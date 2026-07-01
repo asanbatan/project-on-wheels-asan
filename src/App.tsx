@@ -537,6 +537,10 @@ const themes = [
   { id: 'arcade', label: 'Arcade' },
   { id: 'ocean', label: 'Ocean' },
   { id: 'sunset', label: 'Sunset' },
+  { id: 'forest', label: 'Forest' },
+  { id: 'candy', label: 'Candy' },
+  { id: 'space', label: 'Space' },
+  { id: 'lemon', label: 'Lemon' },
 ] as const;
 
 type ThemeId = (typeof themes)[number]['id'];
@@ -688,6 +692,7 @@ type SectionId =
   | 'lessons'
   | 'facts'
   | 'trading'
+  | 'shop'
   | 'companies'
   | 'decision-lab'
   | 'calculator'
@@ -699,7 +704,8 @@ const sidebarItems: Array<{ id: SectionId; label: string; icon: string }> = [
   { id: 'home', label: 'Home', icon: '⌂' },
   { id: 'lessons', label: 'Lessons', icon: '▣' },
   { id: 'facts', label: 'Facts', icon: 'i' },
-  { id: 'trading', label: 'Trading', icon: '$' },
+  { id: 'trading', label: 'Market', icon: '$' },
+  { id: 'shop', label: 'Shop', icon: '◈' },
   { id: 'companies', label: 'Companies', icon: '◆' },
   { id: 'decision-lab', label: 'Decision Lab', icon: '?' },
   { id: 'calculator', label: 'Calculator', icon: '+' },
@@ -827,6 +833,10 @@ function App() {
   const [lessonMistakes, setLessonMistakes] = useState<LessonMistake[]>([]);
   const [reviewComplete, setReviewComplete] = useState(false);
   const [skippedQuestions, setSkippedQuestions] = useState<string[]>([]);
+  const [ownedHints, setOwnedHints] = useState(0);
+  const [ownedSkips, setOwnedSkips] = useState(0);
+  const [shopMessage, setShopMessage] = useState('');
+  const [showByeSign, setShowByeSign] = useState(false);
   const [xp, setXp] = useState(0);
   const [wallet, setWallet] = useState(0);
   const [levelNotice, setLevelNotice] = useState<number | null>(null);
@@ -846,6 +856,7 @@ function App() {
   const [musicVolume, setMusicVolume] = useState(35);
   const musicContextRef = useRef<AudioContext | null>(null);
   const musicTimerRef = useRef<number | null>(null);
+  const byeTimerRef = useRef<number | null>(null);
   const activeLesson = lessons.find((lesson) => lesson.id === activeLessonId) ?? lessons[0];
   const activeQuestion = activeLesson.questions[questionIndex] ?? activeLesson.questions[0];
   const activeLessonIndex = lessons.findIndex((lesson) => lesson.id === activeLesson.id);
@@ -854,6 +865,7 @@ function App() {
   const wasSkipped = skippedQuestions.includes(activeQuestionKey);
   const level = Math.floor(xp / 100) + 1;
   const xpIntoLevel = xp % 100;
+  const totalQuestions = lessons.reduce((total, lesson) => total + lesson.questions.length, 0);
   const progress = Math.round((completedLessons.length / lessons.length) * 100);
   const lessonProgress = Math.round(((questionIndex + (lessonAnswer === activeQuestion.correct ? 1 : 0)) / activeLesson.questions.length) * 100);
   const visibleLessons = lessons.slice(lessonWindowStart, lessonWindowStart + 4);
@@ -882,6 +894,14 @@ function App() {
 
     return () => window.clearTimeout(timeout);
   }, [levelNotice]);
+
+  useEffect(() => {
+    return () => {
+      if (byeTimerRef.current) {
+        window.clearTimeout(byeTimerRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (musicTimerRef.current) {
@@ -998,6 +1018,26 @@ function App() {
   };
 
   const activateSection = (sectionId: SectionId) => {
+    if (activeSection === 'shop' && sectionId !== 'shop') {
+      if (byeTimerRef.current) {
+        window.clearTimeout(byeTimerRef.current);
+      }
+
+      setShowByeSign(true);
+      byeTimerRef.current = window.setTimeout(() => {
+        setShowByeSign(false);
+        setActiveSection(sectionId);
+        byeTimerRef.current = null;
+      }, 2000);
+      return;
+    }
+
+    if (byeTimerRef.current) {
+      window.clearTimeout(byeTimerRef.current);
+      byeTimerRef.current = null;
+    }
+
+    setShowByeSign(false);
     setActiveSection(sectionId);
   };
 
@@ -1053,8 +1093,28 @@ function App() {
     }
   };
 
-  const buyHint = () => {
-    if (wallet < hintCost || lessonHint || lessonAnswer) {
+  const buyShopItem = (item: 'hint' | 'skip') => {
+    const cost = item === 'hint' ? hintCost : skipCost;
+
+    if (wallet < cost) {
+      setShopMessage(`Need $${cost - wallet} more for that ${item}.`);
+      playAnswerSound(false);
+      return;
+    }
+
+    setWallet((current) => current - cost);
+    if (item === 'hint') {
+      setOwnedHints((current) => current + 1);
+      setShopMessage('Hint ticket added to your backpack.');
+    } else {
+      setOwnedSkips((current) => current + 1);
+      setShopMessage('Skip pass added to your backpack.');
+    }
+    playAnswerSound(true);
+  };
+
+  const useHint = () => {
+    if (ownedHints < 1 || lessonHint || lessonAnswer) {
       return;
     }
 
@@ -1068,29 +1128,28 @@ function App() {
     ];
     const clue = hintBank[(activeLessonIndex + questionIndex) % hintBank.length];
 
-    setWallet((current) => current - hintCost);
+    setOwnedHints((current) => Math.max(0, current - 1));
     setLessonHint(`Hint: ${clue}`);
-    setHelperMessage(`Hint bought for $${hintCost}.`);
+    setHelperMessage('Hint ticket used.');
     playAnswerSound(true);
   };
 
-  const skipQuestion = () => {
-    if (wallet < skipCost || lessonAnswer) {
+  const useSkip = () => {
+    if (ownedSkips < 1 || lessonAnswer) {
       return;
     }
 
-    setWallet((current) => current - skipCost);
+    setOwnedSkips((current) => Math.max(0, current - 1));
     setSkippedQuestions((current) =>
       current.includes(activeQuestionKey) ? current : [...current, activeQuestionKey],
     );
-    changeXp(10);
     setLessonHint('');
     setHelperMessage('');
     playAnswerSound(true);
 
     if (isFinalQuestion) {
       setLessonAnswer(activeQuestion.correct);
-      setHelperMessage(`Skipped for $${skipCost}. You still earned 10 XP.`);
+      setHelperMessage('Skip pass used. Lesson complete.');
       setCompletedLessons((current) =>
         current.includes(activeLesson.id) ? current : [...current, activeLesson.id],
       );
@@ -1158,7 +1217,7 @@ function App() {
         choice === 'hold'
           ? 'You stayed out. Sometimes no trade is a smart trade, but this round gives $0.'
           : roundedMoney > 0
-            ? `Nice timing. Your pretend trade made $${roundedMoney}. You can spend it on hints and skips.`
+            ? `Nice timing. Your pretend trade made $${roundedMoney}.`
             : roundedMoney < 0
               ? `That trade lost $${Math.abs(roundedMoney)} from your cash wallet.`
               : 'Break-even trade. No money gained or lost.',
@@ -1274,26 +1333,30 @@ function App() {
             <div className="question-tutor">
               <p className="question-prompt">{activeQuestion.question}</p>
             </div>
-            <div className="lesson-shop" aria-label="Question helpers">
+            <div className="lesson-tools" aria-label="Lesson item backpack">
               <div>
-                <strong>${wallet}</strong>
-                <span>Trading cash</span>
+                <strong>{ownedHints}</strong>
+                <span>Hints</span>
+              </div>
+              <div>
+                <strong>{ownedSkips}</strong>
+                <span>Skips</span>
               </div>
               <button
                 className="ghost-button"
-                disabled={wallet < hintCost || Boolean(lessonHint) || Boolean(lessonAnswer)}
+                disabled={ownedHints < 1 || Boolean(lessonHint) || Boolean(lessonAnswer)}
                 type="button"
-                onClick={buyHint}
+                onClick={useHint}
               >
-                Hint ${hintCost}
+                Use hint
               </button>
               <button
                 className="ghost-button"
-                disabled={wallet < skipCost || Boolean(lessonAnswer)}
+                disabled={ownedSkips < 1 || Boolean(lessonAnswer)}
                 type="button"
-                onClick={skipQuestion}
+                onClick={useSkip}
               >
-                Skip ${skipCost}
+                Use skip
               </button>
             </div>
             {(lessonHint || helperMessage) && (
@@ -1326,10 +1389,10 @@ function App() {
                 {lessonAnswer === activeQuestion.correct
                   ? isFinalQuestion
                     ? wasSkipped
-                      ? 'Lesson complete. Skip used, and you still earned XP.'
+                      ? 'Lesson complete. Skip pass used.'
                       : 'Lesson complete. You earned XP.'
                     : wasSkipped
-                      ? 'Skipped. You earned XP and moved forward.'
+                      ? 'Skipped. Keep going.'
                       : 'Correct. Ready for the next challenge.'
                   : 'Not quite. Think about risk, facts, and time.'}
               </p>
@@ -1415,6 +1478,67 @@ function App() {
           </button>
         ))}
       </aside>
+      <aside className="stats-sidebar" aria-label="Learning statistics">
+        <div className="stats-sidebar__header">
+          <p className="eyebrow">Statistics</p>
+          <strong>Level {level}</strong>
+        </div>
+        <div className="stats-sidebar__meter" aria-label={`${xpIntoLevel} out of 100 XP toward next level`}>
+          <div>
+            <span>{xpIntoLevel}/100 XP</span>
+            <span>{100 - xpIntoLevel} to next</span>
+          </div>
+          <div className="progress-track">
+            <span style={{ width: `${xpIntoLevel}%` }} />
+          </div>
+        </div>
+        <div className="stats-sidebar__grid">
+          <span>
+            <strong>{xp}</strong>
+            XP earned
+          </span>
+          <span>
+            <strong>${wallet}</strong>
+            Cash
+          </span>
+          <span>
+            <strong>{completedLessons.length}/{lessons.length}</strong>
+            Lessons
+          </span>
+          <span>
+            <strong>{totalQuestions}</strong>
+            Questions
+          </span>
+        </div>
+        <div className="stats-sidebar__mini">
+          <span>Course progress</span>
+          <strong>{progress}%</strong>
+          <div className="progress-track">
+            <span style={{ width: `${progress}%` }} />
+          </div>
+        </div>
+        {page === 'lesson' && (
+          <div className="stats-sidebar__mini">
+            <span>Current lesson</span>
+            <strong>{lessonProgress}%</strong>
+            <div className="progress-track">
+              <span style={{ width: `${lessonProgress}%` }} />
+            </div>
+          </div>
+        )}
+        <div className="stats-sidebar__status">
+          <span>Trading round</span>
+          <strong>{tradeResult ? `${tradeResult.money >= 0 ? '+' : ''}$${tradeResult.money}` : 'Ready'}</strong>
+        </div>
+        <div className="stats-sidebar__status">
+          <span>Quick check</span>
+          <strong>{answer === 'facts' ? 'Correct' : answer ? 'Try again' : 'Not answered'}</strong>
+        </div>
+        <div className="stats-sidebar__status">
+          <span>Backpack</span>
+          <strong>{ownedHints} hints · {ownedSkips} skips</strong>
+        </div>
+      </aside>
       {activeSection === 'home' && (
       <section className="hero">
         <div className="hero__copy">
@@ -1424,13 +1548,6 @@ function App() {
             Follow a level path, answer quick checks, and learn stocks, risk, patience, and
             compound growth with pretend examples. This site is for education only.
           </p>
-          <div className="hero-chips">
-            <span>Level {level}</span>
-            <span>{lessons.length} lessons</span>
-            <span>{lessons.reduce((total, lesson) => total + lesson.questions.length, 0)} questions</span>
-            <span>{xp} XP</span>
-            <span>${wallet} cash</span>
-          </div>
         </div>
 
         <div className="market-board" aria-label="Pretend market chart">
@@ -1573,16 +1690,9 @@ function App() {
             <p className="eyebrow">Course dashboard</p>
             <h3>{xp} XP earned</h3>
             <p>
-              Complete each level to unlock the next one. Trade to earn cash for hints and skips.
+              Complete each level to unlock the next one. Use Market from the sidebar to practice trading.
             </p>
             {lockedMessage && <p className="locked-message">{lockedMessage}</p>}
-            <div className="stat-strip">
-              <span>Level {level}</span>
-              <span>{lessons.length} lessons</span>
-              <span>{lessons.reduce((total, lesson) => total + lesson.questions.length, 0)} questions</span>
-              <span>{xpIntoLevel}/100 XP</span>
-              <span>${wallet} cash</span>
-            </div>
           </aside>
         </div>
 
@@ -1608,26 +1718,30 @@ function App() {
               <div className="question-tutor">
                 <p className="question-prompt">{activeQuestion.question}</p>
               </div>
-              <div className="lesson-shop" aria-label="Question helpers">
+              <div className="lesson-tools" aria-label="Lesson item backpack">
                 <div>
-                  <strong>${wallet}</strong>
-                  <span>Trading cash</span>
+                  <strong>{ownedHints}</strong>
+                  <span>Hints</span>
+                </div>
+                <div>
+                  <strong>{ownedSkips}</strong>
+                  <span>Skips</span>
                 </div>
                 <button
                   className="ghost-button"
-                  disabled={wallet < hintCost || Boolean(lessonHint) || Boolean(lessonAnswer)}
+                  disabled={ownedHints < 1 || Boolean(lessonHint) || Boolean(lessonAnswer)}
                   type="button"
-                  onClick={buyHint}
+                  onClick={useHint}
                 >
-                  Hint ${hintCost}
+                  Use hint
                 </button>
                 <button
                   className="ghost-button"
-                  disabled={wallet < skipCost || Boolean(lessonAnswer)}
+                  disabled={ownedSkips < 1 || Boolean(lessonAnswer)}
                   type="button"
-                  onClick={skipQuestion}
+                  onClick={useSkip}
                 >
-                  Skip ${skipCost}
+                  Use skip
                 </button>
               </div>
               {(lessonHint || helperMessage) && (
@@ -1660,10 +1774,10 @@ function App() {
                   {lessonAnswer === activeQuestion.correct
                     ? isFinalQuestion
                       ? wasSkipped
-                        ? 'Lesson complete. Skip used, and you still earned XP.'
+                        ? 'Lesson complete. Skip pass used.'
                         : 'Lesson complete. You earned XP.'
                       : wasSkipped
-                        ? 'Skipped. You earned XP and moved forward.'
+                        ? 'Skipped. Keep going.'
                         : 'Correct. Ready for the next challenge.'
                     : 'Not quite. Think about risk, facts, and time.'}
                 </p>
@@ -1768,7 +1882,7 @@ function App() {
           </div>
           <p className="section-copy">
             Pick buy, short sell, or stay out before the final price is revealed. Gains add cash
-            you can spend on lesson hints and skips.
+            to your practice market wallet.
           </p>
         </div>
 
@@ -1846,6 +1960,101 @@ function App() {
               New round
             </button>
           </article>
+        </div>
+      </section>
+
+      <section id="shop" className={`section shop-page ${activeSection === 'shop' ? 'section--active' : 'section--hidden'}`}>
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Item shop</p>
+            <h2>Visit the shopkeeper</h2>
+          </div>
+          <p className="section-copy">
+            Spend practice market cash on lesson items, then use them from your backpack during a lesson.
+          </p>
+        </div>
+
+        <div className="shop-layout">
+          <article className="shopkeeper-card">
+            <div className="shopkeeper-shop" aria-hidden="true">
+              <div className="shop-sign">SHOP</div>
+              <div className="shop-awning">
+                <span />
+                <span />
+                <span />
+              </div>
+              <div className="shop-shelves">
+                <span>HINT</span>
+                <span>PASS</span>
+                <span>SKIP</span>
+              </div>
+              <div className="shop-details" aria-hidden="true">
+                <span className="shop-lantern" />
+                <span className="shop-drawer" />
+              </div>
+              <div className="shopkeeper-person">
+                <div className="shopkeeper-face">
+                  <span />
+                  <span />
+                </div>
+              </div>
+              <div className={`bye-sign ${showByeSign ? 'bye-sign--active' : ''}`}>bye</div>
+              <div className="shop-counter">
+                <span>ITEMS</span>
+              </div>
+            </div>
+            <div>
+              <p className="eyebrow">Shopkeeper</p>
+              <h3>Welcome back, investor.</h3>
+              <p>
+                Earn cash in Market, then trade it here for help items. Hints reveal a clue.
+                Skips move past one question.
+              </p>
+              {shopMessage && <p className="shop-message">{shopMessage}</p>}
+            </div>
+          </article>
+
+          <div className="shop-items" aria-label="Shop items">
+            <article className="shop-item">
+              <span className="shop-item__icon">?</span>
+              <div>
+                <h3>Hint ticket</h3>
+                <p>Gives one clue during a lesson question.</p>
+                <strong>${hintCost}</strong>
+              </div>
+              <button disabled={wallet < hintCost} type="button" onClick={() => buyShopItem('hint')}>
+                Buy hint
+              </button>
+            </article>
+
+            <article className="shop-item">
+              <span className="shop-item__icon">→</span>
+              <div>
+                <h3>Skip pass</h3>
+                <p>Moves past one lesson question without earning XP for it.</p>
+                <strong>${skipCost}</strong>
+              </div>
+              <button disabled={wallet < skipCost} type="button" onClick={() => buyShopItem('skip')}>
+                Buy skip
+              </button>
+            </article>
+          </div>
+
+          <aside className="shop-backpack">
+            <p className="eyebrow">Backpack</p>
+            <div>
+              <span>Cash</span>
+              <strong>${wallet}</strong>
+            </div>
+            <div>
+              <span>Hint tickets</span>
+              <strong>{ownedHints}</strong>
+            </div>
+            <div>
+              <span>Skip passes</span>
+              <strong>{ownedSkips}</strong>
+            </div>
+          </aside>
         </div>
       </section>
 
