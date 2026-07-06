@@ -6,10 +6,10 @@
 //   2) Положи его в секрет:  npm run ai:secret -- GEMINI_API_KEY=твой_ключ
 //   3) Задеплой функцию:     npm run ai:deploy
 //
-// Модель можно поменять (gemini-2.0-flash — быстрая и бесплатная).
+// Модель можно поменять. Flash-Lite is enough for short kid-friendly tutor answers.
 
 const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
-const MODEL = 'gemini-2.0-flash';
+const MODEL = 'gemini-3.1-flash-lite';
 
 const cors = {
   'Access-Control-Allow-Origin': '*',
@@ -39,7 +39,15 @@ Deno.serve(async (req) => {
     );
 
     const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data?.error?.message ?? `Gemini request failed with status ${res.status}`);
+    }
+
     const text = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+    if (!text) {
+      throw new Error(data?.promptFeedback?.blockReason ?? 'Gemini returned an empty answer.');
+    }
+
     return new Response(JSON.stringify({ text }), {
       headers: { ...cors, 'Content-Type': 'application/json' },
     });
