@@ -1103,7 +1103,7 @@ h3 {
   align-items: start;
   display: grid;
   gap: 22px;
-  grid-template-columns: minmax(240px, 0.7fr) minmax(320px, 1.3fr);
+  grid-template-columns: minmax(420px, 1.15fr) minmax(280px, 0.85fr);
   margin-bottom: 22px;
 }
 
@@ -6727,6 +6727,12 @@ button {
   .course-panel {
     grid-template-columns: 1fr;
   }
+
+  .lessons-page .path-step,
+  .lessons-page .path-step:nth-of-type(n) {
+    height: min(560px, calc(100vw - 112px), 68vh);
+    width: min(560px, calc(100vw - 112px), 68vh);
+  }
 }
 
 @media (max-width: 900px) {
@@ -6928,7 +6934,9 @@ button {
 /* Single-planet lesson view */
 .lessons-page .path-map {
   display: grid;
-  min-height: 620px;
+  min-height: clamp(520px, 62vh, 720px);
+  overflow: hidden;
+  padding: clamp(18px, 3vw, 38px);
   place-items: center;
 }
 
@@ -6964,17 +6972,17 @@ button {
   display: grid;
   gap: 12px;
   grid-template-columns: 1fr;
-  height: min(620px, 96vw);
+  height: min(560px, calc(100vw - 420px), 68vh);
   justify-items: center;
   left: auto;
   margin: 0 !important;
   min-height: 0;
   padding: clamp(86px, 13vw, 150px) clamp(34px, 6vw, 72px) clamp(24px, 5vw, 46px);
-  position: absolute;
-  right: -18%;
-  top: -18%;
+  position: relative;
+  right: auto;
+  top: auto;
   transform: none;
-  width: min(620px, 96vw);
+  width: min(560px, calc(100vw - 420px), 68vh);
 }
 
 .lessons-page .path-step--village,
@@ -7327,6 +7335,14 @@ button {
   }
 }
 
+@media (max-width: 1320px) {
+  .lessons-page .path-step,
+  .lessons-page .path-step:nth-of-type(n) {
+    height: min(560px, calc(100vw - 112px), 68vh);
+    width: min(560px, calc(100vw - 112px), 68vh);
+  }
+}
+
 @media (max-width: 760px) {
   .lessons-page .path-map {
     display: grid;
@@ -7336,10 +7352,10 @@ button {
 
   .lessons-page .path-step,
   .lessons-page .path-step:nth-of-type(n) {
-    height: min(500px, 118vw);
-    position: absolute;
-    right: -36%;
-    top: -12%;
-    width: min(500px, 118vw);
+    height: min(380px, calc(100vw - 42px));
+    position: relative;
+    right: auto;
+    top: auto;
+    width: min(380px, calc(100vw - 42px));
   }
 }
