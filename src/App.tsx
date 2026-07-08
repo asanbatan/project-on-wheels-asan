@@ -27,14 +27,20 @@ type LessonMistake = {
   correct: string;
 };
 
+type ChartMode = 'line' | 'candles';
+type LessonDifficulty = 'Easy' | 'Medium' | 'Hard';
+
 type SavedProgress = {
   activeLessonId: string;
+  chartMode: ChartMode;
   claimedAchievements: string[];
   completedLessons: string[];
   currency: CurrencyId;
   cursorColor: CursorColorId;
   cursorDesign: CursorDesignId;
   language: LanguageId;
+  lessonDifficulty: LessonDifficulty;
+  lessonDifficultyChosen: boolean;
   ownedBoosters: Partial<Record<MarketBoosterId, number>>;
   ownedHints: number;
   ownedRampages: number;
@@ -46,9 +52,38 @@ type SavedProgress = {
   xp: number;
 };
 
+type VaultGameId = 'tiles' | 'code' | 'market' | 'snake' | 'breaker';
+
+type SnakeCell = {
+  x: number;
+  y: number;
+};
+
+type BreakerBall = {
+  x: number;
+  y: number;
+  dx: number;
+  dy: number;
+};
+
 const hintCost = 10;
 const skipCost = 25;
 const skipRampageCost = 500;
+const snakeBoardSize = 10;
+const breakerBrickCount = 18;
+
+function makeSnakeFood(snake: SnakeCell[]) {
+  const openCells = Array.from({ length: snakeBoardSize * snakeBoardSize }, (_, index) => ({
+    x: index % snakeBoardSize,
+    y: Math.floor(index / snakeBoardSize),
+  })).filter((cell) => !snake.some((snakeCell) => snakeCell.x === cell.x && snakeCell.y === cell.y));
+
+  return openCells[Math.floor(Math.random() * openCells.length)] ?? { x: 8, y: 8 };
+}
+
+function getFreshBricks() {
+  return Array.from({ length: breakerBrickCount }, (_, index) => index);
+}
 
 const marketBoosters = [
   {
@@ -508,36 +543,255 @@ const scenarios = [
   },
 ];
 
+const lessonPlaces = [
+  { name: 'Village', scene: 'village' },
+  { name: 'Bazaar', scene: 'bazaar' },
+  { name: 'City', scene: 'city' },
+  { name: 'Harbor', scene: 'harbor' },
+  { name: 'Forest Camp', scene: 'forest' },
+  { name: 'Mountain Bank', scene: 'mountain' },
+  { name: 'Tech Park', scene: 'tech' },
+  { name: 'Space Port', scene: 'space' },
+] as const;
+
+function getLessonPlace(index: number) {
+  return lessonPlaces[index % lessonPlaces.length];
+}
+
+function getLessonDifficulty(index: number) {
+  if (index < 34) {
+    return 'Easy';
+  }
+
+  if (index < 67) {
+    return 'Medium';
+  }
+
+  return 'Hard';
+}
+
+function getDifficultyBounds(difficulty: LessonDifficulty) {
+  if (difficulty === 'Easy') {
+    return { start: 0, end: 33 };
+  }
+
+  if (difficulty === 'Medium') {
+    return { start: 34, end: 66 };
+  }
+
+  return { start: 67, end: lessons.length - 1 };
+}
+
+const lessonDifficultyOptions: LessonDifficulty[] = ['Easy', 'Medium', 'Hard'];
+
 const kidKnownCompanies = [
   {
     name: 'Apple',
     symbol: 'AAPL',
+    exchange: 'Nasdaq',
+    sector: 'Consumer tech',
+    country: 'United States',
+    founded: '1976',
     knownFor: 'iPhone, iPad, Mac, AirPods',
+    business: 'Apple makes devices, software, services, and accessories that work together in one ecosystem.',
+    learnerFocus: 'Watch how iPhone sales, services growth, and new product launches affect the business.',
+    revenueStream: 'Device sales, App Store fees, subscriptions, accessories',
+    risk: 'A few product lines create a large part of sales.',
   },
   {
     name: 'Samsung',
-    symbol: 'SMSN',
+    symbol: '005930.KS',
+    exchange: 'Korea Exchange',
+    sector: 'Electronics',
+    country: 'South Korea',
+    founded: '1938',
     knownFor: 'Galaxy phones, TVs, tablets',
+    business: 'Samsung Electronics sells phones, TVs, appliances, displays, and memory chips around the world.',
+    learnerFocus: 'Study how chip demand and phone competition can change profits.',
+    revenueStream: 'Semiconductors, phones, TVs, appliances, displays',
+    risk: 'Memory chip prices can rise and fall in cycles.',
   },
   {
     name: 'Nintendo',
     symbol: 'NTDOY',
+    exchange: 'OTC ADR',
+    sector: 'Video games',
+    country: 'Japan',
+    founded: '1889',
     knownFor: 'Switch, Mario, Zelda',
+    business: 'Nintendo makes game consoles, games, characters, and licensing deals around famous franchises.',
+    learnerFocus: 'Look at console cycles, hit games, and how old characters keep earning money.',
+    revenueStream: 'Consoles, games, digital sales, licensing',
+    risk: 'Sales can depend heavily on the success of each console generation.',
   },
   {
     name: 'Disney',
     symbol: 'DIS',
+    exchange: 'NYSE',
+    sector: 'Entertainment',
+    country: 'United States',
+    founded: '1923',
     knownFor: 'Movies, parks, Marvel, Pixar',
+    business: 'Disney earns money from parks, movies, streaming, TV networks, cruises, and character licensing.',
+    learnerFocus: 'Compare steady park income with riskier movie and streaming results.',
+    revenueStream: 'Theme parks, streaming, movies, TV, merchandise',
+    risk: 'Entertainment hits are hard to predict and parks are expensive to run.',
   },
   {
     name: 'Roblox',
     symbol: 'RBLX',
+    exchange: 'NYSE',
+    sector: 'Gaming platform',
+    country: 'United States',
+    founded: '2004',
     knownFor: 'Roblox games and creators',
+    business: 'Roblox runs an online platform where players and creators build, share, and spend Robux.',
+    learnerFocus: 'Track users, bookings, creator payouts, and whether the platform can become profitable.',
+    revenueStream: 'Robux sales, subscriptions, creator marketplace fees',
+    risk: 'Fast growth can still come with losses and safety costs.',
   },
   {
     name: 'Nike',
     symbol: 'NKE',
+    exchange: 'NYSE',
+    sector: 'Apparel',
+    country: 'United States',
+    founded: '1964',
     knownFor: 'Shoes, sportswear, athletes',
+    business: 'Nike designs and sells shoes, clothing, and sports gear through stores, websites, and partners.',
+    learnerFocus: 'Watch brand strength, athlete deals, inventory, and direct-to-consumer sales.',
+    revenueStream: 'Shoes, apparel, equipment, direct online sales',
+    risk: 'Trends change quickly and inventory mistakes can hurt margins.',
+  },
+  {
+    name: 'Microsoft',
+    symbol: 'MSFT',
+    exchange: 'Nasdaq',
+    sector: 'Software and cloud',
+    country: 'United States',
+    founded: '1975',
+    knownFor: 'Xbox, Minecraft, Windows',
+    business: 'Microsoft sells software, cloud services, business tools, games, devices, and AI products.',
+    learnerFocus: 'Study Azure cloud growth, Office subscriptions, gaming, and AI spending.',
+    revenueStream: 'Cloud, Microsoft 365, Windows, Xbox, LinkedIn',
+    risk: 'Cloud and AI competition can be expensive.',
+  },
+  {
+    name: 'Sony',
+    symbol: 'SONY',
+    exchange: 'NYSE ADR',
+    sector: 'Entertainment and electronics',
+    country: 'Japan',
+    founded: '1946',
+    knownFor: 'PlayStation, cameras, movies',
+    business: 'Sony sells PlayStation products, image sensors, music, movies, electronics, and financial services.',
+    learnerFocus: 'Compare gaming, sensors, music, and movies because Sony is several businesses in one.',
+    revenueStream: 'Games, sensors, music, movies, electronics',
+    risk: 'Hardware cycles and entertainment releases can make results uneven.',
+  },
+  {
+    name: 'Alphabet',
+    symbol: 'GOOGL',
+    exchange: 'Nasdaq',
+    sector: 'Internet services',
+    country: 'United States',
+    founded: '1998',
+    knownFor: 'Google Search, YouTube, Android',
+    business: 'Alphabet owns Google, YouTube, Android, Google Cloud, and research projects.',
+    learnerFocus: 'Watch advertising, YouTube, cloud growth, and how AI changes search.',
+    revenueStream: 'Search ads, YouTube ads, cloud, app store fees',
+    risk: 'Most revenue still comes from advertising.',
+  },
+  {
+    name: 'Amazon',
+    symbol: 'AMZN',
+    exchange: 'Nasdaq',
+    sector: 'E-commerce and cloud',
+    country: 'United States',
+    founded: '1994',
+    knownFor: 'Shopping, Prime Video, deliveries',
+    business: 'Amazon runs online stores, Prime, advertising, streaming, devices, and Amazon Web Services.',
+    learnerFocus: 'Separate retail profits from AWS cloud profits because they behave differently.',
+    revenueStream: 'Online stores, AWS, ads, subscriptions, third-party seller fees',
+    risk: 'Retail delivery is huge but can have thin profit margins.',
+  },
+  {
+    name: 'Netflix',
+    symbol: 'NFLX',
+    exchange: 'Nasdaq',
+    sector: 'Streaming',
+    country: 'United States',
+    founded: '1997',
+    knownFor: 'Shows, movies, streaming',
+    business: 'Netflix sells streaming memberships and ads while producing and licensing shows and movies.',
+    learnerFocus: 'Watch subscribers, pricing, content spending, and ad-supported plans.',
+    revenueStream: 'Subscriptions, advertising plans, content licensing',
+    risk: 'Making popular shows costs a lot and competition is intense.',
+  },
+  {
+    name: 'Spotify',
+    symbol: 'SPOT',
+    exchange: 'NYSE',
+    sector: 'Audio streaming',
+    country: 'Sweden',
+    founded: '2006',
+    knownFor: 'Music, podcasts, playlists',
+    business: 'Spotify streams music, podcasts, and audiobooks with free ad-supported and paid plans.',
+    learnerFocus: 'Study users, premium subscribers, royalties, ads, and podcast investments.',
+    revenueStream: 'Premium subscriptions, ads, podcast tools, audiobooks',
+    risk: 'Music royalties can make profits harder to grow.',
+  },
+  {
+    name: 'Tesla',
+    symbol: 'TSLA',
+    exchange: 'Nasdaq',
+    sector: 'Electric vehicles',
+    country: 'United States',
+    founded: '2003',
+    knownFor: 'Electric cars and batteries',
+    business: 'Tesla sells electric vehicles, batteries, charging, software features, and energy products.',
+    learnerFocus: 'Watch car deliveries, margins, battery costs, charging, and software income.',
+    revenueStream: 'Vehicle sales, energy storage, charging, software',
+    risk: 'Car prices, competition, and factory costs can change quickly.',
+  },
+  {
+    name: 'Coca-Cola',
+    symbol: 'KO',
+    exchange: 'NYSE',
+    sector: 'Beverages',
+    country: 'United States',
+    founded: '1892',
+    knownFor: 'Drinks and famous brands',
+    business: 'Coca-Cola owns beverage brands and works with bottlers that make and distribute drinks.',
+    learnerFocus: 'Look at brand power, pricing, international sales, and dividend history.',
+    revenueStream: 'Drink concentrates, syrups, finished beverages, licensing',
+    risk: 'Tastes can change and sugary drinks face health pressure.',
+  },
+  {
+    name: "McDonald's",
+    symbol: 'MCD',
+    exchange: 'NYSE',
+    sector: 'Restaurants',
+    country: 'United States',
+    founded: '1940',
+    knownFor: 'Restaurants, fries, Happy Meals',
+    business: "McDonald's runs and franchises restaurants, earning money from food sales, rent, and franchise fees.",
+    learnerFocus: 'Study same-store sales, franchising, menu pricing, and restaurant traffic.',
+    revenueStream: 'Restaurant sales, franchise fees, rent from franchisees',
+    risk: 'Food costs, labor costs, and customer habits can pressure profits.',
+  },
+  {
+    name: 'Meta',
+    symbol: 'META',
+    exchange: 'Nasdaq',
+    sector: 'Social media',
+    country: 'United States',
+    founded: '2004',
+    knownFor: 'Instagram, WhatsApp, VR',
+    business: 'Meta owns Facebook, Instagram, WhatsApp, Threads, Messenger, and virtual reality projects.',
+    learnerFocus: 'Watch ad revenue, user time, AI spending, and Reality Labs losses.',
+    revenueStream: 'Advertising, business messaging, VR hardware and software',
+    risk: 'Advertising rules, privacy changes, and VR spending can affect results.',
   },
 ];
 
@@ -550,6 +804,26 @@ const investingFacts = [
   'Short-term price moves can be noisy, even when a company is still strong.',
   'A portfolio is the collection of investments someone owns.',
   'Investing money you need soon can be dangerous because prices can fall.',
+  'A share is a tiny ownership piece of a company.',
+  'Companies can grow sales but still lose money if their costs are too high.',
+  'Market news can change prices before most people fully understand the story.',
+  'A dividend is money some companies share with owners, but not every company pays one.',
+  'Buying only because a price went down is risky if the business is getting weaker.',
+  'Great investors often care more about patience than perfect timing.',
+  'Fees are small costs that can quietly reduce returns over many years.',
+  'An index fund owns many investments at once, which can make it more diversified.',
+  'Cash is useful because it does not jump around like stocks, but it may grow more slowly.',
+  'A company can be popular with kids and still be too expensive as a stock.',
+  'The stock market is not one person deciding prices; it is many buyers and sellers.',
+  'A watchlist helps you study companies before making a pretend decision.',
+  'Panic selling means making a decision mainly because you feel scared.',
+  'Long-term investing means thinking in years, not minutes.',
+  'A business moat is something that helps a company stay strong against competitors.',
+  'Revenue is money a company brings in before paying all its costs.',
+  'Profit is what can be left after a company pays its costs.',
+  'A stock chart shows what happened before, but it cannot perfectly predict what happens next.',
+  'Owning one stock can feel exciting, but owning many can reduce one-company risk.',
+  'The safest choice depends on the goal and how soon the money is needed.',
 ];
 
 const tradeNews = [
@@ -1033,19 +1307,6 @@ const sidebarItems: Array<{ id: SectionId; label: string; icon: string }> = [
   { id: 'settings', label: 'Settings', icon: '⚙' },
 ];
 
-function getRandomMove() {
-  let move = Number((Math.random() * 9 - 4.5).toFixed(1));
-
-  if (Math.abs(move) < 0.4) {
-    move = move < 0 ? -0.7 : 0.7;
-  }
-
-  return {
-    move: `${move > 0 ? '+' : ''}${move.toFixed(1)}%`,
-    tone: move >= 0 ? 'up' : 'down',
-  };
-}
-
 function shuffleItems<T>(items: T[]) {
   return [...items].sort(() => Math.random() - 0.5);
 }
@@ -1183,6 +1444,7 @@ function App() {
   const [helperMessage, setHelperMessage] = useState('');
   const [lessonMistakes, setLessonMistakes] = useState<LessonMistake[]>([]);
   const [reviewComplete, setReviewComplete] = useState(false);
+  const [planetSpinning, setPlanetSpinning] = useState(false);
   const [skippedQuestions, setSkippedQuestions] = useState<string[]>([]);
   const [ownedHints, setOwnedHints] = useState(0);
   const [ownedSkips, setOwnedSkips] = useState(0);
@@ -1198,13 +1460,31 @@ function App() {
   const [realPiggyAmount, setRealPiggyAmount] = useState('1');
   const [secretGameScore, setSecretGameScore] = useState(0);
   const [secretGameTarget, setSecretGameTarget] = useState(() => Math.floor(Math.random() * 9));
-  const [secretGameMessage, setSecretGameMessage] = useState('Find the safe vault tile.');
+  const [secretGameMessage, setSecretGameMessage] = useState('All games are free. Pick one and play.');
+  const [activeVaultGame, setActiveVaultGame] = useState<VaultGameId>('tiles');
+  const [vaultCodeTarget, setVaultCodeTarget] = useState(() => ['123', '231', '312'][Math.floor(Math.random() * 3)]);
+  const [marketDirection, setMarketDirection] = useState<'up' | 'down'>(() =>
+    Math.random() > 0.5 ? 'up' : 'down',
+  );
+  const [snake, setSnake] = useState<SnakeCell[]>([
+    { x: 4, y: 5 },
+    { x: 3, y: 5 },
+    { x: 2, y: 5 },
+  ]);
+  const [snakeFood, setSnakeFood] = useState<SnakeCell>({ x: 7, y: 5 });
+  const [snakeDirection, setSnakeDirection] = useState<SnakeCell>({ x: 1, y: 0 });
+  const [snakeRunning, setSnakeRunning] = useState(false);
+  const [snakeScore, setSnakeScore] = useState(0);
+  const [breakerPaddle, setBreakerPaddle] = useState(42);
+  const [breakerBall, setBreakerBall] = useState<BreakerBall>({ x: 50, y: 74, dx: 3, dy: -3 });
+  const [breakerBricks, setBreakerBricks] = useState<number[]>(() => getFreshBricks());
+  const [breakerRunning, setBreakerRunning] = useState(false);
+  const [breakerScore, setBreakerScore] = useState(0);
   const [aiPrompt, setAiPrompt] = useState('');
   const [aiAnswer, setAiAnswer] = useState('');
   const [displayedAiAnswer, setDisplayedAiAnswer] = useState('');
   const [aiBusy, setAiBusy] = useState(false);
   const [aiError, setAiError] = useState('');
-  const [pushyWave, setPushyWave] = useState<'hello' | 'bye' | ''>('');
   const [claimedAchievements, setClaimedAchievements] = useState<string[]>([]);
   const [levelNotice, setLevelNotice] = useState<number | null>(null);
   const [lockedMessage, setLockedMessage] = useState('');
@@ -1214,6 +1494,9 @@ function App() {
   const [answer, setAnswer] = useState('');
   const [tradeRound, setTradeRound] = useState(() => makeTradeRound());
   const [tradeChoice, setTradeChoice] = useState<'buy' | 'sell' | 'hold' | ''>('');
+  const [chartMode, setChartMode] = useState<ChartMode>('line');
+  const [lessonDifficulty, setLessonDifficulty] = useState<LessonDifficulty>('Easy');
+  const [lessonDifficultyChosen, setLessonDifficultyChosen] = useState(false);
   const [activeMarketBoosters, setActiveMarketBoosters] = useState<MarketBoosterId[]>([]);
   const [tradeResult, setTradeResult] = useState<{
     money: number;
@@ -1233,8 +1516,8 @@ function App() {
   const musicContextRef = useRef<AudioContext | null>(null);
   const musicTimerRef = useRef<number | null>(null);
   const byeTimerRef = useRef<number | null>(null);
-  const pushyWaveTimerRef = useRef<number | null>(null);
   const saveTimerRef = useRef<number | null>(null);
+  const planetSpinTimerRef = useRef<number | null>(null);
   const wrongAnswerTimerRef = useRef<number | null>(null);
   const activeLesson = lessons.find((lesson) => lesson.id === activeLessonId) ?? lessons[0];
   const activeQuestion = activeLesson.questions[questionIndex] ?? activeLesson.questions[0];
@@ -1247,17 +1530,11 @@ function App() {
   const totalQuestions = lessons.reduce((total, lesson) => total + lesson.questions.length, 0);
   const progress = Math.round((completedLessons.length / lessons.length) * 100);
   const lessonProgress = Math.round(((questionIndex + (lessonAnswer === activeQuestion.correct ? 1 : 0)) / activeLesson.questions.length) * 100);
-  const visibleLessons = lessons.slice(lessonWindowStart, lessonWindowStart + 4);
-  const lessonWindowNumber = Math.floor(lessonWindowStart / 4) + 1;
-  const totalLessonWindows = Math.ceil(lessons.length / 4);
-  const sessionCompanies = useMemo(
-    () =>
-      shuffleItems(kidKnownCompanies).map((company) => ({
-        ...company,
-        ...getRandomMove(),
-      })),
-    [],
-  );
+  const difficultyBounds = getDifficultyBounds(lessonDifficulty);
+  const difficultyLevelCount = difficultyBounds.end - difficultyBounds.start + 1;
+  const difficultyLevelNumber = lessonWindowStart - difficultyBounds.start + 1;
+  const visibleLessons = lessons.slice(lessonWindowStart, lessonWindowStart + 1);
+  const sessionCompanies = useMemo(() => kidKnownCompanies, []);
   const sessionFacts = useMemo(() => shuffleItems(investingFacts).slice(0, 3), []);
   const sessionNews = useMemo(() => shuffleItems(fakeMarketNews).slice(0, 3), []);
   const sessionChart = useMemo(() => makeChartPath(), []);
@@ -1498,19 +1775,6 @@ function App() {
       progress: Math.min(wallet, 10000),
       target: 10000,
     },
-    {
-      id: 'secret-real-67',
-      icon: '67',
-      title: 'Sixty Seven Saver',
-      detail: 'You saved 67 in your real-life piggy bank.',
-      hint: 'A strangely specific number belongs in the real piggy bank.',
-      difficulty: 'Secret',
-      reward: 6700,
-      secret: true,
-      unlocked: realPiggyBank >= 67,
-      progress: Math.min(realPiggyBank, 67),
-      target: 67,
-    },
   ];
   const unlockedAchievements = achievements.filter((achievement) => achievement.unlocked).length;
   const achievementProgress = Math.round((unlockedAchievements / achievements.length) * 100);
@@ -1546,11 +1810,11 @@ function App() {
       if (byeTimerRef.current) {
         window.clearTimeout(byeTimerRef.current);
       }
-      if (pushyWaveTimerRef.current) {
-        window.clearTimeout(pushyWaveTimerRef.current);
-      }
       if (saveTimerRef.current) {
         window.clearTimeout(saveTimerRef.current);
+      }
+      if (planetSpinTimerRef.current) {
+        window.clearTimeout(planetSpinTimerRef.current);
       }
       if (wrongAnswerTimerRef.current) {
         window.clearTimeout(wrongAnswerTimerRef.current);
@@ -1604,7 +1868,16 @@ function App() {
       const progressData = data?.progress as Partial<SavedProgress> | null | undefined;
 
       if (progressData) {
-        setActiveLessonId(progressData.activeLessonId ?? lessons[0].id);
+        const savedDifficulty = progressData.lessonDifficulty ?? 'Easy';
+        const savedBounds = getDifficultyBounds(savedDifficulty);
+        const savedLessonId = progressData.activeLessonId ?? lessons[savedBounds.start]?.id ?? lessons[0].id;
+        const savedLessonIndex = lessons.findIndex((lesson) => lesson.id === savedLessonId);
+        const savedLessonIsInDifficulty =
+          savedLessonIndex >= savedBounds.start && savedLessonIndex <= savedBounds.end;
+        const nextLessonIndex = savedLessonIsInDifficulty ? savedLessonIndex : savedBounds.start;
+
+        setActiveLessonId(lessons[nextLessonIndex]?.id ?? lessons[0].id);
+        setLessonWindowStart(nextLessonIndex);
         setClaimedAchievements(progressData.claimedAchievements ?? []);
         setCompletedLessons(progressData.completedLessons ?? []);
         setOwnedHints(progressData.ownedHints ?? 0);
@@ -1616,6 +1889,9 @@ function App() {
         });
         setSkippedQuestions(progressData.skippedQuestions ?? []);
         setTheme(progressData.theme ?? 'fresh');
+        setChartMode(progressData.chartMode ?? 'line');
+        setLessonDifficulty(savedDifficulty);
+        setLessonDifficultyChosen(progressData.lessonDifficultyChosen ?? false);
         setCurrency(progressData.currency ?? 'USD');
         setLanguage(progressData.language ?? 'en');
         setCursorDesign(progressData.cursorDesign ?? 'arrow');
@@ -1645,12 +1921,15 @@ function App() {
     saveTimerRef.current = window.setTimeout(async () => {
       const progressData: SavedProgress = {
         activeLessonId,
+        chartMode,
         claimedAchievements,
         completedLessons,
         currency,
         cursorColor,
         cursorDesign,
         language,
+        lessonDifficulty,
+        lessonDifficultyChosen,
         ownedBoosters,
         ownedHints,
         ownedRampages,
@@ -1673,12 +1952,15 @@ function App() {
     }, 700);
   }, [
     activeLessonId,
+    chartMode,
     claimedAchievements,
     completedLessons,
     currency,
     cursorColor,
     cursorDesign,
     language,
+    lessonDifficulty,
+    lessonDifficultyChosen,
     ownedBoosters,
     ownedHints,
     ownedRampages,
@@ -1777,7 +2059,8 @@ function App() {
 
   const openLesson = (lessonId: string) => {
     const lessonIndex = lessons.findIndex((lesson) => lesson.id === lessonId);
-    const previousLesson = lessons[lessonIndex - 1];
+    const previousLesson =
+      lessonIndex > difficultyBounds.start ? lessons[lessonIndex - 1] : undefined;
 
     if (previousLesson && !completedLessons.includes(previousLesson.id)) {
       setLockedMessage(`Complete lesson ${lessonIndex} first to unlock this level.`);
@@ -1785,7 +2068,7 @@ function App() {
     }
 
     setLockedMessage('');
-    setLessonWindowStart(Math.floor(lessonIndex / 4) * 4);
+    setLessonWindowStart(lessonIndex);
     setActiveLessonId(lessonId);
     setQuestionIndex(0);
     setLessonAnswer('');
@@ -1807,26 +2090,6 @@ function App() {
   };
 
   const activateSection = (sectionId: SectionId) => {
-    const triggerPushyWave = (wave: 'hello' | 'bye') => {
-      if (pushyWaveTimerRef.current) {
-        window.clearTimeout(pushyWaveTimerRef.current);
-      }
-
-      setPushyWave(wave);
-      pushyWaveTimerRef.current = window.setTimeout(() => {
-        setPushyWave('');
-        pushyWaveTimerRef.current = null;
-      }, 900);
-    };
-
-    if (activeSection === 'help' && sectionId !== 'help') {
-      triggerPushyWave('bye');
-      window.setTimeout(() => {
-        setActiveSection(sectionId);
-      }, 650);
-      return;
-    }
-
     if (activeSection === 'shop' && sectionId !== 'shop') {
       if (byeTimerRef.current) {
         window.clearTimeout(byeTimerRef.current);
@@ -1836,9 +2099,6 @@ function App() {
       byeTimerRef.current = window.setTimeout(() => {
         setShowByeSign(false);
         setActiveSection(sectionId);
-        if (sectionId === 'help') {
-          triggerPushyWave('hello');
-        }
         byeTimerRef.current = null;
       }, 2000);
       return;
@@ -1851,9 +2111,6 @@ function App() {
 
     setShowByeSign(false);
     setActiveSection(sectionId);
-    if (sectionId === 'help' && activeSection !== 'help') {
-      triggerPushyWave('hello');
-    }
   };
 
   const changeXp = (amount: number) => {
@@ -1868,6 +2125,56 @@ function App() {
 
       return nextXp;
     });
+  };
+
+  const spinToLesson = (nextIndex: number) => {
+    if (planetSpinTimerRef.current) {
+      window.clearTimeout(planetSpinTimerRef.current);
+    }
+
+    setPlanetSpinning(true);
+    planetSpinTimerRef.current = window.setTimeout(() => {
+      const boundedIndex = Math.min(
+        Math.max(nextIndex, difficultyBounds.start),
+        difficultyBounds.end,
+      );
+      setLessonWindowStart(boundedIndex);
+      setActiveLessonId(lessons[boundedIndex]?.id ?? lessons[0].id);
+      setQuestionIndex(0);
+      setLessonAnswer('');
+      setLessonHint('');
+      setHelperMessage('');
+      setLessonMistakes([]);
+      setReviewComplete(false);
+      setPlanetSpinning(false);
+      planetSpinTimerRef.current = null;
+    }, 850);
+  };
+
+  const chooseLessonDifficulty = (difficulty: LessonDifficulty) => {
+    const nextBounds = getDifficultyBounds(difficulty);
+
+    setLessonDifficulty(difficulty);
+    setLessonDifficultyChosen(true);
+    setLockedMessage('');
+    setLessonWindowStart(nextBounds.start);
+    setActiveLessonId(lessons[nextBounds.start]?.id ?? lessons[0].id);
+    setPlanetSpinning(true);
+
+    if (planetSpinTimerRef.current) {
+      window.clearTimeout(planetSpinTimerRef.current);
+    }
+
+    planetSpinTimerRef.current = window.setTimeout(() => {
+      setQuestionIndex(0);
+      setLessonAnswer('');
+      setLessonHint('');
+      setHelperMessage('');
+      setLessonMistakes([]);
+      setReviewComplete(false);
+      setPlanetSpinning(false);
+      planetSpinTimerRef.current = null;
+    }, 850);
   };
 
   const answerLessonQuestion = (choice: string) => {
@@ -1906,6 +2213,9 @@ function App() {
           setCompletedLessons((current) =>
             current.includes(activeLesson.id) ? current : [...current, activeLesson.id],
           );
+          if (activeLessonIndex < difficultyBounds.end) {
+            window.setTimeout(() => spinToLesson(activeLessonIndex + 1), 1000);
+          }
         } else {
           setQuestionIndex((current) => current + 1);
           setLessonAnswer('');
@@ -1929,6 +2239,9 @@ function App() {
       setCompletedLessons((current) =>
         current.includes(activeLesson.id) ? current : [...current, activeLesson.id],
       );
+      if (activeLessonIndex < difficultyBounds.end) {
+        window.setTimeout(() => spinToLesson(activeLessonIndex + 1), 1000);
+      }
     }
   };
 
@@ -2008,6 +2321,9 @@ function App() {
       setCompletedLessons((current) =>
         current.includes(activeLesson.id) ? current : [...current, activeLesson.id],
       );
+      if (activeLessonIndex < difficultyBounds.end) {
+        window.setTimeout(() => spinToLesson(activeLessonIndex + 1), 1000);
+      }
       return;
     }
 
@@ -2021,11 +2337,13 @@ function App() {
       return;
     }
 
-    const lessonStartIndex = Math.max(0, activeLessonIndex);
+    const lessonStartIndex = Math.min(Math.max(activeLessonIndex, difficultyBounds.start), difficultyBounds.end);
+    const rampageEndIndex = Math.min(lessonStartIndex + 10, difficultyBounds.end + 1);
     const rampageLessons = lessons
-      .slice(lessonStartIndex, lessonStartIndex + 10)
+      .slice(lessonStartIndex, rampageEndIndex)
       .map((lesson) => lesson.id);
-    const nextLesson = lessons[lessonStartIndex + 10];
+    const nextLessonIndex = Math.min(lessonStartIndex + 10, difficultyBounds.end);
+    const nextLesson = lessons[nextLessonIndex];
 
     setOwnedRampages((current) => Math.max(0, current - 1));
     setCompletedLessons((current) => Array.from(new Set([...current, ...rampageLessons])));
@@ -2037,9 +2355,8 @@ function App() {
     setQuestionIndex(0);
     playAnswerSound(true);
 
-    if (nextLesson) {
-      setLessonWindowStart(Math.floor((lessonStartIndex + 10) / 4) * 4);
-      setActiveLessonId(nextLesson.id);
+    if (nextLesson && nextLessonIndex > lessonStartIndex) {
+      spinToLesson(nextLessonIndex);
       return;
     }
 
@@ -2047,15 +2364,24 @@ function App() {
   };
 
   const openNextLesson = () => {
-    const nextLesson = lessons[activeLessonIndex + 1];
-
-    if (nextLesson) {
-      setLessonWindowStart(Math.floor((activeLessonIndex + 1) / 4) * 4);
-      openLesson(nextLesson.id);
+    if (activeLessonIndex < difficultyBounds.end) {
+      spinToLesson(activeLessonIndex + 1);
       return;
     }
 
     goToCourse();
+  };
+
+  const startLearning = () => {
+    setPage('course');
+    activateSection('lessons');
+  };
+
+  const openAccountMode = (mode: 'signin' | 'signup') => {
+    setAuthMode(mode);
+    setAuthMessage('');
+    setPage('course');
+    activateSection('account');
   };
 
   const growth = useMemo(() => {
@@ -2083,6 +2409,30 @@ function App() {
     .join('');
   const lastVisibleTradePoint = visibleTradePoints[visibleTradePoints.length - 1];
   const visibleTradeArea = `${visibleTradeLine}L${lastVisibleTradePoint?.x ?? 35} 184L35 184Z`;
+  const visibleTradeSegments = visibleTradePoints.slice(1).map((point, index) => {
+    const previousPoint = visibleTradePoints[index];
+    const direction = point.price >= previousPoint.price ? 'up' : 'down';
+
+    return {
+      direction,
+      d: `M${previousPoint.x} ${previousPoint.y}L${point.x} ${point.y}`,
+      key: `${previousPoint.x}-${point.x}`,
+      point,
+      previousPoint,
+    };
+  });
+  const visibleTradeCandles = visibleTradeSegments.map((segment) => {
+    const top = Math.min(segment.previousPoint.y, segment.point.y);
+    const bottom = Math.max(segment.previousPoint.y, segment.point.y);
+    const height = Math.max(8, bottom - top);
+
+    return {
+      ...segment,
+      bodyHeight: height,
+      bodyY: top,
+      x: segment.point.x - 9,
+    };
+  });
 
   const activateMarketBooster = (boosterId: MarketBoosterId) => {
     const booster = marketBoosters.find((item) => item.id === boosterId);
@@ -2224,7 +2574,7 @@ function App() {
       if (addedSecretAmount || reachedSecretBalance) {
         window.setTimeout(() => {
           setActiveSection('secret-game');
-          setSecretGameMessage('Piggy Bank code 123 accepted. Pick a vault tile.');
+          setSecretGameMessage('Games are free. Pick anything and play.');
           playAnswerSound(true);
         }, 0);
       }
@@ -2254,6 +2604,208 @@ function App() {
 
     setSecretGameTarget(Math.floor(Math.random() * 9));
   };
+
+  const playVaultCode = (code: string) => {
+    if (code === vaultCodeTarget) {
+      setSecretGameScore((current) => current + 1);
+      setWallet((current) => current + 75);
+      setSecretGameMessage(`Code ${code} opened a bonus drawer. You earned $75 game cash.`);
+      playAnswerSound(true);
+    } else {
+      setSecretGameMessage(`Code ${code} was close, but the vault wanted ${vaultCodeTarget}.`);
+      playAnswerSound(false);
+    }
+
+    setVaultCodeTarget(['123', '231', '312'][Math.floor(Math.random() * 3)]);
+  };
+
+  const playMarketGuess = (guess: 'up' | 'down') => {
+    if (guess === marketDirection) {
+      setSecretGameScore((current) => current + 1);
+      setWallet((current) => current + 50);
+      setSecretGameMessage(`Correct. The mini market went ${marketDirection}. You earned $50 game cash.`);
+      playAnswerSound(true);
+    } else {
+      setSecretGameMessage(`Not this time. The mini market went ${marketDirection}.`);
+      playAnswerSound(false);
+    }
+
+    setMarketDirection(Math.random() > 0.5 ? 'up' : 'down');
+  };
+
+  const resetSnakeGame = () => {
+    const freshSnake = [
+      { x: 4, y: 5 },
+      { x: 3, y: 5 },
+      { x: 2, y: 5 },
+    ];
+
+    setSnake(freshSnake);
+    setSnakeFood(makeSnakeFood(freshSnake));
+    setSnakeDirection({ x: 1, y: 0 });
+    setSnakeScore(0);
+    setSnakeRunning(true);
+    setSecretGameMessage('Snake started. Eat coins and avoid the walls.');
+  };
+
+  const changeSnakeDirection = (direction: SnakeCell) => {
+    setSnakeDirection((current) =>
+      current.x + direction.x === 0 && current.y + direction.y === 0 ? current : direction,
+    );
+    setSnakeRunning(true);
+  };
+
+  const resetBreakerGame = () => {
+    setBreakerPaddle(42);
+    setBreakerBall({ x: 50, y: 74, dx: 3, dy: -3 });
+    setBreakerBricks(getFreshBricks());
+    setBreakerScore(0);
+    setBreakerRunning(true);
+    setSecretGameMessage('Block Breaker started. Clear the money blocks.');
+  };
+
+  const moveBreakerPaddle = (amount: number) => {
+    setBreakerPaddle((current) => Math.min(84, Math.max(0, current + amount)));
+    setBreakerRunning(true);
+  };
+
+  useEffect(() => {
+    if (activeVaultGame !== 'snake' || !snakeRunning) {
+      return;
+    }
+
+    const timer = window.setInterval(() => {
+      setSnake((currentSnake) => {
+        const head = currentSnake[0];
+        const nextHead = {
+          x: head.x + snakeDirection.x,
+          y: head.y + snakeDirection.y,
+        };
+        const hitWall =
+          nextHead.x < 0 ||
+          nextHead.y < 0 ||
+          nextHead.x >= snakeBoardSize ||
+          nextHead.y >= snakeBoardSize;
+        const hitSelf = currentSnake.some((cell) => cell.x === nextHead.x && cell.y === nextHead.y);
+
+        if (hitWall || hitSelf) {
+          setSnakeRunning(false);
+          setSecretGameMessage('Snake crashed. Start again for another run.');
+          playAnswerSound(false);
+          return currentSnake;
+        }
+
+        const ateFood = nextHead.x === snakeFood.x && nextHead.y === snakeFood.y;
+        const nextSnake = [nextHead, ...currentSnake];
+
+        if (!ateFood) {
+          nextSnake.pop();
+          return nextSnake;
+        }
+
+        setSnakeScore((current) => current + 1);
+        setWallet((current) => current + 10);
+        setSecretGameScore((current) => current + 1);
+        setSecretGameMessage('Snake ate a coin. +$10 game cash.');
+        setSnakeFood(makeSnakeFood(nextSnake));
+        playAnswerSound(true);
+        return nextSnake;
+      });
+    }, 220);
+
+    return () => window.clearInterval(timer);
+  }, [activeVaultGame, snakeDirection, snakeFood, snakeRunning]);
+
+  useEffect(() => {
+    if (activeVaultGame !== 'breaker' || !breakerRunning) {
+      return;
+    }
+
+    const timer = window.setInterval(() => {
+      setBreakerBall((currentBall) => {
+        let nextBall = {
+          ...currentBall,
+          x: currentBall.x + currentBall.dx,
+          y: currentBall.y + currentBall.dy,
+        };
+
+        if (nextBall.x <= 2 || nextBall.x >= 98) {
+          nextBall = { ...nextBall, dx: -nextBall.dx };
+        }
+
+        if (nextBall.y <= 4) {
+          nextBall = { ...nextBall, dy: Math.abs(nextBall.dy) };
+        }
+
+        const hitPaddle = nextBall.y >= 86 && nextBall.x >= breakerPaddle && nextBall.x <= breakerPaddle + 16;
+        if (hitPaddle) {
+          nextBall = { ...nextBall, dy: -Math.abs(nextBall.dy) };
+        }
+
+        if (nextBall.y > 100) {
+          setBreakerRunning(false);
+          setSecretGameMessage('The ball dropped. Try Block Breaker again.');
+          playAnswerSound(false);
+          return { x: 50, y: 74, dx: 3, dy: -3 };
+        }
+
+        const hitBrick = breakerBricks.find((brick) => {
+          const column = brick % 6;
+          const row = Math.floor(brick / 6);
+          const brickX = 5 + column * 15;
+          const brickY = 10 + row * 10;
+          return nextBall.x >= brickX && nextBall.x <= brickX + 11 && nextBall.y >= brickY && nextBall.y <= brickY + 6;
+        });
+
+        if (hitBrick !== undefined) {
+          setBreakerBricks((current) => current.filter((brick) => brick !== hitBrick));
+          setBreakerScore((current) => current + 1);
+          setWallet((current) => current + 8);
+          setSecretGameScore((current) => current + 1);
+          setSecretGameMessage('Block cleared. +$8 game cash.');
+          playAnswerSound(true);
+          nextBall = { ...nextBall, dy: -nextBall.dy };
+        }
+
+        return nextBall;
+      });
+    }, 42);
+
+    return () => window.clearInterval(timer);
+  }, [activeVaultGame, breakerBricks, breakerPaddle, breakerRunning]);
+
+  useEffect(() => {
+    const handleVaultKeys = (event: KeyboardEvent) => {
+      if (activeVaultGame === 'snake') {
+        if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          changeSnakeDirection({ x: 0, y: -1 });
+        } else if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          changeSnakeDirection({ x: 0, y: 1 });
+        } else if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          changeSnakeDirection({ x: -1, y: 0 });
+        } else if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          changeSnakeDirection({ x: 1, y: 0 });
+        }
+      }
+
+      if (activeVaultGame === 'breaker') {
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          moveBreakerPaddle(-8);
+        } else if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          moveBreakerPaddle(8);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleVaultKeys);
+    return () => window.removeEventListener('keydown', handleVaultKeys);
+  }, [activeVaultGame, snakeDirection]);
 
   const askVerityForHelp = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -2439,6 +2991,58 @@ function App() {
             <span>{languageOption.label}</span>
           </button>
         ))}
+      </div>
+    </div>
+  );
+
+  const chartSettings = (
+    <div className="chart-settings" aria-label="Market chart settings">
+      <div>
+        <span>Market chart</span>
+        <strong>{chartMode === 'line' ? 'Normal lines' : 'Candles'}</strong>
+      </div>
+      <div className="chart-mode-list" role="group" aria-label="Choose market chart style">
+        {[
+          { id: 'line', label: 'Normal lines' },
+          { id: 'candles', label: 'Candles' },
+        ].map((modeOption) => (
+          <button
+            className={`chart-mode-option ${chartMode === modeOption.id ? 'chart-mode-option--active' : ''}`}
+            key={modeOption.id}
+            type="button"
+            onClick={() => setChartMode(modeOption.id as ChartMode)}
+          >
+            {modeOption.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
+  const lessonDifficultySettings = (
+    <div className="lesson-difficulty-settings" aria-label="Lesson difficulty settings">
+      <div>
+        <span>Lesson difficulty</span>
+        <strong>{lessonDifficulty}</strong>
+      </div>
+      <div className="difficulty-choice-list" role="group" aria-label="Choose lesson difficulty">
+        {lessonDifficultyOptions.map((difficulty) => {
+          const optionBounds = getDifficultyBounds(difficulty);
+
+          return (
+            <button
+              className={`difficulty-choice ${lessonDifficulty === difficulty ? 'difficulty-choice--active' : ''}`}
+              key={difficulty}
+              type="button"
+              onClick={() => chooseLessonDifficulty(difficulty)}
+            >
+              <strong>{difficulty}</strong>
+              <span>
+                Levels {optionBounds.start + 1}-{optionBounds.end + 1}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
@@ -2709,6 +3313,20 @@ function App() {
             stocks, funds, and compound growth work.
           </p>
           <p className="hero-note">Built for education only, not real investing advice.</p>
+          <div className="hero-actions" aria-label="Home actions">
+            <button type="button" onClick={startLearning}>
+              Start learning to invest
+            </button>
+            <button className="ghost-button" type="button" onClick={() => activateSection('help')}>
+              Tutorial
+            </button>
+            <button className="ghost-button" type="button" onClick={() => openAccountMode('signup')}>
+              Sign in
+            </button>
+            <button className="ghost-button" type="button" onClick={() => openAccountMode('signin')}>
+              Log in
+            </button>
+          </div>
         </div>
 
         <div className="market-board" aria-label="Pretend market chart">
@@ -2717,12 +3335,9 @@ function App() {
             <strong>Live demo</strong>
           </div>
           {sessionCompanies.slice(0, 3).map((company) => (
-            <div
-              className={`ticker-row ${company.tone === 'down' ? 'ticker-row--down' : ''}`}
-              key={company.symbol}
-            >
+            <div className="ticker-row" key={company.symbol}>
               <span>{company.name}</span>
-              <strong>{company.move}</strong>
+              <strong>{company.symbol} · {company.exchange}</strong>
             </div>
           ))}
           <div className="line-chart">
@@ -2782,7 +3397,7 @@ function App() {
         </div>
       </section>
 
-      <section id="lessons" className={`section ${activeSection === 'lessons' ? 'section--active' : 'section--hidden'}`}>
+      <section id="lessons" className={`section lessons-page ${activeSection === 'lessons' ? 'section--active' : 'section--hidden'}`}>
         <div className="section-heading">
           <div>
             <p className="eyebrow">Lesson path</p>
@@ -2796,53 +3411,88 @@ function App() {
           </div>
         </div>
 
+        {!lessonDifficultyChosen && (
+          <div className="difficulty-greeting" role="dialog" aria-label="Choose lesson difficulty">
+            <div>
+              <p className="eyebrow">Choose your path</p>
+              <h3>Pick a lesson difficulty</h3>
+              <p>Start with the kind of levels you want to play today.</p>
+            </div>
+            <div className="difficulty-choice-list" role="group" aria-label="Choose lesson difficulty">
+              {lessonDifficultyOptions.map((difficulty) => {
+                const optionBounds = getDifficultyBounds(difficulty);
+
+                return (
+                  <button
+                    className={`difficulty-choice ${lessonDifficulty === difficulty ? 'difficulty-choice--active' : ''}`}
+                    key={difficulty}
+                    type="button"
+                    onClick={() => chooseLessonDifficulty(difficulty)}
+                  >
+                    <strong>{difficulty}</strong>
+                    <span>
+                      Levels {optionBounds.start + 1}-{optionBounds.end + 1}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         <div className="duo-layout">
           <div className="path-shell">
             <div className="level-window-controls">
               <button
                 className="ghost-button"
-                disabled={lessonWindowStart === 0}
+                disabled={lessonWindowStart <= difficultyBounds.start}
                 type="button"
-                onClick={() => setLessonWindowStart((current) => Math.max(0, current - 4))}
+                onClick={() => spinToLesson(lessonWindowStart - 1)}
               >
-                Previous 4
+                Previous level
               </button>
               <span>
-                Levels {lessonWindowStart + 1}-{Math.min(lessonWindowStart + 4, lessons.length)} of {lessons.length}
+                {lessonDifficulty} level {difficultyLevelNumber} of {difficultyLevelCount}
               </span>
               <button
                 className="ghost-button"
-                disabled={lessonWindowStart + 4 >= lessons.length}
+                disabled={lessonWindowStart >= difficultyBounds.end}
                 type="button"
-                onClick={() =>
-                  setLessonWindowStart((current) => Math.min(lessons.length - 4, current + 4))
-                }
+                onClick={() => spinToLesson(lessonWindowStart + 1)}
               >
-                Next 4
+                Next level
               </button>
             </div>
-            <div className="path-map" aria-label={`Investing lesson path page ${lessonWindowNumber} of ${totalLessonWindows}`}>
+            <div
+              className={`path-map ${planetSpinning ? 'path-map--spinning' : ''}`}
+              aria-label={`${lessonDifficulty} investing lesson level ${difficultyLevelNumber} of ${difficultyLevelCount}`}
+            >
               {visibleLessons.map((lesson, index) => {
                 const globalIndex = lessonWindowStart + index;
-              const isComplete = completedLessons.includes(lesson.id);
-              const previousLesson = lessons[globalIndex - 1];
-              const isLocked = Boolean(previousLesson && !completedLessons.includes(previousLesson.id));
+                const isComplete = completedLessons.includes(lesson.id);
+                const previousLesson =
+                  globalIndex > difficultyBounds.start ? lessons[globalIndex - 1] : undefined;
+                const isLocked = Boolean(previousLesson && !completedLessons.includes(previousLesson.id));
+                const place = getLessonPlace(globalIndex);
+                const difficulty = getLessonDifficulty(globalIndex);
 
-              return (
-                <button
-                  aria-disabled={isLocked}
-                  className={`path-step ${isComplete ? 'path-step--complete' : ''} ${
-                    isLocked ? 'path-step--locked' : ''
-                  }`}
-                  key={lesson.id}
-                  onClick={() => openLesson(lesson.id)}
-                  style={{ marginLeft: index % 2 === 0 ? 0 : 54 }}
-                  type="button"
-                >
-                  <span>{isComplete ? 'OK' : isLocked ? '🔒' : lesson.badge}</span>
-                  <strong>{lesson.skill}</strong>
-                </button>
-              );
+                return (
+                  <button
+                    aria-disabled={isLocked}
+                    className={`path-step path-step--${place.scene} ${isComplete ? 'path-step--complete' : ''} ${
+                      isLocked ? 'path-step--locked' : ''
+                    }`}
+                    key={lesson.id}
+                    onClick={() => openLesson(lesson.id)}
+                    style={{ marginLeft: index % 2 === 0 ? 0 : 54 }}
+                    type="button"
+                  >
+                    <span>{isComplete ? 'OK' : isLocked ? 'LOCK' : lesson.badge}</span>
+                    <strong>Level {globalIndex + 1}: {place.name}</strong>
+                    <em className={`lesson-difficulty lesson-difficulty--${difficulty.toLowerCase()}`}>{difficulty}</em>
+                    <small>{lesson.skill}</small>
+                  </button>
+                );
               })}
             </div>
           </div>
@@ -2858,37 +3508,64 @@ function App() {
         </div>
 
         <div className="lesson-grid">
-          {visibleLessons.map((lesson) => (
+          {visibleLessons.map((lesson, index) => {
+            const globalIndex = lessonWindowStart + index;
+            const place = getLessonPlace(globalIndex);
+            const difficulty = getLessonDifficulty(globalIndex);
+
+            return (
             <article className="lesson-card" key={lesson.title}>
+              <div className={`lesson-place-art lesson-place-art--${place.scene}`} aria-hidden="true" />
+              <p className="lesson-place-label">Level {globalIndex + 1}: {place.name}</p>
+              <p className={`lesson-difficulty lesson-difficulty--${difficulty.toLowerCase()}`}>{difficulty}</p>
               <h3>{lesson.title}</h3>
               <p>{lesson.text}</p>
               <span>{lesson.check}</span>
             </article>
-          ))}
+            );
+          })}
         </div>
       </section>
 
       <section id="companies" className={`section ${activeSection === 'companies' ? 'section--active' : 'section--hidden'}`}>
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Company examples</p>
-            <h2>Brands you might know</h2>
+            <p className="eyebrow">Real companies</p>
+            <h2>Company profiles you can study</h2>
           </div>
           <p className="section-copy">
-            These are pretend watchlist moves for learning only, not advice to buy or sell.
+            Real public companies, real tickers, and beginner-friendly notes. This is for learning, not advice to buy or sell.
           </p>
         </div>
         <div className="company-grid">
           {sessionCompanies.map((company) => (
             <article className="company-card" key={company.symbol}>
-              <div>
+              <div className="company-card__top">
                 <span className="company-symbol">{company.symbol}</span>
-                <strong className={company.tone === 'down' ? 'move-down' : 'move-up'}>
-                  {company.move}
-                </strong>
+                <span className="company-exchange">{company.exchange}</span>
               </div>
               <h3>{company.name}</h3>
-              <p>{company.knownFor}</p>
+              <p className="company-known">{company.knownFor}</p>
+              <div className="company-meta" aria-label={`${company.name} facts`}>
+                <span>{company.sector}</span>
+                <span>{company.country}</span>
+                <span>Founded {company.founded}</span>
+              </div>
+              <p>{company.business}</p>
+              <div className="company-study">
+                <strong>Study this</strong>
+                <span>{company.learnerFocus}</span>
+              </div>
+              <div className="company-details">
+                <span>
+                  <strong>Makes money from</strong>
+                  {company.revenueStream}
+                </span>
+                <span>
+                  <strong>Risk to watch</strong>
+                  {company.risk}
+                </span>
+              </div>
             </article>
           ))}
         </div>
@@ -2985,8 +3662,32 @@ function App() {
               <path className="grid-line" d="M30 84H330" />
               <path className="grid-line" d="M30 126H330" />
               <path className="grid-line" d="M30 168H330" />
-              <path className="area-line" d={visibleTradeArea} />
-              <path className="stock-line" d={visibleTradeLine} />
+              {chartMode === 'line' ? (
+                <>
+                  <path className="area-line area-line--neutral" d={visibleTradeArea} />
+                  {visibleTradeSegments.map((segment) => (
+                    <path
+                      className={`stock-line stock-line--${segment.direction}`}
+                      d={segment.d}
+                      key={segment.key}
+                    />
+                  ))}
+                </>
+              ) : (
+                <g className="candle-chart" aria-label="Candle chart">
+                  {visibleTradeCandles.map((candle) => (
+                    <g className={`trade-candle trade-candle--${candle.direction}`} key={candle.key}>
+                      <line
+                        x1={candle.point.x}
+                        x2={candle.point.x}
+                        y1={candle.previousPoint.y}
+                        y2={candle.point.y}
+                      />
+                      <rect height={candle.bodyHeight} rx="4" width="18" x={candle.x} y={candle.bodyY} />
+                    </g>
+                  ))}
+                </g>
+              )}
               {!tradeResult && <path className="hidden-price-line" d="M165 106L325 106" />}
               {visibleTradePoints.map((point) => (
                 <circle cx={point.x} cy={point.y} key={`${point.x}-${point.price}`} r="6" />
@@ -3410,42 +4111,217 @@ function App() {
       </section>
 
       <section id="secret-game" className={`section secret-game-page ${activeSection === 'secret-game' ? 'section--active' : 'section--hidden'}`}>
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">Secret Piggy Game</p>
-            <h2>Vault 123</h2>
-          </div>
-          <p className="section-copy">
-            Your real-life Piggy Bank unlocked a hidden vault. Pick the safe tile to win game cash.
-          </p>
-        </div>
+        <div className="vault-portal">
+          <aside className="vault-rail" aria-label="Game categories">
+            {['⌂', '★', '⚡', '◆', '●', '⚙'].map((icon) => (
+              <button key={icon} type="button">{icon}</button>
+            ))}
+          </aside>
 
-        <div className="secret-game-layout">
-          <article className="secret-game-panel">
-            <p className="eyebrow">Vault status</p>
-            <strong>{secretGameMessage}</strong>
-            <span>Wins: {secretGameScore}</span>
-            <span>Reward per safe tile: $123 game cash</span>
-            <button className="ghost-button" type="button" onClick={() => setActiveSection('piggy-bank')}>
-              Back to Piggy Bank
-            </button>
-          </article>
+          <div className="vault-main">
+            <div className="vault-topbar">
+              <div className="vault-brand">
+                <span>V</span>
+                <strong>vault games</strong>
+              </div>
+              <label className="vault-search">
+                <span>Search games and categories</span>
+                <input aria-label="Search games and categories" readOnly value="" />
+              </label>
+              <div className="vault-actions">
+                <span>${wallet.toLocaleString()}</span>
+                <button type="button" onClick={() => setActiveSection('piggy-bank')}>Piggy</button>
+              </div>
+            </div>
 
-          <article className="secret-game-board-card">
-            <div className="secret-game-board" aria-label="Secret vault tile game">
-              {Array.from({ length: 9 }, (_, tileIndex) => (
+            <div className="vault-hero-strip">
+              {[
+                { id: 'snake', label: 'Snake', tag: 'Free arcade', art: 'snake' },
+                { id: 'breaker', label: 'Block Breaker', tag: 'Free classic', art: 'breaker' },
+                { id: 'tiles', label: 'Safe Tiles', tag: 'Free vault', art: 'tiles' },
+              ].map((game) => (
                 <button
-                  className="secret-tile"
-                  key={tileIndex}
+                  className={`vault-wide-card vault-card-art--${game.art}`}
+                  key={game.id}
                   type="button"
-                  onClick={() => playSecretGameTile(tileIndex)}
-                  aria-label={`Vault tile ${tileIndex + 1}`}
+                  onClick={() => {
+                    setActiveVaultGame(game.id as VaultGameId);
+                    setSecretGameMessage(`${game.label} selected. Free to play.`);
+                  }}
                 >
-                  ?
+                  <span>{game.tag}</span>
+                  <strong>{game.label}</strong>
                 </button>
               ))}
             </div>
-          </article>
+
+            <div className="vault-section-title">
+              <h2>New games</h2>
+              <span>Wins: {secretGameScore}</span>
+            </div>
+
+            <div className="vault-card-row">
+              {[
+                { id: 'snake', label: 'Snake', reward: 'Free', art: 'snake' },
+                { id: 'breaker', label: 'Block Breaker', reward: 'Free', art: 'breaker' },
+                { id: 'tiles', label: 'Safe Tiles', reward: 'Free', art: 'tiles' },
+                { id: 'code', label: 'Code Breaker', reward: 'Free', art: 'code' },
+                { id: 'market', label: 'Market Guess', reward: 'Free', art: 'market' },
+              ].map((game) => (
+                <button
+                  className={`vault-game-card vault-card-art--${game.art} ${
+                    activeVaultGame === game.id ? 'vault-game-card--active' : ''
+                  }`}
+                  key={game.id}
+                  type="button"
+                  onClick={() => {
+                    setActiveVaultGame(game.id as VaultGameId);
+                    setSecretGameMessage(`${game.label} selected. Free to play.`);
+                  }}
+                >
+                  <span>{game.reward}</span>
+                  <strong>{game.label}</strong>
+                </button>
+              ))}
+            </div>
+
+            <div className="vault-section-title">
+              <h2>Play now</h2>
+              <span>{secretGameMessage}</span>
+            </div>
+
+            <article className="secret-game-board-card">
+            {activeVaultGame === 'tiles' ? (
+              <>
+                <p className="eyebrow">Safe Tiles</p>
+                <div className="secret-game-board" aria-label="Secret vault tile game">
+                  {Array.from({ length: 9 }, (_, tileIndex) => (
+                    <button
+                      className="secret-tile"
+                      key={tileIndex}
+                      type="button"
+                      onClick={() => playSecretGameTile(tileIndex)}
+                      aria-label={`Vault tile ${tileIndex + 1}`}
+                    >
+                      ?
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : activeVaultGame === 'snake' ? (
+              <div className="vault-snake-game">
+                <p className="eyebrow">Snake</p>
+                <strong>Score: {snakeScore}</strong>
+                <div className="vault-snake-board" aria-label="Snake game board">
+                  {Array.from({ length: snakeBoardSize * snakeBoardSize }, (_, cellIndex) => {
+                    const cell = {
+                      x: cellIndex % snakeBoardSize,
+                      y: Math.floor(cellIndex / snakeBoardSize),
+                    };
+                    const isSnake = snake.some((snakeCell) => snakeCell.x === cell.x && snakeCell.y === cell.y);
+                    const isHead = snake[0]?.x === cell.x && snake[0]?.y === cell.y;
+                    const isFood = snakeFood.x === cell.x && snakeFood.y === cell.y;
+
+                    return (
+                      <span
+                        className={`vault-snake-cell ${isSnake ? 'vault-snake-cell--body' : ''} ${
+                          isHead ? 'vault-snake-cell--head' : ''
+                        } ${isFood ? 'vault-snake-cell--food' : ''}`}
+                        key={`${cell.x}-${cell.y}`}
+                      />
+                    );
+                  })}
+                </div>
+                <div className="vault-direction-pad" aria-label="Snake controls">
+                  <button type="button" onClick={() => changeSnakeDirection({ x: 0, y: -1 })}>
+                    Up
+                  </button>
+                  <button type="button" onClick={() => changeSnakeDirection({ x: -1, y: 0 })}>
+                    Left
+                  </button>
+                  <button type="button" onClick={() => changeSnakeDirection({ x: 1, y: 0 })}>
+                    Right
+                  </button>
+                  <button type="button" onClick={() => changeSnakeDirection({ x: 0, y: 1 })}>
+                    Down
+                  </button>
+                </div>
+                <button type="button" onClick={resetSnakeGame}>
+                  {snakeRunning ? 'Restart Snake' : 'Start Snake'}
+                </button>
+              </div>
+            ) : activeVaultGame === 'breaker' ? (
+              <div className="vault-breaker-game">
+                <p className="eyebrow">Block Breaker</p>
+                <strong>Blocks: {breakerScore}</strong>
+                <div className="vault-breaker-board" aria-label="Block Breaker game board">
+                  {breakerBricks.map((brick) => {
+                    const column = brick % 6;
+                    const row = Math.floor(brick / 6);
+
+                    return (
+                      <span
+                        className="vault-breaker-brick"
+                        key={brick}
+                        style={{
+                          left: `${5 + column * 15}%`,
+                          top: `${10 + row * 10}%`,
+                        }}
+                      />
+                    );
+                  })}
+                  <span
+                    className="vault-breaker-ball"
+                    style={{ left: `${breakerBall.x}%`, top: `${breakerBall.y}%` }}
+                  />
+                  <span className="vault-breaker-paddle" style={{ left: `${breakerPaddle}%` }} />
+                </div>
+                <div className="vault-market-actions">
+                  <button type="button" onClick={() => moveBreakerPaddle(-8)}>
+                    Left
+                  </button>
+                  <button type="button" onClick={() => moveBreakerPaddle(8)}>
+                    Right
+                  </button>
+                </div>
+                <button type="button" onClick={resetBreakerGame}>
+                  {breakerRunning ? 'Restart Block Breaker' : 'Start Block Breaker'}
+                </button>
+              </div>
+            ) : activeVaultGame === 'code' ? (
+              <div className="vault-code-game">
+                <p className="eyebrow">Code Breaker</p>
+                <strong>Find the vault code</strong>
+                <div className="vault-code-options">
+                  {['123', '231', '312'].map((code) => (
+                    <button key={code} type="button" onClick={() => playVaultCode(code)}>
+                      {code}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="vault-market-game">
+                <p className="eyebrow">Market Guess</p>
+                <strong>Will the mini market go up or down?</strong>
+                <div className="vault-market-chart" aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <div className="vault-market-actions">
+                  <button type="button" onClick={() => playMarketGuess('up')}>
+                    Up
+                  </button>
+                  <button type="button" onClick={() => playMarketGuess('down')}>
+                    Down
+                  </button>
+                </div>
+              </div>
+            )}
+            </article>
+          </div>
         </div>
       </section>
 
@@ -3463,9 +4339,7 @@ function App() {
         <div className="help-layout">
           <article className="help-panel">
             <div
-              className={`verity-card ${aiBusy ? 'verity-card--thinking' : ''} ${
-                pushyWave ? `verity-card--wave-${pushyWave}` : ''
-              }`}
+              className={`verity-card ${aiBusy ? 'verity-card--thinking' : ''}`}
               aria-label="Pushy AI helper"
             >
               <div className="verity-world">
@@ -3475,8 +4349,22 @@ function App() {
                 <span className="pushy-thruster pushy-thruster--right" aria-hidden="true" />
                 <span className="pushy-landing-burst" aria-hidden="true" />
                 <span className="pushy-sparks" aria-hidden="true" />
-                <img src="/assets/verity-robot-front.png" alt="Pushy robot helper" />
+                <img className="pushy-robot" src="/assets/verity-robot-front.png" alt="Pushy robot helper" />
               </div>
+              {aiError ? (
+                <p className="help-error">{aiError}</p>
+              ) : aiAnswer ? (
+                <div className="verity-answer-bubble">
+                  <p>
+                    <span aria-hidden="true">&gt;&gt; </span>
+                    {displayedAiAnswer || aiAnswer}
+                  </p>
+                </div>
+              ) : (
+                <div className="verity-answer-bubble verity-answer-bubble--empty">
+                  <p>Pushy answers will show up here.</p>
+                </div>
+              )}
             </div>
             <p className="eyebrow">Question</p>
             <form className="help-form" onSubmit={askVerityForHelp}>
@@ -3504,24 +4392,6 @@ function App() {
                 </button>
               ))}
             </div>
-          </article>
-
-          <article className="help-answer">
-            <p className="eyebrow">Answer</p>
-            {aiError ? (
-              <p className="help-error">{aiError}</p>
-            ) : aiAnswer ? (
-              <div className="verity-answer-bubble">
-                <p>
-                  <span aria-hidden="true">&gt;&gt; </span>
-                  {displayedAiAnswer || aiAnswer}
-                </p>
-              </div>
-            ) : (
-              <div className="verity-answer-bubble verity-answer-bubble--empty">
-                <p>Pushy answers will show up here.</p>
-              </div>
-            )}
           </article>
         </div>
       </section>
@@ -3633,6 +4503,8 @@ function App() {
           {cursorSettings}
           {languageSettings}
           {currencySettings}
+          {lessonDifficultySettings}
+          {chartSettings}
           {musicSettings}
         </div>
       </section>

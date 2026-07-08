@@ -324,12 +324,15 @@ main {
   padding: 64px 0 34px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 440px);
-  align-items: center;
+  align-items: stretch;
   gap: 42px;
 }
 
 .hero__copy {
   animation: float-in 520ms ease both;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   max-width: 650px;
   position: relative;
 }
@@ -343,6 +346,26 @@ main {
   position: absolute;
   top: 8%;
   width: 6px;
+}
+
+.hero-actions {
+  align-items: stretch;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(230px, 1.4fr) repeat(3, minmax(118px, 0.8fr));
+  margin-top: auto;
+  padding-top: 28px;
+}
+
+.hero-actions button:first-child {
+  min-width: 0;
+}
+
+.hero-actions button {
+  min-width: 112px;
+  min-height: 58px;
+  padding: 14px 18px;
+  width: 100%;
 }
 
 .eyebrow {
@@ -514,6 +537,18 @@ h3 {
   transform-origin: bottom;
 }
 
+.area-line--up {
+  fill: rgba(37, 217, 133, 0.22);
+}
+
+.area-line--down {
+  fill: rgba(185, 70, 70, 0.22);
+}
+
+.area-line--neutral {
+  fill: rgba(255, 255, 255, 0.08);
+}
+
 .stock-line {
   animation: draw-line 1150ms 220ms ease both;
   stroke-dasharray: 430;
@@ -523,6 +558,36 @@ h3 {
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 7;
+}
+
+.stock-line--up {
+  stroke: #25d985;
+}
+
+.stock-line--down {
+  stroke: #ff5b5b;
+}
+
+.trade-candle line {
+  stroke-linecap: round;
+  stroke-width: 4;
+}
+
+.trade-candle rect {
+  stroke: rgba(255, 255, 255, 0.78);
+  stroke-width: 1;
+}
+
+.trade-candle--up line,
+.trade-candle--up rect {
+  fill: #25d985;
+  stroke: #25d985;
+}
+
+.trade-candle--down line,
+.trade-candle--down rect {
+  fill: #ff5b5b;
+  stroke: #ff5b5b;
 }
 
 .line-chart circle {
@@ -740,7 +805,9 @@ h3 {
   padding: 12px;
 }
 
-.language-settings {
+.language-settings,
+.lesson-difficulty-settings,
+.chart-settings {
   animation: float-in 580ms ease both;
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--paper) 80%, var(--scene-d)), rgba(255, 255, 255, 0.88));
@@ -762,7 +829,9 @@ h3 {
 .music-settings label,
 .cursor-settings span,
 .currency-settings span,
-.language-settings span {
+.language-settings span,
+.lesson-difficulty-settings span,
+.chart-settings span {
   color: var(--muted);
   font-size: 0.82rem;
   font-weight: 850;
@@ -771,7 +840,9 @@ h3 {
 .music-settings strong,
 .cursor-settings strong,
 .currency-settings strong,
-.language-settings strong {
+.language-settings strong,
+.lesson-difficulty-settings strong,
+.chart-settings strong {
   color: var(--accent-strong);
   font-size: 0.95rem;
   overflow: hidden;
@@ -781,7 +852,9 @@ h3 {
 
 .cursor-settings > div:first-child,
 .currency-settings > div:first-child,
-.language-settings > div:first-child {
+.language-settings > div:first-child,
+.lesson-difficulty-settings > div:first-child,
+.chart-settings > div:first-child {
   display: grid;
   gap: 2px;
 }
@@ -815,7 +888,9 @@ h3 {
 .cursor-design-list,
 .cursor-color-list,
 .currency-list,
-.language-list {
+.language-list,
+.difficulty-choice-list,
+.chart-mode-list {
   display: grid;
   gap: 8px;
 }
@@ -829,7 +904,9 @@ h3 {
 }
 
 .currency-list,
-.language-list {
+.language-list,
+.difficulty-choice-list,
+.chart-mode-list {
   grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
 }
 
@@ -845,7 +922,9 @@ h3 {
 .cursor-design,
 .cursor-color,
 .currency-option,
-.language-option {
+.language-option,
+.difficulty-choice,
+.chart-mode-option {
   background: rgba(255, 255, 255, 0.68);
   border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
   color: var(--accent-strong);
@@ -858,14 +937,17 @@ h3 {
 }
 
 .currency-option,
-.language-option {
+.language-option,
+.difficulty-choice,
+.chart-mode-option {
   align-content: center;
   min-height: 54px;
   text-align: center;
 }
 
 .currency-option span,
-.language-option span {
+.language-option span,
+.difficulty-choice span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -937,7 +1019,11 @@ h3 {
 .currency-option:hover,
 .currency-option--active,
 .language-option:hover,
-.language-option--active {
+.language-option--active,
+.difficulty-choice:hover,
+.difficulty-choice--active,
+.chart-mode-option:hover,
+.chart-mode-option--active {
   background: color-mix(in srgb, var(--accent-soft) 82%, #ffffff);
   color: var(--accent-strong);
 }
@@ -1072,10 +1158,10 @@ h3 {
   color: var(--ink);
   display: grid;
   gap: 8px;
-  height: 104px;
+  min-height: 190px;
   justify-items: center;
   padding: 12px;
-  width: 112px;
+  width: 156px;
   transition: transform 160ms ease, box-shadow 160ms ease;
 }
 
@@ -1124,10 +1210,318 @@ h3 {
 }
 
 .path-step strong {
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   line-height: 1.1;
-  min-height: 28px;
+  min-height: 0;
   text-align: center;
+}
+
+.path-step small,
+.lesson-place-label {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 0;
+  text-align: center;
+}
+
+.lesson-difficulty {
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 950;
+  justify-content: center;
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 0;
+  padding: 8px 10px;
+  text-transform: uppercase;
+}
+
+.lesson-difficulty--easy {
+  background: #dff4d7;
+  color: #1f7a4f;
+}
+
+.lesson-difficulty--medium {
+  background: #fff7dc;
+  color: #8a5a00;
+}
+
+.lesson-difficulty--hard {
+  background: #f4dddd;
+  color: #b94646;
+}
+
+.difficulty-greeting {
+  align-items: center;
+  animation: float-in 520ms ease both;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(232, 246, 255, 0.9)),
+    radial-gradient(circle at 12% 20%, rgba(44, 185, 125, 0.18), transparent 28%);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(260px, 1.2fr);
+  margin: 18px 0;
+  padding: 16px;
+}
+
+.difficulty-greeting h3 {
+  color: var(--ink);
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.difficulty-greeting p {
+  margin: 0;
+}
+
+.lesson-place-art {
+  aspect-ratio: 16 / 10;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.54) 0 38%, transparent 39%),
+    linear-gradient(135deg, var(--scene-d), var(--accent-soft));
+  border: 2px solid rgba(23, 33, 27, 0.16);
+  border-radius: 8px;
+  box-shadow: inset 0 -18px 0 rgba(23, 33, 27, 0.08);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.lesson-place-art {
+  --shadow-detail: rgba(23, 33, 27, 0.16);
+}
+
+.lesson-place-art::before,
+.lesson-place-art::after {
+  content: "";
+  position: absolute;
+}
+
+.lesson-place-art--village {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.08)),
+    url("/assets/lesson-places/village-planet.png") center / cover;
+}
+
+.lesson-place-art--village::before {
+  display: none;
+}
+
+.lesson-place-art--village::after {
+  display: none;
+}
+
+.lesson-place-art--bazaar {
+  background:
+    repeating-linear-gradient(90deg, #ff5b5b 0 14px, #fff7dc 14px 28px, #62a8ff 28px 42px, #fff7dc 42px 56px),
+    linear-gradient(180deg, #dff7ff 0 46%, #ffe3d5 46% 74%, #c6532f 74% 100%);
+}
+
+.lesson-place-art--bazaar::before {
+  background:
+    linear-gradient(180deg, #ffffff 0 28%, #25d985 28% 100%);
+  border: 2px solid rgba(23, 33, 27, 0.18);
+  border-radius: 999px;
+  bottom: 23%;
+  box-shadow:
+    30px -6px 0 -1px #ffd166,
+    60px 1px 0 -1px #ff5b5b,
+    92px -7px 0 -1px #25d985,
+    126px 0 0 -1px #62a8ff;
+  height: 22px;
+  left: 13%;
+  width: 22px;
+}
+
+.lesson-place-art--bazaar::after {
+  background:
+    linear-gradient(180deg, #8a5a35 0 16%, transparent 16%),
+    linear-gradient(90deg, transparent 0 18%, #8a5a35 18% 22%, transparent 22% 48%, #8a5a35 48% 52%, transparent 52% 78%, #8a5a35 78% 82%, transparent 82%);
+  bottom: 23%;
+  height: 58px;
+  left: 18%;
+  width: 70%;
+}
+
+.lesson-place-art--city {
+  background:
+    radial-gradient(circle at 82% 16%, #ffffff 0 8%, transparent 9%),
+    linear-gradient(180deg, #d8e8ff 0 44%, #eef7f0 44% 74%, #404a57 74% 100%);
+}
+
+.lesson-place-art--city::before {
+  background:
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0 4px, transparent 4px 12px),
+    #275f8f;
+  bottom: 18%;
+  box-shadow:
+    28px -18px 0 #1f7a4f,
+    56px -4px 0 #d6a638,
+    84px -26px 0 #7b2ff2,
+    112px -10px 0 #087c8f;
+  height: 70px;
+  left: 10%;
+  width: 24px;
+}
+
+.lesson-place-art--city::after {
+  background:
+    linear-gradient(90deg, transparent 0 44%, #ffd166 44% 56%, transparent 56%),
+    repeating-linear-gradient(90deg, transparent 0 18px, rgba(255, 255, 255, 0.28) 18px 20px);
+  bottom: 0;
+  height: 28%;
+  left: 0;
+  width: 100%;
+}
+
+.lesson-place-art--harbor {
+  background:
+    radial-gradient(circle at 18% 20%, #fff7dc 0 8%, transparent 9%),
+    linear-gradient(180deg, #dff7ff 0 44%, #62a8ff 44% 100%),
+    repeating-linear-gradient(0deg, transparent 0 13px, rgba(255, 255, 255, 0.24) 13px 15px);
+}
+
+.lesson-place-art--harbor::before {
+  background:
+    linear-gradient(90deg, transparent 0 48%, #8a5a35 48% 52%, transparent 52%),
+    linear-gradient(135deg, transparent 0 48%, #ffffff 49% 76%, transparent 77%),
+    linear-gradient(45deg, transparent 0 44%, #ffffff 45% 72%, transparent 73%);
+  clip-path: polygon(0 64%, 78% 64%, 100% 100%, 12% 100%);
+  height: 64px;
+  left: 20%;
+  top: 35%;
+  width: 96px;
+}
+
+.lesson-place-art--harbor::after {
+  background:
+    repeating-linear-gradient(90deg, #8a5a35 0 8px, transparent 8px 20px);
+  bottom: 27%;
+  height: 12px;
+  left: 4%;
+  width: 92%;
+}
+
+.lesson-place-art--forest {
+  background:
+    radial-gradient(circle at 74% 16%, #fff7dc 0 7%, transparent 8%),
+    linear-gradient(180deg, #dff7ff 0 38%, #dff1d9 38% 66%, #2f7d32 66% 100%);
+}
+
+.lesson-place-art--forest::before {
+  background: #1f7a4f;
+  bottom: 20%;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  filter: drop-shadow(32px 10px 0 #2f7d32) drop-shadow(64px -4px 0 #1f7a4f) drop-shadow(96px 12px 0 #2f7d32);
+  height: 86px;
+  left: 8%;
+  width: 54px;
+}
+
+.lesson-place-art--forest::after {
+  background:
+    linear-gradient(90deg, transparent 0 45%, #8a5a35 45% 56%, transparent 56%),
+    linear-gradient(180deg, transparent 0 58%, #9bd78b 58% 100%);
+  bottom: 0;
+  height: 54%;
+  left: 0;
+  width: 100%;
+}
+
+.lesson-place-art--mountain {
+  background:
+    radial-gradient(circle at 18% 18%, #ffffff 0 7%, transparent 8%),
+    linear-gradient(180deg, #d8e8ff 0 42%, #fff7dc 42% 100%);
+}
+
+.lesson-place-art--mountain::before {
+  background: linear-gradient(135deg, #ffffff 0 18%, #8ba3b1 19% 100%);
+  bottom: 16%;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  filter: drop-shadow(60px 18px 0 #6f8f99);
+  height: 96px;
+  left: 8%;
+  width: 112px;
+}
+
+.lesson-place-art--mountain::after {
+  background:
+    linear-gradient(90deg, transparent 0 46%, #1f7a4f 46% 55%, transparent 55%),
+    linear-gradient(180deg, #ffffff 0 22%, #d6a638 22% 100%);
+  border: 2px solid rgba(23, 33, 27, 0.16);
+  bottom: 18%;
+  height: 34px;
+  right: 14%;
+  width: 46px;
+}
+
+.lesson-place-art--tech {
+  background:
+    radial-gradient(circle at 82% 22%, rgba(106, 242, 255, 0.45), transparent 18%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.18) 0 2px, transparent 2px 26px),
+    repeating-linear-gradient(0deg, rgba(255, 79, 216, 0.16) 0 2px, transparent 2px 24px),
+    linear-gradient(135deg, #261247, #122b4d);
+}
+
+.lesson-place-art--tech::before {
+  background:
+    linear-gradient(180deg, #6af2ff 0 18%, #ffffff 18% 22%, #6af2ff 22% 100%);
+  border-radius: 12px;
+  box-shadow:
+    40px 18px 0 #ff4fd8,
+    80px -4px 0 #ffd166,
+    118px 14px 0 #25d985;
+  height: 30px;
+  left: 12%;
+  top: 36%;
+  width: 30px;
+}
+
+.lesson-place-art--tech::after {
+  background:
+    linear-gradient(90deg, transparent 0 47%, #6af2ff 47% 53%, transparent 53%),
+    linear-gradient(180deg, transparent 0 46%, #6af2ff 46% 54%, transparent 54%);
+  border: 2px solid #6af2ff;
+  border-radius: 999px;
+  height: 62px;
+  right: 10%;
+  top: 20%;
+  width: 62px;
+}
+
+.lesson-place-art--space {
+  background:
+    radial-gradient(circle at 24% 24%, #ffffff 0 2px, transparent 3px),
+    radial-gradient(circle at 72% 18%, #ffffff 0 2px, transparent 3px),
+    radial-gradient(circle at 82% 70%, #ffd166 0 4px, transparent 5px),
+    radial-gradient(circle at 16% 72%, #6af2ff 0 3px, transparent 4px),
+    linear-gradient(135deg, #111220, #4657c7);
+}
+
+.lesson-place-art--space::before {
+  background:
+    linear-gradient(180deg, #ffffff 0 58%, #ff5b5b 58% 100%);
+  clip-path: polygon(50% 0, 68% 38%, 100% 52%, 68% 64%, 50% 100%, 32% 64%, 0 52%, 32% 38%);
+  height: 72px;
+  left: 36%;
+  top: 28%;
+  width: 48px;
+}
+
+.lesson-place-art--space::after {
+  background: radial-gradient(circle, rgba(255, 209, 102, 0.96) 0 18%, rgba(255, 91, 91, 0.74) 19% 42%, transparent 44%);
+  bottom: 12%;
+  height: 58px;
+  left: 34%;
+  width: 58px;
 }
 
 .course-panel {
@@ -1443,6 +1837,26 @@ h3 {
   transition: transform 160ms ease, box-shadow 160ms ease;
 }
 
+.lesson-card .lesson-place-art {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  box-shadow:
+    inset -14px -18px 28px rgba(4, 11, 24, 0.18),
+    0 14px 28px rgba(24, 55, 42, 0.14);
+  margin: 0 auto 12px;
+  max-width: 190px;
+}
+
+.lesson-card .lesson-place-label {
+  color: var(--accent-strong);
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.lesson-card .lesson-difficulty {
+  margin: 0 0 10px;
+}
+
 .lesson-card:hover,
 .company-card:hover,
 .scenario:hover,
@@ -1575,7 +1989,7 @@ h3 {
 .company-grid {
   display: grid;
   gap: 14px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .achievement-grid {
@@ -1591,7 +2005,9 @@ h3 {
   border: 1px solid var(--line);
   border-radius: 8px;
   box-shadow: 0 8px 0 color-mix(in srgb, var(--accent) 9%, transparent), 0 16px 28px rgba(24, 55, 42, 0.08);
-  min-height: 170px;
+  display: grid;
+  gap: 12px;
+  min-height: 0;
   padding: 18px;
   transition: transform 160ms ease, box-shadow 160ms ease;
 }
@@ -1716,12 +2132,11 @@ h3 {
     linear-gradient(160deg, #ffffff 0, color-mix(in srgb, var(--scene-d) 54%, #ffffff) 100%);
 }
 
-.company-card > div {
+.company-card__top {
   align-items: center;
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 18px;
 }
 
 .company-symbol {
@@ -1733,14 +2148,85 @@ h3 {
   padding: 8px 10px;
 }
 
+.company-exchange {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
+  border-radius: 999px;
+  color: var(--accent-strong);
+  font-size: 0.78rem;
+  font-weight: 900;
+  padding: 7px 10px;
+}
+
 .company-card h3 {
   font-size: 1.45rem;
-  margin-bottom: 8px;
+  margin: 0;
 }
 
 .company-card p {
   color: var(--muted);
-  margin-bottom: 0;
+  margin: 0;
+}
+
+.company-known {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.company-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.company-meta span {
+  background: color-mix(in srgb, var(--accent-soft) 72%, #ffffff);
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--line));
+  border-radius: 999px;
+  color: var(--accent-strong);
+  font-size: 0.76rem;
+  font-weight: 900;
+  padding: 6px 9px;
+}
+
+.company-study {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid color-mix(in srgb, var(--blue) 20%, var(--line));
+  border-radius: 8px;
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+}
+
+.company-study strong,
+.company-details strong {
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.company-study span {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.company-details {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.company-details span {
+  background: rgba(255, 255, 255, 0.56);
+  border: 1px solid color-mix(in srgb, var(--accent) 13%, var(--line));
+  border-radius: 8px;
+  color: var(--muted);
+  display: grid;
+  font-size: 0.82rem;
+  font-weight: 780;
+  gap: 5px;
+  padding: 10px;
 }
 
 .move-up {
@@ -2534,7 +3020,8 @@ h3 {
 .help-layout {
   display: grid;
   gap: 18px;
-  grid-template-columns: minmax(300px, 0.95fr) minmax(320px, 1.05fr);
+  grid-template-columns: minmax(300px, 760px);
+  justify-content: center;
 }
 
 .help-panel,
@@ -2734,7 +3221,7 @@ h3 {
   transform: rotate(42deg);
 }
 
-.help-page.section--active .verity-world img {
+.help-page.section--active .pushy-robot {
   animation: pushy-idle-hover 2600ms ease-in-out infinite;
 }
 
@@ -2776,7 +3263,7 @@ h3 {
     0 0 26px color-mix(in srgb, var(--gold) 36%, transparent);
 }
 
-.help-page.section--active .verity-card--thinking .verity-world img {
+.help-page.section--active .verity-card--thinking .pushy-robot {
   animation: pushy-thinking 780ms ease-in-out infinite;
 }
 
@@ -2786,11 +3273,6 @@ h3 {
 
 .help-page.section--active .verity-card--thinking .verity-world::after {
   animation: pushy-shadow-thinking 780ms ease-in-out infinite;
-}
-
-.help-page.section--active .verity-card--wave-hello .verity-world img,
-.help-page.section--active .verity-card--wave-bye .verity-world img {
-  animation: pushy-friendly-wave 900ms ease-in-out both;
 }
 
 @keyframes pushy-iron-entry {
@@ -3030,29 +3512,6 @@ h3 {
   }
 }
 
-@keyframes pushy-friendly-wave {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg) scale(1);
-  }
-
-  18% {
-    transform: translateY(-5px) rotate(5deg) scale(1.01);
-  }
-
-  36% {
-    transform: translateY(-5px) rotate(-5deg) scale(1.01);
-  }
-
-  54% {
-    transform: translateY(-5px) rotate(4deg) scale(1.01);
-  }
-
-  72% {
-    transform: translateY(-3px) rotate(-3deg) scale(1.004);
-  }
-}
-
 @keyframes pushy-shadow-thinking {
   0%,
   100% {
@@ -3184,7 +3643,7 @@ h3 {
   border-radius: 16px;
   display: grid;
   gap: 12px;
-  min-height: 128px;
+  min-height: 96px;
 }
 
 .verity-answer-bubble::after {
@@ -3203,6 +3662,17 @@ h3 {
 
 .verity-answer-bubble p span {
   color: var(--accent-strong);
+}
+
+.verity-card .verity-answer-bubble,
+.verity-card .help-error {
+  margin-top: -4px;
+  z-index: 2;
+}
+
+.verity-card .verity-answer-bubble::after {
+  left: 50%;
+  transform: translateX(-50%) rotate(225deg);
 }
 
 .verity-voice-button {
@@ -3424,9 +3894,47 @@ h3 {
   font-weight: 900;
 }
 
-.secret-game-board-card {
+.vault-game-tabs {
   display: grid;
+  gap: 10px;
+}
+
+.vault-game-tab {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  min-height: 52px;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.vault-game-tab span {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  color: #ffffff;
+  padding: 5px 8px;
+}
+
+.vault-game-tab--active {
+  background: color-mix(in srgb, var(--gold) 72%, #ffffff);
+  border-color: #ffffff;
+  color: var(--ink);
+}
+
+.vault-game-tab--active span {
+  background: rgba(23, 33, 27, 0.12);
+  color: var(--ink);
+}
+
+.secret-game-board-card {
+  align-content: center;
+  display: grid;
+  gap: 16px;
   place-items: center;
+  text-align: center;
 }
 
 .secret-game-board {
@@ -3452,6 +3960,441 @@ h3 {
 
 .secret-tile:hover {
   transform: translateY(-2px);
+}
+
+.vault-code-game,
+.vault-market-game,
+.vault-snake-game,
+.vault-breaker-game {
+  display: grid;
+  gap: 16px;
+  max-width: 460px;
+  width: min(100%, 460px);
+}
+
+.vault-code-game strong,
+.vault-market-game strong,
+.vault-snake-game strong,
+.vault-breaker-game strong {
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  line-height: 1.05;
+}
+
+.vault-code-options,
+.vault-market-actions {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.vault-code-options button,
+.vault-market-actions button {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--gold) 78%, #ffffff), color-mix(in srgb, var(--accent) 72%, #ffffff));
+  border: 2px solid rgba(255, 255, 255, 0.78);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 4vw, 2rem);
+  min-height: 72px;
+}
+
+.vault-market-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.vault-market-chart {
+  align-items: end;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px) 0 0 / 100% 25%,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(37, 217, 133, 0.16));
+  border: 2px solid rgba(255, 255, 255, 0.42);
+  border-radius: 8px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  min-height: 190px;
+  padding: 18px;
+}
+
+.vault-market-chart span {
+  background: linear-gradient(180deg, var(--gold), var(--accent));
+  border-radius: 999px 999px 4px 4px;
+  min-height: 54px;
+}
+
+.vault-market-chart span:nth-child(1) {
+  height: 42%;
+}
+
+.vault-market-chart span:nth-child(2) {
+  height: 72%;
+}
+
+.vault-market-chart span:nth-child(3) {
+  height: 54%;
+}
+
+.vault-market-chart span:nth-child(4) {
+  height: 86%;
+}
+
+.vault-snake-board {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px) 0 0 / 10% 10%,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px) 0 0 / 10% 10%,
+    #081612;
+  border: 2px solid rgba(255, 255, 255, 0.46);
+  border-radius: 8px;
+  display: grid;
+  gap: 3px;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  padding: 8px;
+}
+
+.vault-snake-cell {
+  aspect-ratio: 1;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+}
+
+.vault-snake-cell--body {
+  background: linear-gradient(135deg, var(--accent), #7dffc4);
+  box-shadow: 0 0 12px rgba(125, 255, 196, 0.36);
+}
+
+.vault-snake-cell--head {
+  background: linear-gradient(135deg, var(--gold), #ffffff);
+}
+
+.vault-snake-cell--food {
+  background: linear-gradient(135deg, #ffd166, #ffffff);
+  border-radius: 999px;
+}
+
+.vault-direction-pad {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.vault-direction-pad button,
+.vault-snake-game > button,
+.vault-breaker-game > button {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  min-height: 44px;
+}
+
+.vault-breaker-board {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px) 0 0 / 100% 20%,
+    linear-gradient(135deg, #081612, #102d26);
+  border: 2px solid rgba(255, 255, 255, 0.46);
+  border-radius: 8px;
+  min-height: 300px;
+  overflow: hidden;
+  position: relative;
+}
+
+.vault-breaker-brick,
+.vault-breaker-ball,
+.vault-breaker-paddle {
+  position: absolute;
+}
+
+.vault-breaker-brick {
+  background: linear-gradient(135deg, var(--gold), #ffffff);
+  border: 1px solid rgba(23, 33, 27, 0.22);
+  border-radius: 4px;
+  height: 6%;
+  width: 11%;
+}
+
+.vault-breaker-ball {
+  background: #ffffff;
+  border: 2px solid var(--gold);
+  border-radius: 999px;
+  box-shadow: 0 0 16px rgba(255, 209, 102, 0.62);
+  height: 18px;
+  transform: translate(-50%, -50%);
+  width: 18px;
+}
+
+.vault-breaker-paddle {
+  background: linear-gradient(135deg, var(--accent), #7dffc4);
+  border-radius: 999px;
+  bottom: 7%;
+  height: 14px;
+  width: 16%;
+}
+
+.secret-game-page {
+  background: #080912;
+  border-color: #1c1d2d;
+  color: #ffffff;
+  overflow: hidden;
+  padding: 0;
+}
+
+.vault-portal {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(112, 70, 255, 0.26), transparent 32%),
+    radial-gradient(circle at 88% 12%, rgba(37, 217, 133, 0.14), transparent 28%),
+    #080912;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  min-height: 780px;
+}
+
+.vault-rail {
+  align-content: start;
+  background: #111220;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: grid;
+  gap: 12px;
+  padding: 88px 10px 18px;
+}
+
+.vault-rail button {
+  align-items: center;
+  aspect-ratio: 1;
+  background: transparent;
+  border: 0;
+  border-radius: 12px;
+  color: #9fa2ff;
+  display: grid;
+  font-size: 1.15rem;
+  min-height: 42px;
+  padding: 0;
+  place-items: center;
+}
+
+.vault-rail button:first-child,
+.vault-rail button:hover {
+  background: rgba(127, 94, 255, 0.18);
+  color: #ffffff;
+}
+
+.vault-main {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+  padding: 18px 22px 28px;
+}
+
+.vault-topbar {
+  align-items: center;
+  background: #181929;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: grid;
+  gap: 16px;
+  grid-template-columns: auto minmax(260px, 520px) auto;
+  margin: -18px -22px 0;
+  min-height: 74px;
+  padding: 12px 22px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.vault-brand {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.vault-brand span {
+  align-items: center;
+  background: linear-gradient(135deg, #7b61ff, #44e3ff);
+  border-radius: 12px;
+  color: #ffffff;
+  display: grid;
+  font-family: var(--font-display);
+  height: 42px;
+  place-items: center;
+  width: 42px;
+}
+
+.vault-brand strong {
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  line-height: 0.95;
+  max-width: 88px;
+}
+
+.vault-search {
+  background: #34364f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  color: #cfd0df;
+  display: grid;
+  min-height: 48px;
+  padding: 0 18px;
+  place-items: center start;
+}
+
+.vault-search span {
+  font-weight: 850;
+}
+
+.vault-search input {
+  display: none;
+}
+
+.vault-actions {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+}
+
+.vault-actions span {
+  background: #27283b;
+  border-radius: 999px;
+  color: #ffffff;
+  font-weight: 950;
+  padding: 11px 14px;
+}
+
+.vault-actions button {
+  background: #6f43ff;
+  color: #ffffff;
+  min-height: 44px;
+  padding-inline: 18px;
+}
+
+.vault-hero-strip,
+.vault-card-row {
+  display: grid;
+  gap: 12px;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 1fr);
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.vault-wide-card,
+.vault-game-card {
+  align-content: end;
+  background: #202236;
+  border: 0;
+  border-radius: 10px;
+  color: #ffffff;
+  display: grid;
+  justify-items: start;
+  min-width: 0;
+  overflow: hidden;
+  padding: 14px;
+  position: relative;
+  text-align: left;
+}
+
+.vault-wide-card {
+  min-height: 116px;
+}
+
+.vault-game-card {
+  aspect-ratio: 4 / 3;
+  min-height: 168px;
+}
+
+.vault-wide-card::before,
+.vault-game-card::before {
+  background:
+    linear-gradient(180deg, transparent 28%, rgba(0, 0, 0, 0.72)),
+    var(--vault-card-art);
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+.vault-wide-card span,
+.vault-game-card span {
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 999px;
+  color: #202236;
+  font-size: 0.82rem;
+  font-weight: 950;
+  padding: 6px 9px;
+  position: relative;
+  z-index: 1;
+}
+
+.vault-wide-card strong,
+.vault-game-card strong {
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  line-height: 0.96;
+  margin-top: 8px;
+  position: relative;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.56);
+  z-index: 1;
+}
+
+.vault-game-card--active {
+  box-shadow: 0 0 0 3px #7657ff, 0 16px 28px rgba(0, 0, 0, 0.34);
+}
+
+.vault-card-art--snake {
+  --vault-card-art:
+    radial-gradient(circle at 68% 32%, #ffd166 0 8%, transparent 9%),
+    repeating-linear-gradient(90deg, #36d67f 0 18px, #22a95e 18px 36px),
+    linear-gradient(135deg, #143b2b, #28cc78);
+}
+
+.vault-card-art--breaker {
+  --vault-card-art:
+    linear-gradient(90deg, transparent 0 18%, #ffffff 18% 22%, transparent 22% 100%),
+    repeating-linear-gradient(0deg, #ff5656 0 18px, #ffd166 18px 36px, #5ce1ff 36px 54px),
+    linear-gradient(135deg, #15172a, #391a70);
+}
+
+.vault-card-art--tiles {
+  --vault-card-art:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.2) 0 12px, transparent 12px 24px),
+    linear-gradient(135deg, #7657ff, #23d18b);
+}
+
+.vault-card-art--code {
+  --vault-card-art:
+    linear-gradient(90deg, transparent 0 32%, rgba(255, 255, 255, 0.72) 32% 34%, transparent 34% 66%, rgba(255, 255, 255, 0.72) 66% 68%, transparent 68%),
+    linear-gradient(135deg, #111220, #7657ff);
+}
+
+.vault-card-art--market {
+  --vault-card-art:
+    linear-gradient(135deg, transparent 0 44%, #ffd166 44% 49%, transparent 49%),
+    linear-gradient(160deg, #0b5638, #47e0ff);
+}
+
+.vault-section-title {
+  align-items: end;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.vault-section-title h2 {
+  color: #ffffff;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  margin: 0;
+}
+
+.vault-section-title span {
+  color: #a7a7d8;
+  font-weight: 900;
+}
+
+.secret-game-page .secret-game-board-card {
+  background: #10111d;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  box-shadow: none;
 }
 
 .lesson-tools {
@@ -4286,15 +5229,15 @@ h1 {
 .path-step {
   align-items: center;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  height: 86px;
-  justify-items: start;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  min-height: 190px;
   width: 100%;
 }
 
 .path-step strong {
   min-height: 0;
-  text-align: left;
+  text-align: center;
 }
 
 .course-panel {
@@ -4367,7 +5310,9 @@ h1 {
 
 .settings-page .theme-picker,
 .settings-page .music-settings,
-.settings-page .cursor-settings {
+.settings-page .cursor-settings,
+.settings-page .lesson-difficulty-settings,
+.settings-page .chart-settings {
   min-width: 0;
 }
 
@@ -4689,7 +5634,7 @@ h1 {
 .company-grid,
 .achievement-grid,
 .dictionary {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .fact-card,
@@ -4888,6 +5833,11 @@ body,
 
   .hero-chips {
     display: none;
+  }
+
+  .hero-actions {
+    grid-template-columns: 1fr;
+    margin-top: 24px;
   }
 
   .quick-nav {
@@ -5449,6 +6399,7 @@ body,
 .cursor-design-list,
 .cursor-color-list,
 .currency-list,
+.difficulty-choice-list,
 .language-list,
 .stats-sidebar__grid {
   min-width: 0;
@@ -5476,6 +6427,8 @@ body,
 .music-settings,
 .cursor-settings,
 .currency-settings,
+.lesson-difficulty-settings,
+.chart-settings,
 .language-settings,
 .stats-sidebar__status,
 .stats-sidebar__grid span,
@@ -5539,11 +6492,30 @@ button {
   min-width: 0;
 }
 
+.chart-settings {
+  background: rgba(255, 255, 255, 0.88);
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  box-shadow: var(--shadow-soft);
+  color: var(--ink);
+  min-width: 0;
+}
+
+.lesson-difficulty-settings {
+  background: rgba(255, 255, 255, 0.88);
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  box-shadow: var(--shadow-soft);
+  color: var(--ink);
+  min-width: 0;
+}
+
 .settings-page .music-settings {
   grid-column: 1 / -1;
 }
 
-.currency-list {
+.currency-list,
+.difficulty-choice-list {
   min-width: 0;
 }
 
@@ -5778,5 +6750,596 @@ button {
   .lesson-stats,
   .lesson-tools {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Planet-style lesson map */
+.lessons-page .path-map {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 209, 102, 0.22) 0 8%, transparent 9%),
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.92) 0 2px, transparent 3px),
+    radial-gradient(circle at 78% 22%, rgba(255, 255, 255, 0.72) 0 2px, transparent 3px),
+    radial-gradient(circle at 32% 78%, rgba(255, 255, 255, 0.82) 0 2px, transparent 3px),
+    linear-gradient(135deg, #10152f, #13243f 48%, #0b101f);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 24px 60px rgba(0, 0, 0, 0.22);
+  display: block;
+  min-height: 560px;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+}
+
+.lessons-page .path-map::before,
+.lessons-page .path-map::after {
+  border: 2px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  content: "";
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-12deg);
+}
+
+.lessons-page .path-map::before {
+  height: 410px;
+  width: 74%;
+}
+
+.lessons-page .path-map::after {
+  height: 270px;
+  width: 52%;
+}
+
+.lesson-planet {
+  align-items: center;
+  background:
+    radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.74), transparent 16%),
+    linear-gradient(135deg, #25d985, #62a8ff 54%, #ffd166);
+  border: 3px solid rgba(255, 255, 255, 0.72);
+  border-radius: 50%;
+  box-shadow: 0 0 0 14px rgba(98, 168, 255, 0.12), 0 0 48px rgba(37, 217, 133, 0.34);
+  color: #ffffff;
+  display: grid;
+  height: 190px;
+  justify-items: center;
+  left: 50%;
+  padding: 28px;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 190px;
+  z-index: 1;
+}
+
+.lesson-planet::before {
+  border: 12px solid rgba(255, 255, 255, 0.22);
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-radius: 50%;
+  content: "";
+  height: 80px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) rotate(-16deg);
+  width: 260px;
+}
+
+.lesson-planet span {
+  background: rgba(255, 255, 255, 0.42);
+  border-radius: 999px;
+  height: 34px;
+  width: 72px;
+}
+
+.lesson-planet strong {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  line-height: 0.95;
+  position: relative;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.24);
+  z-index: 1;
+}
+
+.lessons-page .path-step {
+  border: 2px solid rgba(255, 255, 255, 0.72);
+  border-radius: 16px;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.26);
+  margin-left: 0 !important;
+  min-height: 172px;
+  padding: 10px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: min(190px, 38%);
+  z-index: 2;
+}
+
+.lessons-page .path-step:hover,
+.lessons-page .path-step--active {
+  box-shadow: 0 22px 40px rgba(0, 0, 0, 0.3);
+  transform: translate(-50%, -54%) scale(1.02);
+}
+
+.lessons-page .path-step:nth-of-type(1) {
+  left: 21%;
+  top: 23%;
+}
+
+.lessons-page .path-step:nth-of-type(2) {
+  left: 78%;
+  top: 24%;
+}
+
+.lessons-page .path-step:nth-of-type(3) {
+  left: 24%;
+  top: 78%;
+}
+
+.lessons-page .path-step:nth-of-type(4) {
+  left: 76%;
+  top: 77%;
+}
+
+.lessons-page .path-step span {
+  height: 38px;
+  width: 38px;
+}
+
+.lessons-page .path-step strong,
+.lessons-page .path-step small {
+  color: var(--ink);
+}
+
+.lessons-page .path-step--locked {
+  opacity: 0.72;
+}
+
+@media (max-width: 760px) {
+  .lessons-page .path-map {
+    display: grid;
+    gap: 12px;
+    min-height: 0;
+    padding: 16px;
+  }
+
+  .lesson-planet,
+  .lessons-page .path-map::before,
+  .lessons-page .path-map::after {
+    display: none;
+  }
+
+  .lessons-page .path-step,
+  .lessons-page .path-step:nth-of-type(n) {
+    left: auto;
+    position: relative;
+    top: auto;
+    transform: none;
+    width: 100%;
+  }
+
+  .lessons-page .path-step:hover,
+  .lessons-page .path-step--active {
+    transform: translateY(-2px);
+  }
+}
+
+/* Single-planet lesson view */
+.lessons-page .path-map {
+  display: grid;
+  min-height: 620px;
+  place-items: center;
+}
+
+.lessons-page .path-map::before {
+  height: min(540px, 86%);
+  width: min(540px, 86%);
+}
+
+.lessons-page .path-map::after {
+  height: min(390px, 66%);
+  width: min(390px, 66%);
+}
+
+.lessons-page .path-step,
+.lessons-page .path-step:nth-of-type(n) {
+  align-content: center;
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255, 255, 255, 0.72) 0 6%, transparent 7%),
+    radial-gradient(ellipse at 32% 36%, #2f9f63 0 11%, transparent 12%),
+    radial-gradient(ellipse at 46% 46%, #1f7a4f 0 13%, transparent 14%),
+    radial-gradient(ellipse at 62% 36%, #3a4658 0 11%, transparent 12%),
+    radial-gradient(ellipse at 66% 58%, #404a57 0 10%, transparent 11%),
+    radial-gradient(ellipse at 38% 62%, #d6a638 0 8%, transparent 9%),
+    radial-gradient(circle at 48% 48%, #36b5dc 0 42%, #1f7fb8 43% 61%, #0e315f 74%);
+  border: 0;
+  border-radius: 50%;
+  box-shadow:
+    inset -34px -48px 74px rgba(4, 11, 24, 0.28),
+    inset 24px 18px 36px rgba(255, 255, 255, 0.12),
+    0 0 0 18px rgba(98, 168, 255, 0.12),
+    0 0 72px rgba(98, 168, 255, 0.36),
+    0 32px 82px rgba(0, 0, 0, 0.34);
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr;
+  height: min(620px, 96vw);
+  justify-items: center;
+  left: auto;
+  margin: 0 !important;
+  min-height: 0;
+  padding: clamp(86px, 13vw, 150px) clamp(34px, 6vw, 72px) clamp(24px, 5vw, 46px);
+  position: absolute;
+  right: -18%;
+  top: -18%;
+  transform: none;
+  width: min(620px, 96vw);
+}
+
+.lessons-page .path-step--village,
+.lessons-page .path-step--village:nth-of-type(n) {
+  background:
+    linear-gradient(180deg, rgba(8, 15, 26, 0.02), rgba(8, 15, 26, 0.1)),
+    url("/assets/lesson-places/village-planet.png") center / cover;
+}
+
+.lessons-page .path-step::before {
+  background:
+    repeating-linear-gradient(90deg, #2b3440 0 12px, #566474 12px 18px, transparent 18px 38px);
+  border: 0;
+  border-radius: 999px;
+  content: "";
+  height: 16%;
+  left: -8%;
+  opacity: 0.82;
+  pointer-events: none;
+  position: absolute;
+  top: 58%;
+  transform: rotate(-18deg);
+  width: 116%;
+}
+
+.lessons-page .path-step::after {
+  background:
+    radial-gradient(circle at 20% 40%, #1f7a4f 0 7px, transparent 8px),
+    radial-gradient(circle at 29% 34%, #25d985 0 6px, transparent 7px),
+    radial-gradient(circle at 39% 39%, #1f7a4f 0 8px, transparent 9px),
+    radial-gradient(circle at 54% 26%, #3a4658 0 9px, transparent 10px),
+    radial-gradient(circle at 64% 31%, #566474 0 8px, transparent 9px),
+    radial-gradient(circle at 72% 42%, #2b3440 0 9px, transparent 10px);
+  content: "";
+  inset: 0;
+  opacity: 0.88;
+  pointer-events: none;
+  position: absolute;
+}
+
+.lessons-page .path-step--village::before,
+.lessons-page .path-step--village::after {
+  display: none;
+}
+
+.lessons-page .path-step--bazaar,
+.lessons-page .path-step--bazaar:nth-of-type(n) {
+  background:
+    radial-gradient(circle at 31% 23%, rgba(255, 255, 255, 0.78) 0 6%, transparent 7%),
+    repeating-conic-gradient(from 14deg at 50% 52%, rgba(255, 91, 91, 0.42) 0deg 10deg, rgba(255, 209, 102, 0.46) 10deg 22deg, rgba(98, 168, 255, 0.34) 22deg 32deg),
+    radial-gradient(circle at 48% 48%, #f6b45b 0 38%, #c6532f 39% 57%, #6e2f28 73%);
+  box-shadow:
+    inset -34px -48px 74px rgba(64, 23, 16, 0.34),
+    inset 24px 18px 36px rgba(255, 255, 255, 0.14),
+    0 0 0 18px rgba(255, 209, 102, 0.14),
+    0 0 72px rgba(255, 91, 91, 0.34),
+    0 32px 82px rgba(0, 0, 0, 0.34);
+}
+
+.lessons-page .path-step--bazaar::before {
+  background:
+    repeating-linear-gradient(90deg, #ff5b5b 0 20px, #fff7dc 20px 38px, #62a8ff 38px 56px, #fff7dc 56px 76px);
+  height: 13%;
+  opacity: 0.92;
+  top: 50%;
+  transform: rotate(-14deg);
+}
+
+.lessons-page .path-step--bazaar::after {
+  background:
+    radial-gradient(circle at 25% 41%, #25d985 0 8px, transparent 9px),
+    radial-gradient(circle at 34% 37%, #ffd166 0 7px, transparent 8px),
+    radial-gradient(circle at 44% 43%, #ff5b5b 0 9px, transparent 10px),
+    radial-gradient(circle at 59% 34%, #62a8ff 0 8px, transparent 9px),
+    radial-gradient(circle at 70% 40%, #fff7dc 0 9px, transparent 10px);
+  opacity: 0.95;
+}
+
+.lessons-page .path-step--city,
+.lessons-page .path-step--city:nth-of-type(n) {
+  background:
+    radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.8) 0 6%, transparent 7%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.18) 0 3px, transparent 3px 18px),
+    radial-gradient(circle at 48% 48%, #5fc7ff 0 39%, #2e6f9f 40% 58%, #142f54 74%);
+  box-shadow:
+    inset -34px -48px 74px rgba(5, 17, 39, 0.42),
+    inset 24px 18px 36px rgba(255, 255, 255, 0.14),
+    0 0 0 18px rgba(98, 168, 255, 0.13),
+    0 0 72px rgba(95, 199, 255, 0.38),
+    0 32px 82px rgba(0, 0, 0, 0.34);
+}
+
+.lessons-page .path-step--city::before {
+  background:
+    repeating-linear-gradient(90deg, #26384d 0 24px, #ffd166 24px 27px, #26384d 27px 42px, #e9f5ff 42px 45px);
+  height: 18%;
+  opacity: 0.9;
+  top: 55%;
+  transform: rotate(-12deg);
+}
+
+.lessons-page .path-step--city::after {
+  background:
+    linear-gradient(180deg, transparent 0 54%, rgba(20, 47, 84, 0.68) 54% 100%),
+    repeating-linear-gradient(90deg, transparent 0 28px, rgba(255, 209, 102, 0.92) 28px 32px, transparent 32px 54px);
+  opacity: 0.86;
+}
+
+.lessons-page .path-step--harbor,
+.lessons-page .path-step--harbor:nth-of-type(n) {
+  background:
+    radial-gradient(circle at 30% 23%, rgba(255, 255, 255, 0.82) 0 6%, transparent 7%),
+    repeating-radial-gradient(circle at 48% 55%, rgba(255, 255, 255, 0.28) 0 2px, transparent 2px 18px),
+    radial-gradient(circle at 48% 48%, #55d7df 0 41%, #1f7fb8 42% 61%, #123a66 75%);
+  box-shadow:
+    inset -34px -48px 74px rgba(5, 26, 44, 0.36),
+    inset 24px 18px 36px rgba(255, 255, 255, 0.14),
+    0 0 0 18px rgba(85, 215, 223, 0.14),
+    0 0 72px rgba(85, 215, 223, 0.36),
+    0 32px 82px rgba(0, 0, 0, 0.34);
+}
+
+.lessons-page .path-step--harbor::before {
+  background:
+    repeating-linear-gradient(90deg, #ffffff 0 18px, #55d7df 18px 36px);
+  height: 12%;
+  opacity: 0.82;
+  top: 56%;
+  transform: rotate(-20deg);
+}
+
+.lessons-page .path-step--harbor::after {
+  background:
+    linear-gradient(45deg, transparent 0 45%, #ffffff 46% 61%, transparent 62%),
+    linear-gradient(135deg, transparent 0 47%, #ffffff 48% 62%, transparent 63%),
+    radial-gradient(ellipse at 52% 57%, #8a5a35 0 13%, transparent 14%);
+  opacity: 0.9;
+}
+
+.lessons-page .path-step--forest,
+.lessons-page .path-step--forest:nth-of-type(n) {
+  background:
+    radial-gradient(circle at 31% 24%, rgba(255, 255, 255, 0.76) 0 6%, transparent 7%),
+    radial-gradient(ellipse at 40% 38%, #1f7a4f 0 23%, transparent 24%),
+    radial-gradient(ellipse at 63% 56%, #2f7d32 0 27%, transparent 28%),
+    radial-gradient(circle at 48% 48%, #49b96f 0 42%, #17725a 43% 62%, #0d3c35 75%);
+  box-shadow:
+    inset -34px -48px 74px rgba(6, 35, 28, 0.38),
+    inset 24px 18px 36px rgba(255, 255, 255, 0.14),
+    0 0 0 18px rgba(73, 185, 111, 0.13),
+    0 0 72px rgba(73, 185, 111, 0.36),
+    0 32px 82px rgba(0, 0, 0, 0.34);
+}
+
+.lessons-page .path-step--forest::before {
+  background:
+    repeating-linear-gradient(90deg, #174c30 0 18px, #2f7d32 18px 32px, #9bd78b 32px 38px);
+  height: 16%;
+  opacity: 0.9;
+  top: 54%;
+  transform: rotate(-16deg);
+}
+
+.lessons-page .path-step--forest::after {
+  background:
+    radial-gradient(circle at 24% 42%, #9bd78b 0 10px, transparent 11px),
+    radial-gradient(circle at 35% 36%, #174c30 0 12px, transparent 13px),
+    radial-gradient(circle at 48% 44%, #2f7d32 0 13px, transparent 14px),
+    radial-gradient(circle at 63% 37%, #9bd78b 0 9px, transparent 10px),
+    radial-gradient(circle at 73% 45%, #174c30 0 12px, transparent 13px);
+  opacity: 0.96;
+}
+
+.lessons-page .path-step--mountain,
+.lessons-page .path-step--mountain:nth-of-type(n) {
+  background:
+    radial-gradient(circle at 30% 23%, rgba(255, 255, 255, 0.86) 0 6%, transparent 7%),
+    radial-gradient(ellipse at 42% 42%, #ffffff 0 9%, transparent 10%),
+    radial-gradient(ellipse at 55% 52%, #8ba3b1 0 24%, transparent 25%),
+    radial-gradient(circle at 48% 48%, #b9d9ea 0 39%, #6f8f99 40% 61%, #2d4654 75%);
+  box-shadow:
+    inset -34px -48px 74px rgba(19, 32, 39, 0.38),
+    inset 24px 18px 36px rgba(255, 255, 255, 0.16),
+    0 0 0 18px rgba(185, 217, 234, 0.14),
+    0 0 72px rgba(185, 217, 234, 0.34),
+    0 32px 82px rgba(0, 0, 0, 0.34);
+}
+
+.lessons-page .path-step--mountain::before {
+  background:
+    repeating-linear-gradient(90deg, #ffffff 0 18px, #8ba3b1 18px 36px, #6f8f99 36px 56px);
+  height: 18%;
+  opacity: 0.9;
+  top: 55%;
+  transform: rotate(-18deg);
+}
+
+.lessons-page .path-step--mountain::after {
+  background:
+    conic-gradient(from 220deg at 35% 60%, transparent 0 18%, #ffffff 18% 26%, #8ba3b1 26% 40%, transparent 40%),
+    conic-gradient(from 220deg at 58% 56%, transparent 0 18%, #ffffff 18% 25%, #6f8f99 25% 42%, transparent 42%);
+  opacity: 0.94;
+}
+
+.lessons-page .path-step--tech,
+.lessons-page .path-step--tech:nth-of-type(n) {
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.78) 0 6%, transparent 7%),
+    repeating-linear-gradient(90deg, rgba(37, 217, 133, 0.28) 0 2px, transparent 2px 28px),
+    repeating-linear-gradient(0deg, rgba(98, 168, 255, 0.22) 0 2px, transparent 2px 28px),
+    radial-gradient(circle at 48% 48%, #152e5b 0 42%, #0d5765 43% 61%, #091a36 75%);
+  box-shadow:
+    inset -34px -48px 74px rgba(3, 12, 31, 0.42),
+    inset 24px 18px 36px rgba(255, 255, 255, 0.12),
+    0 0 0 18px rgba(37, 217, 133, 0.12),
+    0 0 72px rgba(37, 217, 133, 0.34),
+    0 32px 82px rgba(0, 0, 0, 0.34);
+}
+
+.lessons-page .path-step--tech::before {
+  background:
+    repeating-linear-gradient(90deg, #25d985 0 9px, transparent 9px 18px, #62a8ff 18px 27px, transparent 27px 40px);
+  box-shadow: 0 0 24px rgba(37, 217, 133, 0.48);
+  height: 10%;
+  opacity: 0.95;
+  top: 57%;
+  transform: rotate(-14deg);
+}
+
+.lessons-page .path-step--tech::after {
+  background:
+    radial-gradient(circle at 28% 42%, #25d985 0 7px, transparent 8px),
+    radial-gradient(circle at 43% 35%, #62a8ff 0 7px, transparent 8px),
+    radial-gradient(circle at 58% 45%, #25d985 0 8px, transparent 9px),
+    radial-gradient(circle at 70% 38%, #62a8ff 0 7px, transparent 8px);
+  opacity: 0.92;
+}
+
+.lessons-page .path-step--space,
+.lessons-page .path-step--space:nth-of-type(n) {
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.7) 0 6%, transparent 7%),
+    radial-gradient(circle at 35% 42%, #5d4b91 0 9%, transparent 10%),
+    radial-gradient(circle at 62% 54%, #2f2259 0 15%, transparent 16%),
+    radial-gradient(circle at 48% 48%, #7162b8 0 39%, #35295f 40% 61%, #130d2b 75%);
+  box-shadow:
+    inset -34px -48px 74px rgba(9, 5, 27, 0.46),
+    inset 24px 18px 36px rgba(255, 255, 255, 0.11),
+    0 0 0 18px rgba(113, 98, 184, 0.14),
+    0 0 72px rgba(172, 129, 255, 0.36),
+    0 32px 82px rgba(0, 0, 0, 0.34);
+}
+
+.lessons-page .path-step--space::before {
+  background:
+    repeating-linear-gradient(90deg, #d7c9ff 0 10px, transparent 10px 26px);
+  height: 9%;
+  opacity: 0.55;
+  top: 57%;
+  transform: rotate(-20deg);
+}
+
+.lessons-page .path-step--space::after {
+  background:
+    radial-gradient(circle at 24% 42%, rgba(19, 13, 43, 0.72) 0 15px, transparent 16px),
+    radial-gradient(circle at 45% 35%, rgba(255, 255, 255, 0.28) 0 7px, transparent 8px),
+    radial-gradient(circle at 59% 48%, rgba(19, 13, 43, 0.62) 0 18px, transparent 19px),
+    radial-gradient(circle at 74% 40%, rgba(255, 255, 255, 0.24) 0 9px, transparent 10px);
+  opacity: 0.95;
+}
+
+.lessons-page .path-step:hover,
+.lessons-page .path-step--active {
+  transform: translateY(-4px) scale(1.01);
+}
+
+.lessons-page .path-step span,
+.lessons-page .path-step strong,
+.lessons-page .path-step small,
+.lessons-page .path-step .lesson-difficulty {
+  position: relative;
+  z-index: 1;
+}
+
+.lessons-page .path-step span {
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--accent-strong);
+  height: 52px;
+  width: 52px;
+}
+
+.lessons-page .path-step strong {
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3.4vw, 2.05rem);
+  max-width: 300px;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.62);
+}
+
+.lessons-page .path-step small {
+  background: rgba(255, 255, 255, 0.84);
+  border-radius: 999px;
+  color: var(--ink);
+  padding: 7px 11px;
+}
+
+.lessons-page .path-step--locked {
+  opacity: 0.78;
+}
+
+.lessons-page .path-map--spinning .path-step {
+  animation: lesson-planet-spin 850ms cubic-bezier(0.2, 0.82, 0.18, 1) both;
+  pointer-events: none;
+}
+
+.lessons-page .path-map--spinning::before,
+.lessons-page .path-map--spinning::after {
+  animation: lesson-orbit-spin 850ms cubic-bezier(0.2, 0.82, 0.18, 1) both;
+}
+
+@keyframes lesson-planet-spin {
+  0% {
+    filter: brightness(1);
+    transform: rotateY(0deg) rotate(0deg) scale(1);
+  }
+
+  42% {
+    filter: brightness(1.18);
+    transform: rotateY(88deg) rotate(18deg) scale(0.94);
+  }
+
+  58% {
+    filter: brightness(1.18);
+    transform: rotateY(272deg) rotate(26deg) scale(0.94);
+  }
+
+  100% {
+    filter: brightness(1);
+    transform: rotateY(360deg) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes lesson-orbit-spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(-12deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(348deg);
+  }
+}
+
+@media (max-width: 760px) {
+  .lessons-page .path-map {
+    display: grid;
+    min-height: 420px;
+    place-items: center;
+  }
+
+  .lessons-page .path-step,
+  .lessons-page .path-step:nth-of-type(n) {
+    height: min(500px, 118vw);
+    position: absolute;
+    right: -36%;
+    top: -12%;
+    width: min(500px, 118vw);
   }
 }
