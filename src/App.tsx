@@ -921,6 +921,183 @@ const translations: Record<LanguageId, Record<string, string>> = {
     'settings.copy': 'Change the background, language, currency, music, and cursor from one place.',
     'settings.language': 'Language',
     'settings.currency': 'Currency',
+    'settings.background': 'Background',
+    'settings.music': 'Music',
+    'settings.cursor': 'Cursor',
+    'settings.marketChart': 'Market chart',
+    'settings.normalLines': 'Normal lines',
+    'settings.candles': 'Candles',
+    'settings.lessonDifficulty': 'Lesson difficulty',
+    'settings.levels': 'Levels',
+    'common.level': 'Level',
+    'common.unlocked': 'unlocked',
+    'common.complete': 'complete',
+    'common.completed': 'complete',
+    'common.cash': 'cash',
+    'common.questions': 'Questions',
+    'common.lessons': 'Lessons',
+    'common.ready': 'Ready',
+    'common.correct': 'Correct',
+    'common.tryAgain': 'Try again',
+    'common.notAnswered': 'Not answered',
+    'common.backpack': 'Backpack',
+    'common.hints': 'hints',
+    'common.skips': 'skips',
+    'common.rampage': 'rampage',
+    'common.boosters': 'boosters',
+    'common.buy': 'Buy',
+    'common.active': 'Active',
+    'common.owned': 'owned',
+    'common.locked': 'Locked',
+    'common.claimed': 'Claimed',
+    'common.claimCash': 'Claim cash',
+    'home.eyebrow': 'Money basics for young learners',
+    'home.title': 'Investing for Kids',
+    'home.description': 'A playful learning app for practicing money basics without using real cash. Complete lessons, try pretend market rounds, earn shop items, and learn how risk, patience, stocks, funds, and compound growth work.',
+    'home.note': 'Built for education only, not real investing advice.',
+    'home.start': 'Start learning to invest',
+    'home.tutorial': 'Tutorial',
+    'home.signIn': 'Sign in',
+    'home.logIn': 'Log in',
+    'home.practiceMarket': 'Practice Market',
+    'home.liveDemo': 'Live demo',
+    'home.fakeNews': 'Fake News',
+    'home.pretendOnly': 'Pretend only',
+    'stats.title': 'Statistics',
+    'stats.xpEarned': 'XP earned',
+    'stats.courseProgress': 'Course progress',
+    'stats.tradingRound': 'Trading round',
+    'stats.quickCheck': 'Quick check',
+    'stats.toNext': 'to next',
+    'facts.eyebrow': 'Fresh facts',
+    'facts.title': "Today's investing facts",
+    'facts.copy': 'These rotate each time you open or refresh the site.',
+    'lessons.eyebrow': 'Lesson path',
+    'lessons.title': 'Level up your money brain',
+    'lessons.choosePath': 'Choose your path',
+    'lessons.pickDifficulty': 'Pick a lesson difficulty',
+    'lessons.pickDifficultyCopy': 'Start with the kind of levels you want to play today.',
+    'lessons.previous': 'Previous level',
+    'lessons.next': 'Next level',
+    'lessons.courseDashboard': 'Course dashboard',
+    'lessons.dashboardCopy': 'Complete each level to unlock the next one. Use Market from the sidebar to practice trading.',
+    'lessons.backToMap': 'Back to map',
+    'lessons.question': 'Question',
+    'lessons.of': 'of',
+    'lessons.chooseAnswer': 'Choose the best answer',
+    'lessons.useHint': 'Use hint',
+    'lessons.useSkip': 'Use skip',
+    'lessons.useRampage': 'Use rampage',
+    'lessons.nextQuestion': 'Next question',
+    'lessons.nextLesson': 'Next lesson',
+    'lessons.finishCourse': 'Finish course',
+    'lessons.reviewTime': 'Review time',
+    'lessons.practiceAgain': 'Questions to practice again',
+    'lessons.reviewCopy': 'You finished the level. Check the questions you missed before moving on.',
+    'lessons.yourAnswer': 'Your answer',
+    'lessons.correctAnswer': 'Correct answer',
+    'lessons.reviewed': 'I reviewed them',
+    'lessons.completeSkip': 'Lesson complete. Skip pass used.',
+    'lessons.completeXp': 'Lesson complete. You earned XP.',
+    'lessons.skipped': 'Skipped. Keep going.',
+    'lessons.correctNext': 'Correct. Ready for the next challenge.',
+    'lessons.notQuite': 'Not quite. Think about risk, facts, and time.',
+    'companies.eyebrow': 'Real companies',
+    'companies.title': 'Company profiles you can study',
+    'companies.copy': 'Real public companies, real tickers, and beginner-friendly notes. This is for learning, not advice to buy or sell.',
+    'companies.founded': 'Founded',
+    'companies.study': 'Study this',
+    'companies.moneyFrom': 'Makes money from',
+    'companies.risk': 'Risk to watch',
+    'trading.eyebrow': 'Pretend day trading',
+    'trading.title': 'Trade one fast market round',
+    'trading.copy': 'Pick buy, short sell, or stay out before the final price is revealed. Gains add cash to your practice market wallet.',
+    'trading.start': 'Start',
+    'trading.shares': 'shares',
+    'trading.endHidden': 'End hidden',
+    'trading.boosters': 'Boosters',
+    'trading.finalHint': 'Final move hint',
+    'trading.up': 'up',
+    'trading.down': 'down',
+    'trading.buy': 'Buy',
+    'trading.shortSell': 'Short sell',
+    'trading.stayOut': 'Stay out',
+    'trading.marketClose': 'Market close',
+    'trading.bought': 'Bought',
+    'trading.shortSold': 'Short sold',
+    'trading.noTrade': 'No trade',
+    'trading.newRound': 'New round',
+    'shop.eyebrow': 'Item shop',
+    'shop.title': 'Visit the shopkeeper',
+    'shop.copy': 'Spend practice market cash on lesson items, then use them from your backpack during a lesson.',
+    'shop.shopkeeper': 'Shopkeeper',
+    'shop.welcome': 'Welcome back, investor.',
+    'shop.explain': 'Earn cash in Market, then trade it here for help items. Hints reveal a clue. Skips move past one question.',
+    'shop.hintTicket': 'Hint ticket',
+    'shop.hintCopy': 'Gives one clue during a lesson question.',
+    'shop.skipPass': 'Skip pass',
+    'shop.skipCopy': 'Moves past one lesson question without earning XP for it.',
+    'shop.skipRampage': 'Skip Rampage',
+    'shop.rampageCopy': 'Completes up to 10 lessons instantly when used inside a lesson.',
+    'shop.buyHint': 'Buy hint',
+    'shop.buySkip': 'Buy skip',
+    'shop.buyRampage': 'Buy rampage',
+    'shop.buyBooster': 'Buy booster',
+    'shop.hintTickets': 'Hint tickets',
+    'shop.skipPasses': 'Skip passes',
+    'decision.eyebrow': 'Pretend decision lab',
+    'decision.title': 'When a price goes down',
+    'decision.copy': 'A price going down is not automatically good or bad. Practice asking why before choosing a pretend action.',
+    'calculator.eyebrow': 'Calculator',
+    'calculator.title': 'Compound growth demo',
+    'calculator.copy': 'This uses a pretend 6% yearly growth rate. Real investments do not grow smoothly.',
+    'calculator.starting': 'Starting money',
+    'calculator.monthly': 'Added each month',
+    'calculator.years': 'Years',
+    'dictionary.eyebrow': 'Dictionary',
+    'dictionary.title': 'Words investors use',
+    'quiz.eyebrow': 'Quick check',
+    'quiz.title': 'A stock price falls. What should you do first?',
+    'quiz.panic': 'Panic sell instantly',
+    'quiz.facts': 'Find out why it fell',
+    'quiz.hype': 'Buy more because it is cheaper',
+    'achievements.eyebrow': 'Achievements',
+    'achievements.title': 'Badges you have earned',
+    'achievements.unlocked': 'unlocked',
+    'achievements.secret': 'Secret achievement',
+    'achievements.hint': 'Hint',
+    'games.vault': 'vault games',
+    'games.search': 'Search games and categories',
+    'games.piggy': 'Piggy',
+    'games.new': 'New games',
+    'games.playNow': 'Play now',
+    'games.safeTiles': 'Safe Tiles',
+    'games.snake': 'Snake',
+    'games.breaker': 'Block Breaker',
+    'games.code': 'Code Breaker',
+    'games.findCode': 'Find the vault code',
+    'games.marketGuess': 'Market Guess',
+    'games.marketQuestion': 'Will the mini market go up or down?',
+    'help.eyebrow': 'Pushy Help',
+    'help.title': 'Ask Pushy',
+    'help.empty': 'Pushy answers will show up here.',
+    'help.question': 'Question',
+    'help.placeholder': 'Example: explain diversification in a simple way',
+    'account.eyebrow': 'Account',
+    'account.title': 'Save your progress',
+    'account.signedIn': 'Signed in',
+    'account.signedInCopy': 'Your progress saves automatically while you play.',
+    'account.cloudSave': 'Cloud save',
+    'day.mon': 'Mon',
+    'day.tue': 'Tue',
+    'day.wed': 'Wed',
+    'day.thu': 'Thu',
+    'day.fri': 'Fri',
+    'shop.sign': 'SHOP',
+    'shop.items': 'ITEMS',
+    'shop.hintShort': 'HINT',
+    'shop.passShort': 'PASS',
+    'shop.skipShort': 'SKIP',
     'piggy.eyebrow': 'Piggy bank',
     'piggy.title': 'Your real-life money',
     'piggy.copy': 'Track cash you find, save, or spend outside the game.',
@@ -1048,6 +1225,546 @@ const translations: Record<LanguageId, Record<string, string>> = {
     'piggy.add': 'Añadir',
     'piggy.spend': 'Gastar o corregir',
     'piggy.spendHelp': 'Resta cuando gastes dinero real o hayas puesto demasiado.',
+  },
+};
+
+const extraTranslations: Partial<Record<LanguageId, Record<string, string>>> = {
+  ru: {
+    'settings.background': 'Фон',
+    'settings.music': 'Музыка',
+    'settings.cursor': 'Курсор',
+    'settings.marketChart': 'График рынка',
+    'settings.normalLines': 'Обычные линии',
+    'settings.candles': 'Свечи',
+    'settings.lessonDifficulty': 'Сложность уроков',
+    'settings.levels': 'Уровни',
+    'common.level': 'Уровень',
+    'common.unlocked': 'открыто',
+    'common.complete': 'готово',
+    'common.completed': 'готово',
+    'common.cash': 'наличные',
+    'common.questions': 'Вопросы',
+    'common.lessons': 'Уроки',
+    'common.ready': 'Готово',
+    'common.correct': 'Верно',
+    'common.tryAgain': 'Попробуй ещё',
+    'common.notAnswered': 'Нет ответа',
+    'common.backpack': 'Рюкзак',
+    'common.hints': 'подсказки',
+    'common.skips': 'пропуски',
+    'common.rampage': 'рывок',
+    'common.boosters': 'бустеры',
+    'common.buy': 'Купить',
+    'common.active': 'Активно',
+    'common.owned': 'есть',
+    'common.locked': 'Закрыто',
+    'common.claimed': 'Получено',
+    'common.claimCash': 'Получить деньги',
+    'home.eyebrow': 'Основы денег для юных учеников',
+    'home.title': 'Инвестиции для детей',
+    'home.description': 'Игровое приложение для изучения денег без настоящего риска. Проходи уроки, тренируйся на рынке, зарабатывай предметы и изучай риск, терпение, акции, фонды и сложный рост.',
+    'home.note': 'Только для обучения, не настоящий инвестиционный совет.',
+    'home.start': 'Начать учиться инвестировать',
+    'home.tutorial': 'Туториал',
+    'home.signIn': 'Регистрация',
+    'home.logIn': 'Войти',
+    'home.practiceMarket': 'Тренировочный рынок',
+    'home.liveDemo': 'Демо',
+    'home.fakeNews': 'Учебные новости',
+    'home.pretendOnly': 'Только игра',
+    'stats.title': 'Статистика',
+    'stats.xpEarned': 'XP заработано',
+    'stats.courseProgress': 'Прогресс курса',
+    'stats.tradingRound': 'Раунд рынка',
+    'stats.quickCheck': 'Быстрая проверка',
+    'stats.toNext': 'до следующего',
+    'facts.eyebrow': 'Свежие факты',
+    'facts.title': 'Факты об инвестировании сегодня',
+    'facts.copy': 'Они меняются при открытии или обновлении сайта.',
+    'lessons.eyebrow': 'Путь уроков',
+    'lessons.title': 'Прокачай денежное мышление',
+    'lessons.choosePath': 'Выбери путь',
+    'lessons.pickDifficulty': 'Выбери сложность уроков',
+    'lessons.pickDifficultyCopy': 'Начни с уровней, которые хочешь пройти сегодня.',
+    'lessons.previous': 'Предыдущий уровень',
+    'lessons.next': 'Следующий уровень',
+    'lessons.courseDashboard': 'Панель курса',
+    'lessons.dashboardCopy': 'Проходи уровни, чтобы открывать следующие. Используй Рынок для тренировки торговли.',
+    'lessons.backToMap': 'Назад к карте',
+    'lessons.question': 'Вопрос',
+    'lessons.of': 'из',
+    'lessons.chooseAnswer': 'Выбери лучший ответ',
+    'lessons.useHint': 'Использовать подсказку',
+    'lessons.useSkip': 'Использовать пропуск',
+    'lessons.useRampage': 'Использовать рывок',
+    'lessons.nextQuestion': 'Следующий вопрос',
+    'lessons.nextLesson': 'Следующий урок',
+    'lessons.finishCourse': 'Завершить курс',
+    'lessons.reviewTime': 'Время повторения',
+    'lessons.practiceAgain': 'Вопросы для практики',
+    'lessons.reviewCopy': 'Ты закончил уровень. Проверь ошибки перед продолжением.',
+    'lessons.yourAnswer': 'Твой ответ',
+    'lessons.correctAnswer': 'Правильный ответ',
+    'lessons.reviewed': 'Я повторил',
+    'lessons.completeSkip': 'Урок завершён. Пропуск использован.',
+    'lessons.completeXp': 'Урок завершён. Ты заработал XP.',
+    'lessons.skipped': 'Пропущено. Продолжай.',
+    'lessons.correctNext': 'Верно. Готов к следующему вызову.',
+    'lessons.notQuite': 'Не совсем. Подумай о риске, фактах и времени.',
+    'companies.eyebrow': 'Настоящие компании',
+    'companies.title': 'Профили компаний для изучения',
+    'companies.copy': 'Настоящие публичные компании, тикеры и простые заметки. Это обучение, не совет покупать или продавать.',
+    'companies.founded': 'Основана',
+    'companies.study': 'Что изучать',
+    'companies.moneyFrom': 'Зарабатывает на',
+    'companies.risk': 'Риск',
+    'trading.eyebrow': 'Игровая дневная торговля',
+    'trading.title': 'Один быстрый рыночный раунд',
+    'trading.copy': 'Выбери купить, шортить или не входить до финальной цены. Прибыль добавит игровые деньги.',
+    'trading.start': 'Старт',
+    'trading.shares': 'акций',
+    'trading.endHidden': 'Финиш скрыт',
+    'trading.boosters': 'Бустеры',
+    'trading.finalHint': 'Подсказка движения',
+    'trading.up': 'вверх',
+    'trading.down': 'вниз',
+    'trading.buy': 'Купить',
+    'trading.shortSell': 'Шортить',
+    'trading.stayOut': 'Не входить',
+    'trading.marketClose': 'Закрытие рынка',
+    'trading.bought': 'Куплено',
+    'trading.shortSold': 'Шорт',
+    'trading.noTrade': 'Без сделки',
+    'trading.newRound': 'Новый раунд',
+    'shop.eyebrow': 'Магазин предметов',
+    'shop.title': 'Посети продавца',
+    'shop.copy': 'Трать игровые деньги на предметы для уроков и используй их из рюкзака.',
+    'shop.shopkeeper': 'Продавец',
+    'shop.welcome': 'С возвращением, инвестор.',
+    'shop.explain': 'Зарабатывай деньги на Рынке и покупай предметы помощи. Подсказки дают намёк. Пропуски проходят один вопрос.',
+    'shop.hintTicket': 'Билет подсказки',
+    'shop.hintCopy': 'Даёт одну подсказку во время вопроса.',
+    'shop.skipPass': 'Пропуск',
+    'shop.skipCopy': 'Пропускает один вопрос без XP.',
+    'shop.skipRampage': 'Скип-рывок',
+    'shop.rampageCopy': 'Завершает до 10 уроков сразу.',
+    'shop.buyHint': 'Купить подсказку',
+    'shop.buySkip': 'Купить пропуск',
+    'shop.buyRampage': 'Купить рывок',
+    'shop.buyBooster': 'Купить бустер',
+    'shop.hintTickets': 'Билеты подсказок',
+    'shop.skipPasses': 'Пропуски',
+    'decision.eyebrow': 'Лаборатория решений',
+    'decision.title': 'Когда цена падает',
+    'decision.copy': 'Падение цены не всегда хорошо или плохо. Сначала спроси почему.',
+    'calculator.eyebrow': 'Калькулятор',
+    'calculator.title': 'Демо сложного роста',
+    'calculator.copy': 'Используется учебные 6% в год. Реальные инвестиции не растут ровно.',
+    'calculator.starting': 'Начальная сумма',
+    'calculator.monthly': 'Каждый месяц',
+    'calculator.years': 'Годы',
+    'dictionary.eyebrow': 'Словарь',
+    'dictionary.title': 'Слова инвесторов',
+    'quiz.eyebrow': 'Быстрая проверка',
+    'quiz.title': 'Цена акции падает. Что сделать сначала?',
+    'quiz.panic': 'Сразу продать в панике',
+    'quiz.facts': 'Узнать, почему упала',
+    'quiz.hype': 'Купить больше, потому что дешевле',
+    'achievements.eyebrow': 'Достижения',
+    'achievements.title': 'Заработанные значки',
+    'achievements.unlocked': 'открыто',
+    'achievements.secret': 'Секретное достижение',
+    'achievements.hint': 'Подсказка',
+    'games.vault': 'игры хранилища',
+    'games.search': 'Поиск игр и категорий',
+    'games.piggy': 'Копилка',
+    'games.new': 'Новые игры',
+    'games.playNow': 'Играть',
+    'games.safeTiles': 'Безопасные плитки',
+    'games.snake': 'Змейка',
+    'games.breaker': 'Блок-брейкер',
+    'games.code': 'Взлом кода',
+    'games.findCode': 'Найди код хранилища',
+    'games.marketGuess': 'Угадай рынок',
+    'games.marketQuestion': 'Мини-рынок пойдёт вверх или вниз?',
+    'help.eyebrow': 'Помощь Pushy',
+    'help.title': 'Спроси Pushy',
+    'help.empty': 'Ответы Pushy появятся здесь.',
+    'help.question': 'Вопрос',
+    'help.placeholder': 'Пример: объясни диверсификацию просто',
+    'account.eyebrow': 'Аккаунт',
+    'account.title': 'Сохрани прогресс',
+    'account.signedIn': 'Вход выполнен',
+    'account.signedInCopy': 'Прогресс сохраняется автоматически во время игры.',
+    'account.cloudSave': 'Облачное сохранение',
+    'day.mon': 'Пн',
+    'day.tue': 'Вт',
+    'day.wed': 'Ср',
+    'day.thu': 'Чт',
+    'day.fri': 'Пт',
+    'shop.sign': 'МАГАЗИН',
+    'shop.items': 'ТОВАРЫ',
+    'shop.hintShort': 'ПОДСК',
+    'shop.passShort': 'ПАСС',
+    'shop.skipShort': 'СКИП',
+  },
+  kk: {
+    'settings.background': 'Фон',
+    'settings.music': 'Музыка',
+    'settings.cursor': 'Курсор',
+    'settings.marketChart': 'Нарық графигі',
+    'settings.normalLines': 'Қалыпты сызықтар',
+    'settings.candles': 'Шамдар',
+    'settings.lessonDifficulty': 'Сабақ қиындығы',
+    'settings.levels': 'Деңгейлер',
+    'common.level': 'Деңгей',
+    'common.unlocked': 'ашылды',
+    'common.complete': 'аяқталды',
+    'common.completed': 'аяқталды',
+    'common.cash': 'ақша',
+    'common.questions': 'Сұрақтар',
+    'common.lessons': 'Сабақтар',
+    'common.ready': 'Дайын',
+    'common.correct': 'Дұрыс',
+    'common.tryAgain': 'Қайта көр',
+    'common.notAnswered': 'Жауап жоқ',
+    'common.backpack': 'Рюкзак',
+    'common.hints': 'көмек',
+    'common.skips': 'өткізу',
+    'common.rampage': 'рывок',
+    'common.boosters': 'бустерлер',
+    'common.buy': 'Сатып алу',
+    'common.active': 'Белсенді',
+    'common.owned': 'бар',
+    'common.locked': 'Жабық',
+    'common.claimed': 'Алынды',
+    'common.claimCash': 'Ақшаны алу',
+    'home.eyebrow': 'Жас оқушыларға ақша негіздері',
+    'home.title': 'Балаларға инвестиция',
+    'home.description': 'Нағыз ақшасыз қаржыны үйренуге арналған ойын. Сабақ өт, нарықта жаттық, заттар тап, тәуекелді, шыдамды, акцияны, қорды және күрделі өсімді үйрен.',
+    'home.note': 'Тек оқу үшін, нақты инвестициялық кеңес емес.',
+    'home.start': 'Инвестицияны үйренуді бастау',
+    'home.tutorial': 'Туториал',
+    'home.signIn': 'Тіркелу',
+    'home.logIn': 'Кіру',
+    'home.practiceMarket': 'Жаттығу нарығы',
+    'home.liveDemo': 'Демо',
+    'home.fakeNews': 'Оқу жаңалықтары',
+    'home.pretendOnly': 'Тек ойын',
+    'stats.title': 'Статистика',
+    'stats.xpEarned': 'XP жиналды',
+    'stats.courseProgress': 'Курс прогресі',
+    'stats.tradingRound': 'Нарық раунды',
+    'stats.quickCheck': 'Тез тексеру',
+    'stats.toNext': 'келесіге дейін',
+    'facts.eyebrow': 'Жаңа фактілер',
+    'facts.title': 'Бүгінгі инвестиция фактілері',
+    'facts.copy': 'Сайт ашылғанда немесе жаңарғанда ауысады.',
+    'lessons.eyebrow': 'Сабақ жолы',
+    'lessons.title': 'Ақша ойыңды дамыт',
+    'lessons.choosePath': 'Жолыңды таңда',
+    'lessons.pickDifficulty': 'Сабақ қиындығын таңда',
+    'lessons.pickDifficultyCopy': 'Бүгін ойнағың келетін деңгейлерден баста.',
+    'lessons.previous': 'Алдыңғы деңгей',
+    'lessons.next': 'Келесі деңгей',
+    'lessons.courseDashboard': 'Курс панелі',
+    'lessons.dashboardCopy': 'Келесісін ашу үшін әр деңгейді аяқта. Сауданы жаттықтыру үшін Нарықты қолдан.',
+    'lessons.backToMap': 'Картаға қайту',
+    'lessons.question': 'Сұрақ',
+    'lessons.of': '/',
+    'lessons.chooseAnswer': 'Ең жақсы жауапты таңда',
+    'lessons.useHint': 'Көмек қолдану',
+    'lessons.useSkip': 'Өткізуді қолдану',
+    'lessons.useRampage': 'Рывок қолдану',
+    'lessons.nextQuestion': 'Келесі сұрақ',
+    'lessons.nextLesson': 'Келесі сабақ',
+    'lessons.finishCourse': 'Курсты аяқтау',
+    'lessons.reviewTime': 'Қайталау уақыты',
+    'lessons.practiceAgain': 'Қайталау сұрақтары',
+    'lessons.reviewCopy': 'Деңгейді аяқтадың. Жалғастырмас бұрын қателерді қара.',
+    'lessons.yourAnswer': 'Сенің жауабың',
+    'lessons.correctAnswer': 'Дұрыс жауап',
+    'lessons.reviewed': 'Қайталадым',
+    'lessons.completeSkip': 'Сабақ аяқталды. Өткізу қолданылды.',
+    'lessons.completeXp': 'Сабақ аяқталды. XP алдың.',
+    'lessons.skipped': 'Өткізілді. Жалғастыр.',
+    'lessons.correctNext': 'Дұрыс. Келесі тапсырмаға дайынсың.',
+    'lessons.notQuite': 'Дәл емес. Тәуекел, факт және уақыт туралы ойлан.',
+    'companies.eyebrow': 'Нақты компаниялар',
+    'companies.title': 'Оқуға болатын компания профильдері',
+    'companies.copy': 'Нақты ашық компаниялар, тикерлер және жеңіл түсініктемелер. Бұл оқу, сатып алу немесе сату кеңесі емес.',
+    'companies.founded': 'Құрылған',
+    'companies.study': 'Нені оқу',
+    'companies.moneyFrom': 'Ақшаны табады',
+    'companies.risk': 'Қарау керек тәуекел',
+    'trading.eyebrow': 'Ойын саудасы',
+    'trading.title': 'Бір жылдам нарық раунды',
+    'trading.copy': 'Соңғы баға шықпай тұрып сатып ал, шорт жаса немесе кірме. Пайда ойын ақшаңа қосылады.',
+    'trading.start': 'Бастау',
+    'trading.shares': 'акция',
+    'trading.endHidden': 'Соңы жасырын',
+    'trading.boosters': 'Бустерлер',
+    'trading.finalHint': 'Қозғалыс көмегі',
+    'trading.up': 'жоғары',
+    'trading.down': 'төмен',
+    'trading.buy': 'Сатып алу',
+    'trading.shortSell': 'Шорт сату',
+    'trading.stayOut': 'Кірмеу',
+    'trading.marketClose': 'Нарық жабылуы',
+    'trading.bought': 'Сатып алынды',
+    'trading.shortSold': 'Шорт сатылды',
+    'trading.noTrade': 'Сауда жоқ',
+    'trading.newRound': 'Жаңа раунд',
+    'shop.eyebrow': 'Заттар дүкені',
+    'shop.title': 'Дүкеншіге бар',
+    'shop.copy': 'Ойын ақшасын сабақ заттарына жұмса да, оларды рюкзактан қолдан.',
+    'shop.shopkeeper': 'Дүкенші',
+    'shop.welcome': 'Қайта келдің, инвестор.',
+    'shop.explain': 'Нарықта ақша тап та, көмек заттарын ал. Көмек белгі береді. Өткізу бір сұрақтан өткізеді.',
+    'shop.hintTicket': 'Көмек билеті',
+    'shop.hintCopy': 'Сабақ сұрағында бір белгі береді.',
+    'shop.skipPass': 'Өткізу билеті',
+    'shop.skipCopy': 'XP алмай бір сұрақтан өткізеді.',
+    'shop.skipRampage': 'Скип рывок',
+    'shop.rampageCopy': '10 сабаққа дейін бірден аяқтайды.',
+    'shop.buyHint': 'Көмек сатып алу',
+    'shop.buySkip': 'Өткізу сатып алу',
+    'shop.buyRampage': 'Рывок сатып алу',
+    'shop.buyBooster': 'Бустер сатып алу',
+    'shop.hintTickets': 'Көмек билеттері',
+    'shop.skipPasses': 'Өткізу билеттері',
+    'decision.eyebrow': 'Шешім зертханасы',
+    'decision.title': 'Баға түскенде',
+    'decision.copy': 'Бағаның түсуі автоматты түрде жақсы не жаман емес. Алдымен неге екенін сұра.',
+    'calculator.eyebrow': 'Калькулятор',
+    'calculator.title': 'Күрделі өсім демосы',
+    'calculator.copy': 'Бұл оқу үшін жылына 6% қолданады. Нақты инвестициялар тегіс өспейді.',
+    'calculator.starting': 'Бастапқы ақша',
+    'calculator.monthly': 'Ай сайын қосу',
+    'calculator.years': 'Жыл',
+    'dictionary.eyebrow': 'Сөздік',
+    'dictionary.title': 'Инвестор сөздері',
+    'quiz.eyebrow': 'Тез тексеру',
+    'quiz.title': 'Акция бағасы түсті. Алдымен не істейсің?',
+    'quiz.panic': 'Дереу қорқып сату',
+    'quiz.facts': 'Неге түскенін білу',
+    'quiz.hype': 'Арзан болғандықтан көбірек алу',
+    'achievements.eyebrow': 'Жетістіктер',
+    'achievements.title': 'Жинаған белгілерің',
+    'achievements.unlocked': 'ашылды',
+    'achievements.secret': 'Құпия жетістік',
+    'achievements.hint': 'Көмек',
+    'games.vault': 'қойма ойындары',
+    'games.search': 'Ойындар мен санаттарды іздеу',
+    'games.piggy': 'Қоржын',
+    'games.new': 'Жаңа ойындар',
+    'games.playNow': 'Ойнау',
+    'games.safeTiles': 'Қауіпсіз плиткалар',
+    'games.snake': 'Жылан',
+    'games.breaker': 'Блок сындырғыш',
+    'games.code': 'Код сындырғыш',
+    'games.findCode': 'Қойма кодын тап',
+    'games.marketGuess': 'Нарықты болжа',
+    'games.marketQuestion': 'Мини нарық жоғары ма төмен бе?',
+    'help.eyebrow': 'Pushy көмегі',
+    'help.title': 'Pushy-ден сұра',
+    'help.empty': 'Pushy жауаптары осында шығады.',
+    'help.question': 'Сұрақ',
+    'help.placeholder': 'Мысал: диверсификацияны оңай түсіндір',
+    'account.eyebrow': 'Аккаунт',
+    'account.title': 'Прогресті сақтау',
+    'account.signedIn': 'Кірдің',
+    'account.signedInCopy': 'Ойнағанда прогресс автоматты сақталады.',
+    'account.cloudSave': 'Бұлтта сақтау',
+    'day.mon': 'Дс',
+    'day.tue': 'Сс',
+    'day.wed': 'Ср',
+    'day.thu': 'Бс',
+    'day.fri': 'Жм',
+    'shop.sign': 'ДҮКЕН',
+    'shop.items': 'ЗАТТАР',
+    'shop.hintShort': 'КӨМЕК',
+    'shop.passShort': 'ПАСС',
+    'shop.skipShort': 'СКИП',
+  },
+  es: {
+    'settings.background': 'Fondo',
+    'settings.music': 'Música',
+    'settings.cursor': 'Cursor',
+    'settings.marketChart': 'Gráfico del mercado',
+    'settings.normalLines': 'Líneas normales',
+    'settings.candles': 'Velas',
+    'settings.lessonDifficulty': 'Dificultad',
+    'settings.levels': 'Niveles',
+    'common.level': 'Nivel',
+    'common.unlocked': 'desbloqueado',
+    'common.complete': 'completo',
+    'common.completed': 'completo',
+    'common.cash': 'efectivo',
+    'common.questions': 'Preguntas',
+    'common.lessons': 'Lecciones',
+    'common.ready': 'Listo',
+    'common.correct': 'Correcto',
+    'common.tryAgain': 'Intenta otra vez',
+    'common.notAnswered': 'Sin responder',
+    'common.backpack': 'Mochila',
+    'common.hints': 'pistas',
+    'common.skips': 'saltos',
+    'common.rampage': 'ráfaga',
+    'common.boosters': 'potenciadores',
+    'common.buy': 'Comprar',
+    'common.active': 'Activo',
+    'common.owned': 'tienes',
+    'common.locked': 'Bloqueado',
+    'common.claimed': 'Reclamado',
+    'common.claimCash': 'Reclamar dinero',
+    'home.eyebrow': 'Conceptos de dinero para jóvenes',
+    'home.title': 'Invertir para niños',
+    'home.description': 'Una app divertida para practicar dinero sin usar efectivo real. Completa lecciones, prueba rondas de mercado, gana objetos y aprende riesgo, paciencia, acciones, fondos y crecimiento compuesto.',
+    'home.note': 'Solo educación, no consejo real de inversión.',
+    'home.start': 'Empezar a aprender a invertir',
+    'home.tutorial': 'Tutorial',
+    'home.signIn': 'Registrarse',
+    'home.logIn': 'Iniciar sesión',
+    'home.practiceMarket': 'Mercado de práctica',
+    'home.liveDemo': 'Demo',
+    'home.fakeNews': 'Noticias de práctica',
+    'home.pretendOnly': 'Solo juego',
+    'stats.title': 'Estadísticas',
+    'stats.xpEarned': 'XP ganada',
+    'stats.courseProgress': 'Progreso del curso',
+    'stats.tradingRound': 'Ronda de mercado',
+    'stats.quickCheck': 'Chequeo rápido',
+    'stats.toNext': 'para el siguiente',
+    'facts.eyebrow': 'Datos nuevos',
+    'facts.title': 'Datos de inversión de hoy',
+    'facts.copy': 'Cambian cada vez que abres o actualizas el sitio.',
+    'lessons.eyebrow': 'Ruta de lecciones',
+    'lessons.title': 'Mejora tu mente financiera',
+    'lessons.choosePath': 'Elige tu ruta',
+    'lessons.pickDifficulty': 'Elige dificultad',
+    'lessons.pickDifficultyCopy': 'Empieza con los niveles que quieras jugar hoy.',
+    'lessons.previous': 'Nivel anterior',
+    'lessons.next': 'Siguiente nivel',
+    'lessons.courseDashboard': 'Panel del curso',
+    'lessons.dashboardCopy': 'Completa cada nivel para desbloquear el siguiente. Usa Mercado para practicar trading.',
+    'lessons.backToMap': 'Volver al mapa',
+    'lessons.question': 'Pregunta',
+    'lessons.of': 'de',
+    'lessons.chooseAnswer': 'Elige la mejor respuesta',
+    'lessons.useHint': 'Usar pista',
+    'lessons.useSkip': 'Usar salto',
+    'lessons.useRampage': 'Usar ráfaga',
+    'lessons.nextQuestion': 'Siguiente pregunta',
+    'lessons.nextLesson': 'Siguiente lección',
+    'lessons.finishCourse': 'Terminar curso',
+    'lessons.reviewTime': 'Hora de repasar',
+    'lessons.practiceAgain': 'Preguntas para practicar',
+    'lessons.reviewCopy': 'Terminaste el nivel. Revisa los errores antes de seguir.',
+    'lessons.yourAnswer': 'Tu respuesta',
+    'lessons.correctAnswer': 'Respuesta correcta',
+    'lessons.reviewed': 'Ya repasé',
+    'lessons.completeSkip': 'Lección completa. Salto usado.',
+    'lessons.completeXp': 'Lección completa. Ganaste XP.',
+    'lessons.skipped': 'Saltado. Sigue.',
+    'lessons.correctNext': 'Correcto. Listo para el siguiente reto.',
+    'lessons.notQuite': 'No exactamente. Piensa en riesgo, datos y tiempo.',
+    'companies.eyebrow': 'Empresas reales',
+    'companies.title': 'Perfiles de empresas para estudiar',
+    'companies.copy': 'Empresas públicas reales, tickers reales y notas simples. Es aprendizaje, no consejo para comprar o vender.',
+    'companies.founded': 'Fundada',
+    'companies.study': 'Estudia esto',
+    'companies.moneyFrom': 'Gana dinero de',
+    'companies.risk': 'Riesgo a mirar',
+    'trading.eyebrow': 'Trading diario de práctica',
+    'trading.title': 'Una ronda rápida de mercado',
+    'trading.copy': 'Elige comprar, vender en corto o esperar antes de ver el precio final. Las ganancias suman efectivo de práctica.',
+    'trading.start': 'Inicio',
+    'trading.shares': 'acciones',
+    'trading.endHidden': 'Final oculto',
+    'trading.boosters': 'Potenciadores',
+    'trading.finalHint': 'Pista del movimiento',
+    'trading.up': 'arriba',
+    'trading.down': 'abajo',
+    'trading.buy': 'Comprar',
+    'trading.shortSell': 'Vender corto',
+    'trading.stayOut': 'No entrar',
+    'trading.marketClose': 'Cierre del mercado',
+    'trading.bought': 'Comprado',
+    'trading.shortSold': 'Vendido corto',
+    'trading.noTrade': 'Sin operación',
+    'trading.newRound': 'Nueva ronda',
+    'shop.eyebrow': 'Tienda de objetos',
+    'shop.title': 'Visita al vendedor',
+    'shop.copy': 'Gasta efectivo de práctica en objetos y úsalos desde tu mochila durante una lección.',
+    'shop.shopkeeper': 'Vendedor',
+    'shop.welcome': 'Bienvenido de nuevo, inversor.',
+    'shop.explain': 'Gana efectivo en Mercado y cámbialo por ayuda. Las pistas dan una clave. Los saltos pasan una pregunta.',
+    'shop.hintTicket': 'Boleto de pista',
+    'shop.hintCopy': 'Da una pista durante una pregunta.',
+    'shop.skipPass': 'Pase de salto',
+    'shop.skipCopy': 'Pasa una pregunta sin ganar XP.',
+    'shop.skipRampage': 'Ráfaga de saltos',
+    'shop.rampageCopy': 'Completa hasta 10 lecciones al instante.',
+    'shop.buyHint': 'Comprar pista',
+    'shop.buySkip': 'Comprar salto',
+    'shop.buyRampage': 'Comprar ráfaga',
+    'shop.buyBooster': 'Comprar potenciador',
+    'shop.hintTickets': 'Boletos de pista',
+    'shop.skipPasses': 'Pases de salto',
+    'decision.eyebrow': 'Laboratorio de decisiones',
+    'decision.title': 'Cuando baja un precio',
+    'decision.copy': 'Que un precio baje no es automáticamente bueno o malo. Practica preguntar por qué.',
+    'calculator.eyebrow': 'Calculadora',
+    'calculator.title': 'Demo de crecimiento compuesto',
+    'calculator.copy': 'Usa un 6% anual de práctica. Las inversiones reales no crecen de forma suave.',
+    'calculator.starting': 'Dinero inicial',
+    'calculator.monthly': 'Añadido cada mes',
+    'calculator.years': 'Años',
+    'dictionary.eyebrow': 'Diccionario',
+    'dictionary.title': 'Palabras de inversores',
+    'quiz.eyebrow': 'Chequeo rápido',
+    'quiz.title': 'Una acción baja. ¿Qué haces primero?',
+    'quiz.panic': 'Vender por pánico',
+    'quiz.facts': 'Averiguar por qué bajó',
+    'quiz.hype': 'Comprar más porque está barata',
+    'achievements.eyebrow': 'Logros',
+    'achievements.title': 'Insignias ganadas',
+    'achievements.unlocked': 'desbloqueados',
+    'achievements.secret': 'Logro secreto',
+    'achievements.hint': 'Pista',
+    'games.vault': 'juegos de bóveda',
+    'games.search': 'Buscar juegos y categorías',
+    'games.piggy': 'Alcancía',
+    'games.new': 'Juegos nuevos',
+    'games.playNow': 'Jugar ahora',
+    'games.safeTiles': 'Baldosas seguras',
+    'games.snake': 'Serpiente',
+    'games.breaker': 'Rompebloques',
+    'games.code': 'Rompecódigo',
+    'games.findCode': 'Encuentra el código',
+    'games.marketGuess': 'Adivina mercado',
+    'games.marketQuestion': '¿El mini mercado sube o baja?',
+    'help.eyebrow': 'Ayuda de Pushy',
+    'help.title': 'Pregunta a Pushy',
+    'help.empty': 'Las respuestas de Pushy aparecerán aquí.',
+    'help.question': 'Pregunta',
+    'help.placeholder': 'Ejemplo: explica diversificación de forma simple',
+    'account.eyebrow': 'Cuenta',
+    'account.title': 'Guarda tu progreso',
+    'account.signedIn': 'Sesión iniciada',
+    'account.signedInCopy': 'Tu progreso se guarda automáticamente mientras juegas.',
+    'account.cloudSave': 'Guardado en la nube',
+    'day.mon': 'Lun',
+    'day.tue': 'Mar',
+    'day.wed': 'Mié',
+    'day.thu': 'Jue',
+    'day.fri': 'Vie',
+    'shop.sign': 'TIENDA',
+    'shop.items': 'OBJETOS',
+    'shop.hintShort': 'PISTA',
+    'shop.passShort': 'PASE',
+    'shop.skipShort': 'SALTO',
   },
 };
 
@@ -1545,7 +2262,12 @@ function App() {
       currency,
       style: 'currency',
     }).format(amount);
-  const t = (key: string) => translations[language][key] ?? translations.en[key] ?? key;
+  const t = (key: string) =>
+    extraTranslations[language]?.[key] ??
+    translations[language][key] ??
+    extraTranslations.en?.[key] ??
+    translations.en[key] ??
+    key;
   const activeCursorColor =
     cursorColors.find((colorOption) => colorOption.id === cursorColor) ?? cursorColors[0];
   const cursorStyle = useMemo(
@@ -2854,7 +3576,7 @@ function App() {
 
   const themePicker = (
     <div className="theme-picker" aria-label="Background settings">
-      <span>Background</span>
+      <span>{t('settings.background')}</span>
       <div>
         {themes.map((themeOption) => (
           <button
@@ -2875,7 +3597,7 @@ function App() {
   const musicSettings = (
     <div className="music-settings" aria-label="Music settings">
       <div>
-        <span>Music</span>
+        <span>{t('settings.music')}</span>
         <strong>{activeMusicTrack.name}</strong>
       </div>
       <div className="music-track-list" role="group" aria-label="Choose music track">
@@ -2915,7 +3637,7 @@ function App() {
   const cursorSettings = (
     <div className="cursor-settings" aria-label="Cursor settings">
       <div>
-        <span>Cursor</span>
+        <span>{t('settings.cursor')}</span>
         <strong>{`${cursorDesigns.find((option) => option.id === cursorDesign)?.label ?? 'Arrow'} / ${activeCursorColor.label}`}</strong>
       </div>
       <div className="cursor-design-list" role="group" aria-label="Choose cursor design">
@@ -2998,13 +3720,13 @@ function App() {
   const chartSettings = (
     <div className="chart-settings" aria-label="Market chart settings">
       <div>
-        <span>Market chart</span>
-        <strong>{chartMode === 'line' ? 'Normal lines' : 'Candles'}</strong>
+        <span>{t('settings.marketChart')}</span>
+        <strong>{chartMode === 'line' ? t('settings.normalLines') : t('settings.candles')}</strong>
       </div>
       <div className="chart-mode-list" role="group" aria-label="Choose market chart style">
         {[
-          { id: 'line', label: 'Normal lines' },
-          { id: 'candles', label: 'Candles' },
+          { id: 'line', label: t('settings.normalLines') },
+          { id: 'candles', label: t('settings.candles') },
         ].map((modeOption) => (
           <button
             className={`chart-mode-option ${chartMode === modeOption.id ? 'chart-mode-option--active' : ''}`}
@@ -3022,7 +3744,7 @@ function App() {
   const lessonDifficultySettings = (
     <div className="lesson-difficulty-settings" aria-label="Lesson difficulty settings">
       <div>
-        <span>Lesson difficulty</span>
+        <span>{t('settings.lessonDifficulty')}</span>
         <strong>{lessonDifficulty}</strong>
       </div>
       <div className="difficulty-choice-list" role="group" aria-label="Choose lesson difficulty">
@@ -3038,7 +3760,7 @@ function App() {
             >
               <strong>{difficulty}</strong>
               <span>
-                Levels {optionBounds.start + 1}-{optionBounds.end + 1}
+                {t('settings.levels')} {optionBounds.start + 1}-{optionBounds.end + 1}
               </span>
             </button>
           );
@@ -3052,20 +3774,20 @@ function App() {
       <main className={`app-shell theme-${theme} lesson-page custom-cursor`} style={cursorStyle}>
         {levelNotice && (
           <div className="level-toast" role="status">
-            <strong>Level {levelNotice} unlocked</strong>
-            <span>You reached a new learning level.</span>
+            <strong>{t('common.level')} {levelNotice} {t('common.unlocked')}</strong>
+            <span>{t('lessons.correctNext')}</span>
           </div>
         )}
         <nav className="lesson-topbar" aria-label="Lesson navigation">
           <button className="ghost-button" type="button" onClick={goToCourse}>
-            Back to map
+            {t('lessons.backToMap')}
           </button>
           <div className="lesson-stats">
-            <span>Level {level}</span>
+            <span>{t('common.level')} {level}</span>
             <span>{xp} XP</span>
-            <span>${wallet} cash</span>
-            <span>{100 - xpIntoLevel} XP to next</span>
-            <span>{completedLessons.length}/{lessons.length} complete</span>
+            <span>${wallet} {t('common.cash')}</span>
+            <span>{100 - xpIntoLevel} XP {t('stats.toNext')}</span>
+            <span>{completedLessons.length}/{lessons.length} {t('common.complete')}</span>
           </div>
         </nav>
 
@@ -3080,7 +3802,7 @@ function App() {
           <article className="lesson-card-page">
             <div className="lesson-progress-header">
               <p className="question-meta">
-                Question {questionIndex + 1} of {activeLesson.questions.length}
+                {t('lessons.question')} {questionIndex + 1} {t('lessons.of')} {activeLesson.questions.length}
               </p>
               <div className="progress-track">
                 <span style={{ width: `${lessonProgress}%` }} />
@@ -3093,15 +3815,15 @@ function App() {
             <div className="lesson-tools" aria-label="Lesson item backpack">
               <div>
                 <strong>{ownedHints}</strong>
-                <span>Hints</span>
+                <span>{t('common.hints')}</span>
               </div>
               <div>
                 <strong>{ownedSkips}</strong>
-                <span>Skips</span>
+                <span>{t('common.skips')}</span>
               </div>
               <div>
                 <strong>{ownedRampages}</strong>
-                <span>Rampage</span>
+                <span>{t('common.rampage')}</span>
               </div>
               <button
                 className="ghost-button"
@@ -3109,7 +3831,7 @@ function App() {
                 type="button"
                 onClick={useHint}
               >
-                Use hint
+                {t('lessons.useHint')}
               </button>
               <button
                 className="ghost-button"
@@ -3117,7 +3839,7 @@ function App() {
                 type="button"
                 onClick={useSkip}
               >
-                Use skip
+                {t('lessons.useSkip')}
               </button>
               <button
                 className="ghost-button"
@@ -3125,13 +3847,13 @@ function App() {
                 type="button"
                 onClick={useSkipRampage}
               >
-                Use rampage
+                {t('lessons.useRampage')}
               </button>
             </div>
             {(lessonHint || helperMessage) && (
               <p className="helper-message">{lessonHint || helperMessage}</p>
             )}
-            <h2>Choose the best answer</h2>
+            <h2>{t('lessons.chooseAnswer')}</h2>
             <div className="choice-list">
               {activeQuestion.choices.map((choice) => {
                 const isPicked = lessonAnswer === choice;
@@ -3158,12 +3880,12 @@ function App() {
                 {lessonAnswer === activeQuestion.correct
                   ? isFinalQuestion
                     ? wasSkipped
-                      ? 'Lesson complete. Skip pass used.'
-                      : 'Lesson complete. You earned XP.'
+                      ? t('lessons.completeSkip')
+                      : t('lessons.completeXp')
                     : wasSkipped
-                      ? 'Skipped. Keep going.'
-                      : 'Correct. Ready for the next challenge.'
-                  : 'Not quite. Think about risk, facts, and time.'}
+                      ? t('lessons.skipped')
+                      : t('lessons.correctNext')
+                  : t('lessons.notQuite')}
               </p>
             )}
 
@@ -3179,30 +3901,30 @@ function App() {
                   setReviewComplete(false);
                 }}
               >
-                Next question
+                {t('lessons.nextQuestion')}
               </button>
             )}
 
             {lessonAnswer === activeQuestion.correct && isFinalQuestion && lessonMistakes.length > 0 && !reviewComplete && (
               <div className="review-panel">
-                <p className="eyebrow">Review time</p>
-                <h3>Questions to practice again</h3>
+                <p className="eyebrow">{t('lessons.reviewTime')}</p>
+                <h3>{t('lessons.practiceAgain')}</h3>
                 <p>
-                  You finished the level. Check the questions you missed before moving on.
+                  {t('lessons.reviewCopy')}
                 </p>
                 <div className="review-list">
                   {lessonMistakes.map((mistake) => (
                     <article className="review-item" key={`${mistake.questionIndex}-${mistake.picked}`}>
                       <strong>
-                        Question {mistake.questionIndex + 1}: {mistake.question}
+                        {t('lessons.question')} {mistake.questionIndex + 1}: {mistake.question}
                       </strong>
-                      <span>Your answer: {mistake.picked}</span>
-                      <span>Correct answer: {mistake.correct}</span>
+                      <span>{t('lessons.yourAnswer')}: {mistake.picked}</span>
+                      <span>{t('lessons.correctAnswer')}: {mistake.correct}</span>
                     </article>
                   ))}
                 </div>
                 <button type="button" onClick={() => setReviewComplete(true)}>
-                  I reviewed them
+                  {t('lessons.reviewed')}
                 </button>
               </div>
             )}
@@ -3210,10 +3932,10 @@ function App() {
             {lessonAnswer === activeQuestion.correct && isFinalQuestion && (lessonMistakes.length === 0 || reviewComplete) && (
               <div className="finish-actions">
                 <button type="button" onClick={goToCourse}>
-                  Back to map
+                  {t('lessons.backToMap')}
                 </button>
                 <button type="button" onClick={openNextLesson}>
-                  {lessons[activeLessonIndex + 1] ? 'Next lesson' : 'Finish course'}
+                  {lessons[activeLessonIndex + 1] ? t('lessons.nextLesson') : t('lessons.finishCourse')}
                 </button>
               </div>
             )}
@@ -3227,12 +3949,12 @@ function App() {
     <main className={`app-shell theme-${theme} custom-cursor`} style={cursorStyle}>
       {levelNotice && (
         <div className="level-toast" role="status">
-          <strong>Level {levelNotice} unlocked</strong>
-          <span>You reached a new learning level.</span>
+          <strong>{t('common.level')} {levelNotice} {t('common.unlocked')}</strong>
+          <span>{t('lessons.correctNext')}</span>
         </div>
       )}
       <aside className="sidebar-nav" aria-label="App sidebar">
-        <strong>Investing for Kids</strong>
+        <strong>{t('home.title')}</strong>
         {sidebarItems.map((item) => (
           <button
             aria-label={t(`nav.${item.id}`)}
@@ -3247,15 +3969,15 @@ function App() {
           </button>
         ))}
       </aside>
-      <aside className="stats-sidebar" aria-label="Learning statistics">
+      <aside className="stats-sidebar" aria-label={t('stats.title')}>
         <div className="stats-sidebar__header">
-          <p className="eyebrow">Statistics</p>
-          <strong>Level {level}</strong>
+          <p className="eyebrow">{t('stats.title')}</p>
+          <strong>{t('common.level')} {level}</strong>
         </div>
         <div className="stats-sidebar__meter" aria-label={`${xpIntoLevel} out of 100 XP toward next level`}>
           <div>
             <span>{xpIntoLevel}/100 XP</span>
-            <span>{100 - xpIntoLevel} to next</span>
+            <span>{100 - xpIntoLevel} {t('stats.toNext')}</span>
           </div>
           <div className="progress-track">
             <span style={{ width: `${xpIntoLevel}%` }} />
@@ -3264,75 +3986,73 @@ function App() {
         <div className="stats-sidebar__grid">
           <span>
             <strong>{xp}</strong>
-            XP earned
+            {t('stats.xpEarned')}
           </span>
           <span>
             <strong>${wallet}</strong>
-            Cash
+            {t('common.cash')}
           </span>
           <span>
             <strong>{completedLessons.length}/{lessons.length}</strong>
-            Lessons
+            {t('common.lessons')}
           </span>
           <span>
             <strong>{totalQuestions}</strong>
-            Questions
+            {t('common.questions')}
           </span>
         </div>
         <div className="stats-sidebar__mini">
-          <span>Course progress</span>
+          <span>{t('stats.courseProgress')}</span>
           <strong>{progress}%</strong>
           <div className="progress-track">
             <span style={{ width: `${progress}%` }} />
           </div>
         </div>
         <div className="stats-sidebar__status">
-          <span>Trading round</span>
-          <strong>{tradeResult ? `${tradeResult.money >= 0 ? '+' : ''}$${tradeResult.money}` : 'Ready'}</strong>
+          <span>{t('stats.tradingRound')}</span>
+          <strong>{tradeResult ? `${tradeResult.money >= 0 ? '+' : ''}$${tradeResult.money}` : t('common.ready')}</strong>
         </div>
         <div className="stats-sidebar__status">
-          <span>Quick check</span>
-          <strong>{answer === 'facts' ? 'Correct' : answer ? 'Try again' : 'Not answered'}</strong>
+          <span>{t('stats.quickCheck')}</span>
+          <strong>{answer === 'facts' ? t('common.correct') : answer ? t('common.tryAgain') : t('common.notAnswered')}</strong>
         </div>
         <div className="stats-sidebar__status">
-          <span>Backpack</span>
+          <span>{t('common.backpack')}</span>
           <strong>
-            {ownedHints} hints · {ownedSkips} skips · {ownedRampages} rampage ·{' '}
-            {Object.values(ownedBoosters).reduce((total, count) => total + count, 0)} boosters
+            {ownedHints} {t('common.hints')} · {ownedSkips} {t('common.skips')} · {ownedRampages} {t('common.rampage')} ·{' '}
+            {Object.values(ownedBoosters).reduce((total, count) => total + count, 0)} {t('common.boosters')}
           </strong>
         </div>
       </aside>
       {activeSection === 'home' && (
       <section className="hero">
         <div className="hero__copy">
-          <p className="eyebrow">Money basics for young learners</p>
-          <h1>Investing for Kids</h1>
+          <p className="eyebrow">{t('home.eyebrow')}</p>
+          <h1>{t('home.title')}</h1>
           <p className="hero-description">
-            A playful learning app for practicing money basics without using real cash. Complete
-            lessons, try pretend market rounds, earn shop items, and learn how risk, patience,
-            stocks, funds, and compound growth work.
+            {t('home.description')}
           </p>
-          <p className="hero-note">Built for education only, not real investing advice.</p>
+          <p className="hero-note">{t('home.note')}</p>
           <div className="hero-actions" aria-label="Home actions">
             <button type="button" onClick={startLearning}>
-              Start learning to invest
+              {t('home.start')}
             </button>
             <button className="ghost-button" type="button" onClick={() => activateSection('help')}>
-              Tutorial
+              {t('home.tutorial')}
             </button>
             <button className="ghost-button" type="button" onClick={() => openAccountMode('signup')}>
-              Sign in
+              {t('home.signIn')}
             </button>
             <button className="ghost-button" type="button" onClick={() => openAccountMode('signin')}>
-              Log in
+              {t('home.logIn')}
             </button>
           </div>
         </div>
 
         <div className="market-board" aria-label="Pretend market chart">
           <div className="board-header">
-            <span>Practice Market</span>
-            <strong>Live demo</strong>
+            <span>{t('home.practiceMarket')}</span>
+            <strong>{t('home.liveDemo')}</strong>
           </div>
           {sessionCompanies.slice(0, 3).map((company) => (
             <div className="ticker-row" key={company.symbol}>
@@ -3353,17 +4073,17 @@ function App() {
               ))}
             </svg>
             <div className="chart-labels">
-              <span>Mon</span>
-              <span>Tue</span>
-              <span>Wed</span>
-              <span>Thu</span>
-              <span>Fri</span>
+              <span>{t('day.mon')}</span>
+              <span>{t('day.tue')}</span>
+              <span>{t('day.wed')}</span>
+              <span>{t('day.thu')}</span>
+              <span>{t('day.fri')}</span>
             </div>
           </div>
           <div className="fake-news-feed" aria-label="Fake market news">
             <div className="fake-news-feed__header">
-              <span>Fake News</span>
-              <strong>Pretend only</strong>
+              <span>{t('home.fakeNews')}</span>
+              <strong>{t('home.pretendOnly')}</strong>
             </div>
             {sessionNews.map((news) => (
               <article className="fake-news-card" key={news.headline}>
@@ -3380,11 +4100,11 @@ function App() {
       <section id="facts" className={`section ${activeSection === 'facts' ? 'section--active' : 'section--hidden'}`}>
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Fresh facts</p>
-            <h2>Today&apos;s investing facts</h2>
+            <p className="eyebrow">{t('facts.eyebrow')}</p>
+            <h2>{t('facts.title')}</h2>
           </div>
           <p className="section-copy">
-            These rotate each time you open or refresh the site.
+            {t('facts.copy')}
           </p>
         </div>
         <div className="fact-grid">
@@ -3400,11 +4120,11 @@ function App() {
       <section id="lessons" className={`section lessons-page ${activeSection === 'lessons' ? 'section--active' : 'section--hidden'}`}>
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Lesson path</p>
-            <h2>Level up your money brain</h2>
+            <p className="eyebrow">{t('lessons.eyebrow')}</p>
+            <h2>{t('lessons.title')}</h2>
           </div>
           <div className="progress-card" aria-label={`${progress}% complete`}>
-            <span>{completedLessons.length}/{lessons.length} complete</span>
+            <span>{completedLessons.length}/{lessons.length} {t('common.complete')}</span>
             <div className="progress-track">
               <span style={{ width: `${progress}%` }} />
             </div>
@@ -3414,9 +4134,9 @@ function App() {
         {!lessonDifficultyChosen && (
           <div className="difficulty-greeting" role="dialog" aria-label="Choose lesson difficulty">
             <div>
-              <p className="eyebrow">Choose your path</p>
-              <h3>Pick a lesson difficulty</h3>
-              <p>Start with the kind of levels you want to play today.</p>
+              <p className="eyebrow">{t('lessons.choosePath')}</p>
+              <h3>{t('lessons.pickDifficulty')}</h3>
+              <p>{t('lessons.pickDifficultyCopy')}</p>
             </div>
             <div className="difficulty-choice-list" role="group" aria-label="Choose lesson difficulty">
               {lessonDifficultyOptions.map((difficulty) => {
@@ -3431,7 +4151,7 @@ function App() {
                   >
                     <strong>{difficulty}</strong>
                     <span>
-                      Levels {optionBounds.start + 1}-{optionBounds.end + 1}
+                      {t('settings.levels')} {optionBounds.start + 1}-{optionBounds.end + 1}
                     </span>
                   </button>
                 );
@@ -3449,10 +4169,10 @@ function App() {
                 type="button"
                 onClick={() => spinToLesson(lessonWindowStart - 1)}
               >
-                Previous level
+                {t('lessons.previous')}
               </button>
               <span>
-                {lessonDifficulty} level {difficultyLevelNumber} of {difficultyLevelCount}
+                {lessonDifficulty} {t('common.level').toLowerCase()} {difficultyLevelNumber} {t('lessons.of')} {difficultyLevelCount}
               </span>
               <button
                 className="ghost-button"
@@ -3460,7 +4180,7 @@ function App() {
                 type="button"
                 onClick={() => spinToLesson(lessonWindowStart + 1)}
               >
-                Next level
+                {t('lessons.next')}
               </button>
             </div>
             <div
@@ -3488,7 +4208,7 @@ function App() {
                     type="button"
                   >
                     <span>{isComplete ? 'OK' : isLocked ? 'LOCK' : lesson.badge}</span>
-                    <strong>Level {globalIndex + 1}: {place.name}</strong>
+                    <strong>{t('common.level')} {globalIndex + 1}: {place.name}</strong>
                     <em className={`lesson-difficulty lesson-difficulty--${difficulty.toLowerCase()}`}>{difficulty}</em>
                     <small>{lesson.skill}</small>
                   </button>
@@ -3498,10 +4218,10 @@ function App() {
           </div>
 
           <aside className="course-panel">
-            <p className="eyebrow">Course dashboard</p>
-            <h3>{xp} XP earned</h3>
+            <p className="eyebrow">{t('lessons.courseDashboard')}</p>
+            <h3>{xp} {t('stats.xpEarned')}</h3>
             <p>
-              Complete each level to unlock the next one. Use Market from the sidebar to practice trading.
+              {t('lessons.dashboardCopy')}
             </p>
             {lockedMessage && <p className="locked-message">{lockedMessage}</p>}
           </aside>
@@ -3516,7 +4236,7 @@ function App() {
             return (
             <article className="lesson-card" key={lesson.title}>
               <div className={`lesson-place-art lesson-place-art--${place.scene}`} aria-hidden="true" />
-              <p className="lesson-place-label">Level {globalIndex + 1}: {place.name}</p>
+              <p className="lesson-place-label">{t('common.level')} {globalIndex + 1}: {place.name}</p>
               <p className={`lesson-difficulty lesson-difficulty--${difficulty.toLowerCase()}`}>{difficulty}</p>
               <h3>{lesson.title}</h3>
               <p>{lesson.text}</p>
@@ -3530,11 +4250,11 @@ function App() {
       <section id="companies" className={`section ${activeSection === 'companies' ? 'section--active' : 'section--hidden'}`}>
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Real companies</p>
-            <h2>Company profiles you can study</h2>
+            <p className="eyebrow">{t('companies.eyebrow')}</p>
+            <h2>{t('companies.title')}</h2>
           </div>
           <p className="section-copy">
-            Real public companies, real tickers, and beginner-friendly notes. This is for learning, not advice to buy or sell.
+            {t('companies.copy')}
           </p>
         </div>
         <div className="company-grid">
@@ -3549,20 +4269,20 @@ function App() {
               <div className="company-meta" aria-label={`${company.name} facts`}>
                 <span>{company.sector}</span>
                 <span>{company.country}</span>
-                <span>Founded {company.founded}</span>
+                <span>{t('companies.founded')} {company.founded}</span>
               </div>
               <p>{company.business}</p>
               <div className="company-study">
-                <strong>Study this</strong>
+                <strong>{t('companies.study')}</strong>
                 <span>{company.learnerFocus}</span>
               </div>
               <div className="company-details">
                 <span>
-                  <strong>Makes money from</strong>
+                  <strong>{t('companies.moneyFrom')}</strong>
                   {company.revenueStream}
                 </span>
                 <span>
-                  <strong>Risk to watch</strong>
+                  <strong>{t('companies.risk')}</strong>
                   {company.risk}
                 </span>
               </div>
@@ -3574,12 +4294,11 @@ function App() {
       <section id="trading" className={`section day-trade ${activeSection === 'trading' ? 'section--active' : 'section--hidden'}`}>
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Pretend day trading</p>
-            <h2>Trade one fast market round</h2>
+            <p className="eyebrow">{t('trading.eyebrow')}</p>
+            <h2>{t('trading.title')}</h2>
           </div>
           <p className="section-copy">
-            Pick buy, short sell, or stay out before the final price is revealed. Gains add cash
-            to your practice market wallet.
+            {t('trading.copy')}
           </p>
         </div>
 
@@ -3594,14 +4313,14 @@ function App() {
             </div>
             <p className="trade-news">{tradeRound.news}</p>
             <div className="trade-stats">
-              <span>Start ${tradeRound.startPrice.toFixed(2)}</span>
-              <span>{boostedTradeShares} shares</span>
-              <span>{tradeResult ? `End $${tradeRound.endPrice.toFixed(2)}` : 'End hidden'}</span>
+              <span>{t('trading.start')} ${tradeRound.startPrice.toFixed(2)}</span>
+              <span>{boostedTradeShares} {t('trading.shares')}</span>
+              <span>{tradeResult ? `End $${tradeRound.endPrice.toFixed(2)}` : t('trading.endHidden')}</span>
             </div>
             <div className="market-boosters" aria-label="Market boosters">
               <div className="market-boosters__header">
-                <strong>Boosters</strong>
-                <span>{activeMarketBoosters.length} active</span>
+                <strong>{t('trading.boosters')}</strong>
+                <span>{activeMarketBoosters.length} {t('common.active').toLowerCase()}</span>
               </div>
               <div className="market-booster-grid">
                 {marketBoosters.map((booster) => {
@@ -3619,23 +4338,23 @@ function App() {
                       onClick={() => activateMarketBooster(booster.id)}
                     >
                       <strong>{booster.label}</strong>
-                      <span>{isActive ? 'Active' : `${ownedCount} owned`}</span>
+                      <span>{isActive ? t('common.active') : `${ownedCount} ${t('common.owned')}`}</span>
                     </button>
                   );
                 })}
               </div>
               {activeMarketBoosters.includes('insight') && !tradeResult && (
                 <p className="market-insight">
-                  Final move hint: {tradeRound.movePercent >= 0 ? 'up' : 'down'}
+                  {t('trading.finalHint')}: {tradeRound.movePercent >= 0 ? t('trading.up') : t('trading.down')}
                 </p>
               )}
             </div>
             <div className="trade-actions">
               <button disabled={Boolean(tradeResult)} type="button" onClick={() => makeTrade('buy')}>
-                Buy
+                {t('trading.buy')}
               </button>
               <button disabled={Boolean(tradeResult)} type="button" onClick={() => makeTrade('sell')}>
-                Short sell
+                {t('trading.shortSell')}
               </button>
               <button
                 className="ghost-button"
@@ -3643,14 +4362,14 @@ function App() {
                 type="button"
                 onClick={() => makeTrade('hold')}
               >
-                Stay out
+                {t('trading.stayOut')}
               </button>
             </div>
           </article>
 
           <article className="trade-screen">
             <div className="trade-screen__top">
-              <span>Market close</span>
+              <span>{t('trading.marketClose')}</span>
               <strong className={tradeRound.movePercent >= 0 ? 'move-up' : 'move-down'}>
                 {tradeResult
                   ? `${tradeRound.movePercent > 0 ? '+' : ''}${tradeRound.movePercent}%`
@@ -3697,10 +4416,10 @@ function App() {
               <div className={`trade-result ${tradeResult.money < 0 ? 'trade-result--loss' : ''}`}>
                 <strong>
                   {tradeChoice === 'buy'
-                    ? 'Bought'
+                    ? t('trading.bought')
                     : tradeChoice === 'sell'
-                      ? 'Short sold'
-                      : 'No trade'}
+                      ? t('trading.shortSold')
+                      : t('trading.noTrade')}
                 </strong>
                 <p>{tradeResult.message}</p>
                 <span>
@@ -3710,7 +4429,7 @@ function App() {
               </div>
             )}
             <button className="next-trade" type="button" onClick={resetTrade}>
-              New round
+              {t('trading.newRound')}
             </button>
           </article>
         </div>
@@ -3719,27 +4438,27 @@ function App() {
       <section id="shop" className={`section shop-page ${activeSection === 'shop' ? 'section--active' : 'section--hidden'}`}>
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Item shop</p>
-            <h2>Visit the shopkeeper</h2>
+            <p className="eyebrow">{t('shop.eyebrow')}</p>
+            <h2>{t('shop.title')}</h2>
           </div>
           <p className="section-copy">
-            Spend practice market cash on lesson items, then use them from your backpack during a lesson.
+            {t('shop.copy')}
           </p>
         </div>
 
         <div className="shop-layout">
           <article className="shopkeeper-card">
             <div className="shopkeeper-shop" aria-hidden="true">
-              <div className="shop-sign">SHOP</div>
+              <div className="shop-sign">{t('shop.sign')}</div>
               <div className="shop-awning">
                 <span />
                 <span />
                 <span />
               </div>
               <div className="shop-shelves">
-                <span>HINT</span>
-                <span>PASS</span>
-                <span>SKIP</span>
+                <span>{t('shop.hintShort')}</span>
+                <span>{t('shop.passShort')}</span>
+                <span>{t('shop.skipShort')}</span>
               </div>
               <div className="shop-details" aria-hidden="true">
                 <span className="shop-lantern" />
@@ -3753,15 +4472,14 @@ function App() {
               </div>
               <div className={`bye-sign ${showByeSign ? 'bye-sign--active' : ''}`}>bye</div>
               <div className="shop-counter">
-                <span>ITEMS</span>
+                <span>{t('shop.items')}</span>
               </div>
             </div>
             <div>
-              <p className="eyebrow">Shopkeeper</p>
-              <h3>Welcome back, investor.</h3>
+              <p className="eyebrow">{t('shop.shopkeeper')}</p>
+              <h3>{t('shop.welcome')}</h3>
               <p>
-                Earn cash in Market, then trade it here for help items. Hints reveal a clue.
-                Skips move past one question.
+                {t('shop.explain')}
               </p>
               {shopMessage && <p className="shop-message">{shopMessage}</p>}
             </div>
@@ -3771,32 +4489,32 @@ function App() {
             <article className="shop-item">
               <span className="shop-item__icon">?</span>
               <div>
-                <h3>Hint ticket</h3>
-                <p>Gives one clue during a lesson question.</p>
+                <h3>{t('shop.hintTicket')}</h3>
+                <p>{t('shop.hintCopy')}</p>
                 <strong>${hintCost}</strong>
               </div>
               <button disabled={wallet < hintCost} type="button" onClick={() => buyShopItem('hint')}>
-                Buy hint
+                {t('shop.buyHint')}
               </button>
             </article>
 
             <article className="shop-item">
               <span className="shop-item__icon">→</span>
               <div>
-                <h3>Skip pass</h3>
-                <p>Moves past one lesson question without earning XP for it.</p>
+                <h3>{t('shop.skipPass')}</h3>
+                <p>{t('shop.skipCopy')}</p>
                 <strong>${skipCost}</strong>
               </div>
               <button disabled={wallet < skipCost} type="button" onClick={() => buyShopItem('skip')}>
-                Buy skip
+                {t('shop.buySkip')}
               </button>
             </article>
 
             <article className="shop-item shop-item--premium">
               <span className="shop-item__icon">10</span>
               <div>
-                <h3>Skip Rampage</h3>
-                <p>Completes up to 10 lessons instantly when used inside a lesson.</p>
+                <h3>{t('shop.skipRampage')}</h3>
+                <p>{t('shop.rampageCopy')}</p>
                 <strong>${skipRampageCost}</strong>
               </div>
               <button
@@ -3804,7 +4522,7 @@ function App() {
                 type="button"
                 onClick={() => buyShopItem('rampage')}
               >
-                Buy rampage
+                {t('shop.buyRampage')}
               </button>
             </article>
 
@@ -3821,28 +4539,28 @@ function App() {
                   type="button"
                   onClick={() => buyShopItem(booster.id)}
                 >
-                  Buy booster
+                  {t('shop.buyBooster')}
                 </button>
               </article>
             ))}
           </div>
 
           <aside className="shop-backpack">
-            <p className="eyebrow">Backpack</p>
+            <p className="eyebrow">{t('common.backpack')}</p>
             <div>
-              <span>Cash</span>
+              <span>{t('common.cash')}</span>
               <strong>${wallet}</strong>
             </div>
             <div>
-              <span>Hint tickets</span>
+              <span>{t('shop.hintTickets')}</span>
               <strong>{ownedHints}</strong>
             </div>
             <div>
-              <span>Skip passes</span>
+              <span>{t('shop.skipPasses')}</span>
               <strong>{ownedSkips}</strong>
             </div>
             <div>
-              <span>Skip Rampage</span>
+              <span>{t('shop.skipRampage')}</span>
               <strong>{ownedRampages}</strong>
             </div>
             {marketBoosters.map((booster) => (
@@ -3857,11 +4575,10 @@ function App() {
 
       <section id="decision-lab" className={`section split ${activeSection === 'decision-lab' ? 'section--active' : 'section--hidden'}`}>
         <div>
-          <p className="eyebrow">Pretend decision lab</p>
-          <h2>When a price goes down</h2>
+          <p className="eyebrow">{t('decision.eyebrow')}</p>
+          <h2>{t('decision.title')}</h2>
           <p className="section-copy">
-            A price going down is not automatically good or bad. Practice asking why before
-            choosing a pretend action.
+            {t('decision.copy')}
           </p>
         </div>
         <div className="scenario-list">
@@ -3877,15 +4594,15 @@ function App() {
 
       <section id="calculator" className={`section calculator ${activeSection === 'calculator' ? 'section--active' : 'section--hidden'}`}>
         <div>
-          <p className="eyebrow">Calculator</p>
-          <h2>Compound growth demo</h2>
+          <p className="eyebrow">{t('calculator.eyebrow')}</p>
+          <h2>{t('calculator.title')}</h2>
           <p className="section-copy">
-            This uses a pretend 6% yearly growth rate. Real investments do not grow smoothly.
+            {t('calculator.copy')}
           </p>
         </div>
         <div className="calc-panel">
           <label>
-            Starting money
+            {t('calculator.starting')}
             <input
               min="0"
               type="number"
@@ -3894,7 +4611,7 @@ function App() {
             />
           </label>
           <label>
-            Added each month
+            {t('calculator.monthly')}
             <input
               min="0"
               type="number"
@@ -3903,7 +4620,7 @@ function App() {
             />
           </label>
           <label>
-            Years
+            {t('calculator.years')}
             <input
               min="1"
               max="40"
@@ -3918,8 +4635,8 @@ function App() {
 
       <section id="dictionary" className={`section ${activeSection === 'dictionary' ? 'section--active' : 'section--hidden'}`}>
         <div className="section-heading">
-          <p className="eyebrow">Dictionary</p>
-          <h2>Words investors use</h2>
+          <p className="eyebrow">{t('dictionary.eyebrow')}</p>
+          <h2>{t('dictionary.title')}</h2>
         </div>
         <dl className="dictionary">
           {terms.map(([term, definition]) => (
@@ -3933,8 +4650,8 @@ function App() {
 
       <section id="quick-check" className={`section quiz ${activeSection === 'quick-check' ? 'section--active' : 'section--hidden'}`}>
         <div>
-          <p className="eyebrow">Quick check</p>
-          <h2>A stock price falls. What should you do first?</h2>
+          <p className="eyebrow">{t('quiz.eyebrow')}</p>
+          <h2>{t('quiz.title')}</h2>
         </div>
         <div className="quiz-actions">
           <button
@@ -3944,7 +4661,7 @@ function App() {
               playAnswerSound(false);
             }}
           >
-            Panic sell instantly
+            {t('quiz.panic')}
           </button>
           <button
             type="button"
@@ -3953,7 +4670,7 @@ function App() {
               playAnswerSound(true);
             }}
           >
-            Find out why it fell
+            {t('quiz.facts')}
           </button>
           <button
             type="button"
@@ -3962,7 +4679,7 @@ function App() {
               playAnswerSound(false);
             }}
           >
-            Buy more because it is cheaper
+            {t('quiz.hype')}
           </button>
         </div>
         {quizMessage && <p className="quiz-result">{quizMessage}</p>}
@@ -3971,11 +4688,11 @@ function App() {
       <section id="achievements" className={`section achievements-page ${activeSection === 'achievements' ? 'section--active' : 'section--hidden'}`}>
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Achievements</p>
-            <h2>Badges you have earned</h2>
+            <p className="eyebrow">{t('achievements.eyebrow')}</p>
+            <h2>{t('achievements.title')}</h2>
           </div>
           <div className="progress-card" aria-label={`${achievementProgress}% achievements unlocked`}>
-            <span>{unlockedAchievements}/{achievements.length} unlocked</span>
+            <span>{unlockedAchievements}/{achievements.length} {t('achievements.unlocked')}</span>
             <div className="progress-track">
               <span style={{ width: `${achievementProgress}%` }} />
             </div>
@@ -3996,14 +4713,14 @@ function App() {
               >
                 <div className="achievement-card__top">
                   <span className="achievement-icon">
-                    {achievement.unlocked ? achievement.icon : achievement.secret ? '?' : 'LOCK'}
+                    {achievement.unlocked ? achievement.icon : achievement.secret ? '?' : t('common.locked').toUpperCase()}
                   </span>
                   <span className="achievement-reward">+${achievement.reward}</span>
                 </div>
                 <div>
                   <p className="achievement-difficulty">{achievement.difficulty}</p>
-                  <h3>{isSecretLocked ? 'Secret achievement' : achievement.title}</h3>
-                  <p>{isSecretLocked ? `Hint: ${achievement.hint}` : achievement.detail}</p>
+                  <h3>{isSecretLocked ? t('achievements.secret') : achievement.title}</h3>
+                  <p>{isSecretLocked ? `${t('achievements.hint')}: ${achievement.hint}` : achievement.detail}</p>
                 </div>
                 <div className="achievement-meter">
                   <span>
@@ -4021,7 +4738,7 @@ function App() {
                     claimAchievementReward(achievement.id, achievement.reward, achievement.unlocked)
                   }
                 >
-                  {isClaimed ? 'Claimed' : achievement.unlocked ? 'Claim cash' : 'Locked'}
+                  {isClaimed ? t('common.claimed') : achievement.unlocked ? t('common.claimCash') : t('common.locked')}
                 </button>
               </article>
             );
@@ -4122,15 +4839,15 @@ function App() {
             <div className="vault-topbar">
               <div className="vault-brand">
                 <span>V</span>
-                <strong>vault games</strong>
+                <strong>{t('games.vault')}</strong>
               </div>
               <label className="vault-search">
-                <span>Search games and categories</span>
-                <input aria-label="Search games and categories" readOnly value="" />
+                <span>{t('games.search')}</span>
+                <input aria-label={t('games.search')} readOnly value="" />
               </label>
               <div className="vault-actions">
                 <span>${wallet.toLocaleString()}</span>
-                <button type="button" onClick={() => setActiveSection('piggy-bank')}>Piggy</button>
+                <button type="button" onClick={() => setActiveSection('piggy-bank')}>{t('games.piggy')}</button>
               </div>
             </div>
 
@@ -4156,7 +4873,7 @@ function App() {
             </div>
 
             <div className="vault-section-title">
-              <h2>New games</h2>
+              <h2>{t('games.new')}</h2>
               <span>Wins: {secretGameScore}</span>
             </div>
 
@@ -4186,14 +4903,14 @@ function App() {
             </div>
 
             <div className="vault-section-title">
-              <h2>Play now</h2>
+              <h2>{t('games.playNow')}</h2>
               <span>{secretGameMessage}</span>
             </div>
 
             <article className="secret-game-board-card">
             {activeVaultGame === 'tiles' ? (
               <>
-                <p className="eyebrow">Safe Tiles</p>
+                <p className="eyebrow">{t('games.safeTiles')}</p>
                 <div className="secret-game-board" aria-label="Secret vault tile game">
                   {Array.from({ length: 9 }, (_, tileIndex) => (
                     <button
@@ -4210,7 +4927,7 @@ function App() {
               </>
             ) : activeVaultGame === 'snake' ? (
               <div className="vault-snake-game">
-                <p className="eyebrow">Snake</p>
+                <p className="eyebrow">{t('games.snake')}</p>
                 <strong>Score: {snakeScore}</strong>
                 <div className="vault-snake-board" aria-label="Snake game board">
                   {Array.from({ length: snakeBoardSize * snakeBoardSize }, (_, cellIndex) => {
@@ -4252,7 +4969,7 @@ function App() {
               </div>
             ) : activeVaultGame === 'breaker' ? (
               <div className="vault-breaker-game">
-                <p className="eyebrow">Block Breaker</p>
+                <p className="eyebrow">{t('games.breaker')}</p>
                 <strong>Blocks: {breakerScore}</strong>
                 <div className="vault-breaker-board" aria-label="Block Breaker game board">
                   {breakerBricks.map((brick) => {
@@ -4290,8 +5007,8 @@ function App() {
               </div>
             ) : activeVaultGame === 'code' ? (
               <div className="vault-code-game">
-                <p className="eyebrow">Code Breaker</p>
-                <strong>Find the vault code</strong>
+                <p className="eyebrow">{t('games.code')}</p>
+                <strong>{t('games.findCode')}</strong>
                 <div className="vault-code-options">
                   {['123', '231', '312'].map((code) => (
                     <button key={code} type="button" onClick={() => playVaultCode(code)}>
@@ -4302,8 +5019,8 @@ function App() {
               </div>
             ) : (
               <div className="vault-market-game">
-                <p className="eyebrow">Market Guess</p>
-                <strong>Will the mini market go up or down?</strong>
+                <p className="eyebrow">{t('games.marketGuess')}</p>
+                <strong>{t('games.marketQuestion')}</strong>
                 <div className="vault-market-chart" aria-hidden="true">
                   <span />
                   <span />
@@ -4328,8 +5045,8 @@ function App() {
       <section id="help" className={`section help-page ${activeSection === 'help' ? 'section--active' : 'section--hidden'}`}>
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Pushy Help</p>
-            <h2>Ask Pushy</h2>
+            <p className="eyebrow">{t('help.eyebrow')}</p>
+            <h2>{t('help.title')}</h2>
           </div>
           <p className="section-copy">
             Ask about lessons, investing words, the market game, achievements, or Piggy Bank goals.
@@ -4362,11 +5079,11 @@ function App() {
                 </div>
               ) : (
                 <div className="verity-answer-bubble verity-answer-bubble--empty">
-                  <p>Pushy answers will show up here.</p>
+                  <p>{t('help.empty')}</p>
                 </div>
               )}
             </div>
-            <p className="eyebrow">Question</p>
+            <p className="eyebrow">{t('help.question')}</p>
             <form className="help-form" onSubmit={askVerityForHelp}>
               <label>
                 What do you want help with?
@@ -4374,7 +5091,7 @@ function App() {
                   rows={5}
                   value={aiPrompt}
                   onChange={(event) => setAiPrompt(event.target.value)}
-                  placeholder="Example: explain diversification in a simple way"
+                  placeholder={t('help.placeholder')}
                 />
               </label>
               <button disabled={aiBusy} type="submit">
@@ -4399,8 +5116,8 @@ function App() {
       <section id="account" className={`section account-page ${activeSection === 'account' ? 'section--active' : 'section--hidden'}`}>
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Account</p>
-            <h2>Save your progress</h2>
+            <p className="eyebrow">{t('account.eyebrow')}</p>
+            <h2>{t('account.title')}</h2>
           </div>
           <p className="section-copy">
             Create an account to sync lessons, XP, cash, backpack items, skips, and your theme.
@@ -4411,9 +5128,9 @@ function App() {
           <article className="account-panel">
             {session ? (
               <>
-                <p className="eyebrow">Signed in</p>
+                <p className="eyebrow">{t('account.signedIn')}</p>
                 <h3>{session.user.email}</h3>
-                <p>Your progress saves automatically while you play.</p>
+                <p>{t('account.signedInCopy')}</p>
                 <button className="ghost-button" type="button" onClick={signOut}>
                   Sign out
                 </button>
@@ -4471,7 +5188,7 @@ function App() {
           </article>
 
           <aside className="account-panel account-panel--status">
-            <p className="eyebrow">Cloud save</p>
+            <p className="eyebrow">{t('account.cloudSave')}</p>
             <h3>{saveStatus}</h3>
             <div className="account-save-grid">
               <span>{completedLessons.length}/{lessons.length} lessons</span>
@@ -4491,7 +5208,7 @@ function App() {
       <section id="settings" className={`section settings-page ${activeSection === 'settings' ? 'section--active' : 'section--hidden'}`}>
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Settings</p>
+            <p className="eyebrow">{t('nav.settings')}</p>
             <h2>{t('settings.title')}</h2>
           </div>
           <p className="section-copy">
